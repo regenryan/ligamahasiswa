@@ -1,0 +1,103 @@
+
+> ligamahasiswa@0.1.0 dev
+> next dev
+
+▲ Next.js 16.3.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.59:3000
+✓ Ready in 511ms
+⚠ Warning: Next.js ignored pnpm-lock.yaml in C:\Users\adamraiyan because it is outside the current Git repository (C:\Users\adamraiyan\Desktop\ligamahasiswa).
+ To use this directory, set `turbopack.root` in your Next.js config.
+
+✓ Running next.config.ts took 49ms
+
+ GET / 200 in 1977ms (next.js: 1798ms, application-code: 180ms)
+[browser] Uncaught Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HomePage params={Promise} searchParams={Promise}>
+      <Suspense fallback={null}>
+        <VariantFrame names={[...]}>
+          <main className="overflow-x...">
+            <HomeA>
+              <div className="dir-a min-...">
+                <NavA>
+                <main>
+                  <section className="relative b...">
+                    <div>
+                    <div className="relative m...">
+                      <div>
+                      <div className="flex flex-...">
+                        <div className="border-2 b...">
+                          <p>
+                          <CountdownBlock big={true}>
+                            <div className="flex items...">
+                              <div>
+                              <div>
+                              <div>
+                              <div className="text-center">
+                                <div
+                                  className="border-2 border-current px-3 py-2 text-2xl sm:text-3xl font-bold tabular-..."
+                                >
++                                 06
+-                                 07
+                                ...
+                        ...
+                  ...
+                ...
+          ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at div (<anonymous>)
+    at <unknown> (src/app/page.tsx:29:11)
+    at Array.map (<anonymous>)
+    at CountdownBlock (src/app/page.tsx:27:14)
+    at HomeA (src/app/page.tsx:91:17)
+  27 |       {cells.map((x) => (
+  28 |         <div key={x.l} className="text-center">
+> 29 |           <div className={`${cell} font-bold tabular-nums`}>{x.v}</div>
+     |           ^
+  30 |           <p className="mt-1 text-[10px] uppercase tracking-[0.18em] opacity-60">{x.l}</p>
+  31 |         </div>
+  32 |       ))}
+ GET / 200 in 62ms (next.js: 13ms, application-code: 49ms)
+[browser] The result of getSnapshot should be cached to avoid an infinite loop 
+    at useNow (src/components/clock.tsx:15:30)
+    at AukuTicker (src/app/page.tsx:38:21)
+  13 |
+  14 | export function useNow() {
+> 15 |   return useSyncExternalStore(subscribe, getSnapshot, () => null);
+     |                              ^
+  16 | }
+  17 |
+  18 | export function useCountdown(target: Date, now: Date | null) { (src/components/clock.tsx:15:30)
+[browser] Maximum update depth exceeded. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render. 
+[browser] Uncaught Error: Maximum update depth exceeded. This can happen when a component repeatedly calls setState inside componentWillUpdate or componentDidUpdate. React limits the number of nested updates to prevent infinite loops.
+    at HomeA (src/app/page.tsx:85:17)
+  83 |               </div>
+  84 |               <div className="mt-10">
+> 85 |                 <AukuTicker />
+     |                 ^
+  86 |               </div>
+  87 |             </div>
+  88 |             <div className="flex flex-col gap-4">
+ GET / 200 in 53ms (next.js: 11ms, application-code: 42ms)
+ GET / 200 in 55ms (next.js: 10ms, application-code: 45ms)
+ GET / 200 in 33ms (next.js: 3ms, application-code: 31ms)
+ GET / 200 in 41ms (next.js: 3ms, application-code: 38ms)
+ GET /?v=5 200 in 40ms (next.js: 3ms, application-code: 37ms)
+ GET / 200 in 49ms (next.js: 10ms, application-code: 39ms)
+ GET /?v=5 200 in 42ms (next.js: 4ms, application-code: 38ms)
+ GET /?v=5 200 in 46ms (next.js: 10ms, application-code: 36ms)
+ GET /dashboard/card?v=5 200 in 388ms (next.js: 307ms, application-code: 81ms)
+ GET /zine?v=3 200 in 283ms (next.js: 234ms, application-code: 49ms)

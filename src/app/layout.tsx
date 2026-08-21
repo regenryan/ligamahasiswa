@@ -16,7 +16,7 @@ const fontVars = [
   spaceMono.variable,
 ].join(" ");
 
-const siteUrl = "https://ligamahasiswamalaysia.vercel.app";
+const siteUrl = "https://liga.vercel.app";
 
 export const metadata: Metadata = {
   title: {

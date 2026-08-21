@@ -1,34 +1,14 @@
 import { config } from "@/lib/config";
 import type { Product } from "@/lib/mock";
 
-const HITPAY_API = "https://api.hitpayapp.com/v1";
-
-type HitPayPaymentRequest = {
-  amount: string;
-  currency: string;
-  description: string;
-  reference_no: string;
-  redirect_url: string;
-  webhook_url: string;
-  payment_methods?: string[];
-};
+const HITPAY_API = "https://api.hit-pay.com/v1";
 
 export type HitPayPaymentResponse = {
   id: string;
   url: string;
-  reference_no: string;
+  reference_number: string;
   status: string;
 };
-
-function headers(): Record<string, string> {
-  const token = Buffer.from(
-    `${config.hitpayApiKey}:${config.hitpayApiSecret}`,
-  ).toString("base64");
-  return {
-    Authorization: `Basic ${token}`,
-    "Content-Type": "application/json",
-  };
-}
 
 export async function createHitPayPayment(
   items: Product[],
@@ -43,30 +23,33 @@ export async function createHitPayPayment(
   );
   const ref = `LM-${Date.now()}`;
 
-  const body: HitPayPaymentRequest = {
-    amount: String(total),
-    currency: "MYR",
-    description: `Liga Mahasiswa - ${items.map((p) => p.name).join(", ")}`,
-    reference_no: ref,
+  const params = new URLSearchParams({
+    amount: String(total.toFixed(2)),
+    currency: "myr",
+    purpose: `Liga Mahasiswa - ${items.map((p) => p.name).join(", ")}`,
+    reference_number: ref,
     redirect_url: `${config.siteUrl}/shop/checkout/success?ref=${ref}`,
-    webhook_url: `${config.siteUrl}/api/payment/webhook`,
-    payment_methods: ["fpx", "duitnow_qr", "touch_n_go"],
-  };
+    "payment_methods[]": "fpx",
+  });
 
   try {
     const res = await fetch(`${HITPAY_API}/payment-requests`, {
       method: "POST",
-      headers: headers(),
-      body: JSON.stringify(body),
+      headers: {
+        "X-BUSINESS-API-KEY": config.hitpayApiKey,
+        "Content-Type": "application/x-www-form-urlencoded",
+        "X-Requested-With": "XMLHttpRequest",
+      },
+      body: params.toString(),
     });
 
     if (!res.ok) {
       const err = await res.text();
-      return { ok: false, error: `HitPay error: ${res.status} ${err}` };
+      return { ok: false, error: `HitPay ${res.status}: ${err}` };
     }
 
     const data: HitPayPaymentResponse = await res.json();
-    return { ok: true, url: data.url, reference: data.reference_no };
+    return { ok: true, url: data.url, reference: data.reference_number };
   } catch (err) {
     return {
       ok: false,

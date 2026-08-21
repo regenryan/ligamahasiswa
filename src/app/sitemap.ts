@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://ligamahasiswamalaysia.vercel.app";
+  const base = "https://liga.vercel.app";
   const now = new Date().toISOString();
 
   const chapters = ["malaysia", "um", "utm", "usm", "unisza", "utem"];

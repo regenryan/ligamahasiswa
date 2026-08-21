@@ -4,7 +4,6 @@ import { Suspense, useState } from "react";
 import { Shell } from "@/components/shells";
 import { PageHead, Btn } from "@/components/sections";
 import { CartProvider, useCart } from "@/components/interactive";
-import { createHitPayPayment } from "@/lib/payments";
 import { submitOrder } from "@/lib/sheets";
 
 const DIR = 27;
@@ -38,14 +37,19 @@ function CheckoutInner() {
       paymentStatus: "initiated",
     });
 
-    const res = await createHitPayPayment(items);
+    const res = await fetch("/api/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items }),
+    });
+    const data = await res.json();
     setSending(false);
 
-    if (res.ok && res.url) {
+    if (data.ok && data.url) {
       clear();
-      window.location.href = res.url;
-    } else if (res.error) {
-      setError(res.error);
+      window.location.href = data.url;
+    } else if (data.error) {
+      setError(data.error);
     } else {
       setError("Could not start payment. Try again.");
     }

@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: "https://ligamahasiswamalaysia.vercel.app/sitemap.xml",
+    sitemap: "https://liga.vercel.app/sitemap.xml",
   };
 }

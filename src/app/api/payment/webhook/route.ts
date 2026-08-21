@@ -5,7 +5,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    if (!config.hitpayApiSecret) {
+    if (!config.hitpaySalt) {
       return NextResponse.json({ ok: false, error: "Webhook not configured" }, { status: 503 });
     }
 
@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
     const payload = JSON.stringify(body);
     const crypto = await import("crypto");
     const expected = crypto
-      .createHmac("sha256", config.hitpayApiSecret)
+      .createHmac("sha256", config.hitpaySalt)
       .update(payload)
       .digest("hex");
 

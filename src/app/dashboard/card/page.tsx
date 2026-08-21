@@ -1,200 +1,226 @@
 "use client";
 
 import { Suspense } from "react";
-import { VariantFrame } from "@/components/VariantFrame";
-import { NavA, FooterA, NavB, FooterB, NavC, FooterC, NavD, FooterD, NavE, FooterE } from "@/components/shells";
+import { Shell } from "@/components/shells";
+import { PageHead, Btn, SectionHead, JoinBand } from "@/components/sections";
+import { Reveal, Tabs } from "@/components/interactive";
+import { members } from "@/lib/mock";
 
-const NAMES = ["A Kad Merah", "B Skuad Kampus", "C Midnight Demo", "D Zine Print", "E Flat Signal"];
+const DIR = 27;
 
-const MEMBER = {
-  name: "Adam Raiyan",
-  id: "LMMA-2026-0017",
-  chapter: "Malaysia",
-  exp: "11.2026",
-};
+const QR_PATTERN: boolean[] = Array.from({ length: 81 }, (_, i) => {
+  const r = Math.floor(i / 9);
+  const c = i % 9;
+  const corner = (r < 3 && c < 3) || (r < 3 && c > 5) || (r > 5 && c < 3);
+  if (corner) return !(r % 3 === 1 && c % 3 === 1);
+  return ((r * 7 + c * 13) % 6) < 3;
+});
 
-function MemberCardFront({ tone }: { tone: "a" | "b" | "c" | "d" | "e" }) {
-  const frame =
-    tone === "a"
-      ? "border-2 border-ink bg-cream"
-      : tone === "b"
-        ? "rounded-3xl bg-hi"
-        : tone === "c"
-          ? "border border-white/10 bg-gradient-to-br from-mist to-[#131313]"
-          : tone === "d"
-            ? "border-2 border-ink bg-cream"
-            : "border-2 border-paper/20 bg-mist";
-  const dark = tone === "c" || tone === "e";
-  const text = dark ? "text-paper" : "text-ink";
-  const sub = dark ? "text-paper/50" : "text-ink/50";
+const PERKS = [
+  {
+    title: "Member prices in the shop",
+    body: "Discounted tees, pins and zines. Every ringgit funds the next campaign.",
+  },
+  {
+    title: "Priority entry at assemblies",
+    body: "Skip the queue at the door. Front rows are reserved for members.",
+  },
+  {
+    title: "Vote in league decisions",
+    body: "One member, one vote. You pick the campaigns and the direction.",
+  },
+  {
+    title: "Member-only merch drops",
+    body: "Hoodies and lanyards that never reach the public store.",
+  },
+];
+
+const STEPS = [
+  {
+    title: "Register in 2 minutes",
+    body: "Name, email and your chapter. No fees, no queues, no forms to the office.",
+  },
+  {
+    title: "Committee verifies within days",
+    body: "Your chapter committee checks your status. It usually takes 2 to 5 days.",
+  },
+  {
+    title: "Card unlocks member prices and priority entry",
+    body: "The moment your card is verified, every perk switches on.",
+  },
+];
+
+function QrBox() {
   return (
-    <div className={`relative aspect-[1.586/1] w-full overflow-hidden ${frame} p-5`}>
-      {tone === "a" && <div className="halftone absolute inset-0 opacity-[0.06]" aria-hidden="true" />}
-      {tone === "d" && <div className="grain absolute inset-0 opacity-[0.05]" aria-hidden="true" />}
-      <div className="relative flex h-full flex-col justify-between">
-        <div className="flex items-start justify-between">
+    <div aria-hidden="true" className="shrink-0 bg-fog p-1.5">
+      <div className="grid grid-cols-9">
+        {QR_PATTERN.map((on, i) => (
+          <span
+            key={i}
+            className={on ? "bg-midnight" : "bg-fog"}
+            style={{ width: "5px", height: "5px" }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function MemberCard() {
+  const m = members[0];
+  const initials = m.name
+    .split(" ")
+    .slice(0, 2)
+    .map((p) => p[0])
+    .join("");
+
+  return (
+    <div className="relative mx-auto w-full max-w-md overflow-hidden border border-fog/20 bg-midnight text-fog" style={{ aspectRatio: "85.6 / 53.98" }}>
+      <div className="flex h-full flex-col justify-between p-5 sm:p-6">
+        <div className="flex items-start justify-between gap-4">
           <div>
-            <p className={`display text-lg leading-none ${dark ? "text-glow" : "text-brand"}`}>LIGA</p>
-            <p className={`display text-[11px] tracking-[0.3em] ${sub}`}>MAHASISWA MALAYSIA</p>
+            <p className="display text-xl text-fog">Liga Mahasiswa</p>
+            <p className="mono mt-1 text-[10px] uppercase tracking-[0.2em] text-fog/50">
+              Digital member card
+            </p>
           </div>
-          <div className="flex h-9 w-9 items-center justify-center border-2 border-current text-xs font-black">
-            LM
+          <QrBox />
+        </div>
+        <div className="my-3 h-px bg-fog/15" />
+        <div className="flex items-center gap-3">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center border border-fog/20 bg-fog/10">
+            <span className="text-[12px] font-extrabold uppercase text-fog/70">
+              {initials}
+            </span>
+          </div>
+          <div>
+            <p className="text-[14px] font-bold leading-tight text-fog">{m.name}</p>
+            <p className="mt-0.5 text-[11px] text-fog/60">
+              {m.role} / Malaysia
+            </p>
           </div>
         </div>
-        <div className={`flex items-end justify-between gap-3 ${text}`}>
-          <div className="flex items-center gap-3">
-            <div className={`relative h-14 w-14 overflow-hidden ${dark ? "border-paper/30" : "border-ink/30"} border`}>
-              <div aria-hidden="true" className={`halftone absolute inset-0 opacity-40 ${dark ? "halftone-light" : ""}`} />
+        <div className="grid grid-cols-3 gap-1.5">
+          {["Member", "Since 2024", "Active"].map((x) => (
+            <div
+              key={x}
+              className="flex items-center justify-center border border-fog/15 bg-fog/5 px-2 py-1.5 text-center text-[10px] uppercase tracking-[0.1em] text-fog/50"
+            >
+              {x}
             </div>
-            <div>
-              <p className="font-black leading-tight">{MEMBER.name}</p>
-              <p className={`text-[11px] font-bold uppercase tracking-[0.2em] ${sub}`}>
-                {MEMBER.chapter} - {MEMBER.id}
-              </p>
-            </div>
-          </div>
-          <div className="text-right">
-            <p className={`text-[11px] uppercase tracking-[0.2em] ${sub}`}>Valid until</p>
-            <p className="font-black">{MEMBER.exp}</p>
-          </div>
+          ))}
         </div>
-        <div className="flex items-center justify-between">
-          <p className={`text-[11px] uppercase tracking-[0.2em] ${sub}`}>Ahli diperakui oleh jawatankuasa</p>
-          <div className="h-8 w-8 rotate-45 border-2 border-dashed border-current opacity-60" />
+        <div className="mono flex items-center justify-between gap-3 text-[10px] uppercase tracking-[0.14em] text-fog/40">
+          <span>LMM-2026-0001</span>
+          <span className="accent">Verified</span>
         </div>
       </div>
     </div>
   );
 }
 
-function DashboardNav({ tone }: { tone: "a" | "b" | "c" | "d" | "e" }) {
-  const links = ["Dashboard", "Kad ahli", "Pesanan", "RSVP", "Suka zine"];
-  const active = "Kad ahli";
-  const cls =
-    tone === "c"
-      ? "border border-paper/15 px-3 py-1.5 text-xs font-bold uppercase tracking-widest"
-      : "border-2 border-ink px-3 py-1.5 text-xs font-bold uppercase tracking-widest";
-  const on = tone === "c" ? "border-brand bg-brand text-paper" : "bg-ink text-paper";
-  const off = tone === "c" ? "text-paper/50 hover:border-glow hover:text-glow" : "text-ink/60 hover:bg-ink hover:text-paper";
+function MyCardPanel() {
   return (
-    <div className="flex flex-wrap gap-2">
-      {links.map((l) => (
-        <button key={l} type="button" className={`press ${cls} ${l === active ? on : off}`}>
-          {l}
-        </button>
-      ))}
+    <div className="mx-auto w-full max-w-md">
+      <p className="mono mb-4 text-[11px] uppercase tracking-[0.2em] text-ink/50">
+        Card 001 / issued
+      </p>
+      <MemberCard />
+      <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+        <Btn kind="join" onClick={() => {}}>
+          Share my card
+        </Btn>
+        <Btn kind="ghost">
+          Download (demo)
+        </Btn>
+      </div>
+      <p className="mono mt-5 text-center text-[11px] uppercase tracking-[0.14em] text-ink/50">
+        One ID, one member. Present it at the door.
+      </p>
     </div>
   );
 }
 
-function CardView({ tone }: { tone: "a" | "b" | "c" | "d" | "e" }) {
-  const dark = tone === "c" || tone === "e";
-  const pageBg = tone === "a" ? "bg-paper" : tone === "b" ? "bg-cream" : tone === "c" ? "bg-midnight" : tone === "d" ? "bg-paper grain relative" : "bg-ink";
-  const text = dark ? "text-paper" : "text-ink";
-  const sub = dark ? "text-paper/50" : "text-ink/50";
-  const perks = [
-    "Beli barang member-only di Kedai Liga",
-    "Pesanan dan history order terus dalam dashboard",
-    "Kemasukan event tertutup dan RSVP awal",
-    "Undi dalam Pilihan Raya Kampus",
-  ];
-  const solidBtn =
-    tone === "a"
-      ? "press display bg-brand px-6 py-3 text-sm tracking-widest text-paper"
-      : tone === "b"
-        ? "press rounded-full bg-ink px-6 py-3 text-sm font-bold text-paper"
-        : tone === "c"
-          ? "press bg-brand px-7 py-3 text-sm font-bold uppercase tracking-[0.16em] text-paper"
-          : tone === "d"
-            ? "press stamp bg-brand px-6 py-2.5 text-sm font-bold text-paper"
-            : "press bg-hi px-7 py-3.5 text-sm font-black text-ink";
-  const ghostBtn =
-    tone === "a"
-      ? "press display border-2 border-ink px-6 py-3 text-sm tracking-widest hover:bg-ink hover:text-paper"
-      : tone === "b"
-        ? "press rounded-full border-2 border-ink/15 bg-paper px-6 py-3 text-sm font-bold"
-        : tone === "c"
-          ? "press border border-paper/25 px-7 py-3 text-sm font-bold uppercase tracking-[0.16em] text-paper hover:border-glow hover:text-glow"
-          : tone === "d"
-            ? "press stamp border-2 border-ink px-6 py-2.5 text-sm font-bold"
-            : "press border-2 border-paper/30 px-7 py-3.5 text-sm font-black uppercase tracking-[0.16em] hover:border-brand hover:text-brand";
-  const box = dark ? "border border-white/10 bg-mist" : "border-2 border-ink bg-cream";
+function HowToJoinPanel() {
   return (
-    <div className={`dir-${tone} ${pageBg} ${text} min-h-screen`}>
-      {tone === "a" && <NavA />}
-      {tone === "b" && <NavB />}
-      {tone === "c" && <NavC />}
-      {tone === "d" && <NavD />}
-      {tone === "e" && <NavE />}
-      <main className="mx-auto max-w-7xl px-5 py-14">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <p className={`text-xs font-bold uppercase tracking-[0.25em] ${dark ? "text-glow" : "text-brand"}`}>
-              Dashboard - Kad ahli
-            </p>
-            <h1 className="display mt-4 text-4xl sm:text-5xl">KAD AHLI DIGITAL</h1>
-          </div>
-          <DashboardNav tone={tone} />
+    <div className="mx-auto w-full max-w-2xl">
+      <div className="border border-line bg-cream p-6 sm:p-8">
+        <p className="mono text-[11px] uppercase tracking-[0.2em] text-ink/50">
+          How it works
+        </p>
+        <ol className="mt-6 space-y-6">
+          {STEPS.map((s, i) => (
+            <li key={s.title} className="flex items-start gap-4">
+              <span className="accent shrink-0 text-[13px] font-extrabold">{i + 1}</span>
+              <div>
+                <h3 className="text-[15px] font-bold leading-snug">{s.title}</h3>
+                <p className="mt-1 text-[14px] leading-relaxed text-ink/70">{s.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <div className="mt-8 flex flex-wrap items-center gap-4 border-t border-line pt-6">
+          <Btn kind="join" href="#join">
+            Register now
+          </Btn>
+          <p className="mono text-[11px] uppercase tracking-[0.14em] text-ink/50">
+            Membership is free. No fees, ever.
+          </p>
         </div>
-        <div className="mt-12 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
-          <div className="space-y-6">
-            <MemberCardFront tone={tone} />
-            <div className="flex flex-wrap gap-3">
-              <button type="button" className={solidBtn}>
-                Simpan ke Apple / Google Wallet
-              </button>
-              <button type="button" className={ghostBtn}>
-                Muat turun PDF kad
-              </button>
-            </div>
-          </div>
-          <div className="space-y-6">
-            <div className={box}>
-              <p className={`text-xs font-bold uppercase tracking-[0.2em] ${dark ? "text-glow" : "text-brand"}`}>
-                Apa kad ni bagi?
-              </p>
-              <ul className="mt-4 space-y-3">
-                {perks.map((p) => (
-                  <li key={p} className="flex gap-3 text-sm leading-relaxed">
-                    <span className={`font-black ${dark ? "text-glow" : "text-brand"}`}>+</span>
-                    <span>{p}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className={box}>
-              <p className={`text-xs font-bold uppercase tracking-[0.2em] ${dark ? "text-glow" : "text-brand"}`}>
-                Pasal kad ni
-              </p>
-              <p className={`mt-3 text-sm leading-relaxed ${sub}`}>
-                Kad digital dikeluarkan selepas keahlian disahkan oleh jawatankuasa chapter.
-                Satu ID, satu ahli. Jangan kongsi kad dengan orang lain - nanti kawan kau
-                kena tahan di pintu masuk event.
-              </p>
-            </div>
-          </div>
-        </div>
-      </main>
-      {tone === "a" && <FooterA />}
-      {tone === "b" && <FooterB />}
-      {tone === "c" && <FooterC />}
-      {tone === "d" && <FooterD />}
-      {tone === "e" && <FooterE />}
+      </div>
     </div>
+  );
+}
+
+function PerksSection() {
+  return (
+    <section className="border-b border-line">
+      <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+        <Reveal>
+          <SectionHead
+            index={2}
+            title="What the card unlocks"
+            sub="Four reasons to carry it. Membership is free, the perks are not."
+          />
+        </Reveal>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {PERKS.map((p, i) => (
+            <Reveal key={p.title} delay={i * 60}>
+              <article className="flex h-full flex-col border border-line bg-cream p-6">
+                <span className="accent text-[13px]">{"\u2713"}</span>
+                <h3 className="mt-4 text-[15px] font-bold leading-snug">{p.title}</h3>
+                <p className="mt-2 text-[13px] leading-relaxed text-ink/60">{p.body}</p>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
 export default function CardPage() {
-  const variants = [
-    <CardView key="a" tone="a" />,
-    <CardView key="b" tone="b" />,
-    <CardView key="c" tone="c" />,
-    <CardView key="d" tone="d" />,
-    <CardView key="e" tone="e" />,
-  ];
   return (
     <Suspense fallback={null}>
-      <VariantFrame names={NAMES}>{variants}</VariantFrame>
+      <Shell dir={DIR}>
+        <PageHead
+          kicker="Dashboard"
+          title="Your member card"
+          sub="Verification takes a few days. Your digital card is issued the moment you register."
+        />
+        <section className="border-b border-line">
+          <div className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6">
+            <Reveal>
+              <Tabs
+                labels={["My card", "How to join"]}
+                tabs={[<MyCardPanel key="card" />, <HowToJoinPanel key="join" />]}
+              />
+            </Reveal>
+          </div>
+        </section>
+        <PerksSection />
+        <JoinBand />
+      </Shell>
     </Suspense>
   );
 }

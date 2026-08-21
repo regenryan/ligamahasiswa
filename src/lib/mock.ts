@@ -18,7 +18,7 @@ export type Campaign = {
   slug: string;
   chapterSlug: string;
   title: string;
-  status: "Aktif" | "Menang" | "On-going";
+  status: "Active" | "Won" | "Ongoing";
   summary: string;
   demands: string[];
   timeline: { date: string; text: string }[];
@@ -32,7 +32,7 @@ export type EventItem = {
   date: string;
   time: string;
   place: string;
-  type: "Forum" | "Perhimpunan" | "Dialog";
+  type: "Forum" | "Assembly" | "Dialogue";
   blurb: string;
 };
 
@@ -41,7 +41,7 @@ export type MediaItem = {
   outlet: string;
   title: string;
   date: string;
-  kind: "Video" | "Podcast" | "Artikel";
+  kind: "Video" | "Podcast" | "Article";
   blurb: string;
 };
 
@@ -70,7 +70,7 @@ export const chapters: Chapter[] = [
     short: "Malaysia",
     ig: "@ligamahasiswa.my",
     color: "#e11d2e",
-    tagline: "Gerakan mahasiswa di peringkat kebangsaan.",
+    tagline: "The national student movement.",
   },
   {
     slug: "um",
@@ -78,7 +78,7 @@ export const chapters: Chapter[] = [
     short: "UM",
     ig: "@ligamahasiswa.um",
     color: "#e11d2e",
-    tagline: "Kampus pertama yang berani.",
+    tagline: "The first campus that dared.",
   },
   {
     slug: "utm",
@@ -86,7 +86,7 @@ export const chapters: Chapter[] = [
     short: "UTM",
     ig: "@ligamahasiswautm",
     color: "#e11d2e",
-    tagline: "Engineers yang tak diam je.",
+    tagline: "Engineers who refuse to stay quiet.",
   },
   {
     slug: "usm",
@@ -94,7 +94,7 @@ export const chapters: Chapter[] = [
     short: "USM",
     ig: "@ligamahasiswa.usm",
     color: "#e11d2e",
-    tagline: "Pulau, pantai, perlawanan.",
+    tagline: "Island, beach, resistance.",
   },
   {
     slug: "unisza",
@@ -102,7 +102,7 @@ export const chapters: Chapter[] = [
     short: "UniSZA",
     ig: "@ligamahasiswa.unisza",
     color: "#e11d2e",
-    tagline: "Terengganu ada suara sendiri.",
+    tagline: "Terengganu has its own voice.",
   },
   {
     slug: "utem",
@@ -119,43 +119,46 @@ export const members: Member[] = [
     name: "Alyaah Hani Anuar",
     chapterSlug: "malaysia",
     role: "President",
-    blurb: "Suara utama gerakan. Bekas pelajar UM, sekarang jaga arah nasional.",
+    blurb:
+      "The movement's leading voice. Former UM student, now steering the national direction.",
   },
   {
     name: "Adam Raiyan Abd. Rahim",
     chapterSlug: "malaysia",
-    role: "Jurucakap",
-    blurb: "Jurucakap Liga Mahasiswa Malaysia dan UTM. Selalunya depan mikrofon.",
+    role: "Spokesperson",
+    blurb:
+      "Spokesperson for Liga Mahasiswa Malaysia and UTM. Usually in front of a microphone.",
   },
   {
     name: "Ammar Daniel Noor Irwan",
     chapterSlug: "um",
     role: "President",
-    blurb: "Pimpin Liga Mahasiswa UM. Tak gentar bila kampus saman pelajarnya.",
+    blurb:
+      "Leads Liga Mahasiswa UM. Unshaken when the campus sued its own students.",
   },
   {
     name: "Ahsanul Akmal Muhammad Sulam",
     chapterSlug: "um",
     role: "Vice President",
-    blurb: "Tangan kanan presiden UM. Urus gerak kerja harian kampus.",
+    blurb: "The UM president's right hand. Runs the day-to-day campus work.",
   },
   {
     name: "Adief Al Syarif",
     chapterSlug: "utm",
     role: "President",
-    blurb: "Ketuai gabungan gerakan mahasiswa UTM lawan peraturan lapuk.",
+    blurb: "Heads the UTM student coalition against outdated campus rules.",
   },
   {
     name: "Muhammad Ajwad",
     chapterSlug: "usm",
     role: "President",
-    blurb: "Bina liga di Pulau Pinang dari kosong. Kini jadi rujukan kampus.",
+    blurb: "Built the league in Penang from zero. Now a reference for other campuses.",
   },
   {
     name: "Irfan Wafiy",
     chapterSlug: "unisza",
     role: "President",
-    blurb: "Bawa isu mahasiswa luar bandar ke aras nasional.",
+    blurb: "Carries rural student issues to the national level.",
   },
 ];
 
@@ -164,19 +167,19 @@ export const campaigns: Campaign[] = [
     slug: "mansuh-auku",
     chapterSlug: "malaysia",
     title: "Mansuh AUKU",
-    status: "Aktif",
+    status: "Active",
     summary:
-      "AUKU 1971 telah memerintah kehidupan pelajar selama 55 tahun. Sekarang dah cukup.",
+      "AUKU 1971 has ruled student life for 55 years. That is long enough.",
     demands: [
-      "Hapuskan AUKU 1971 sepenuhnya",
-      "Ganti dengan akta yang hormat hak pelajar",
-      "Pelajar duduk sekali dalam penggubalan undang-undang kampus",
+      "Abolish AUKU 1971 entirely",
+      "Replace it with a law that respects student rights",
+      "Students sit at the table when campus law is drafted",
     ],
     timeline: [
-      { date: "2024", text: "Gerakan Liga Mahasiswa mula dibentuk" },
-      { date: "2025-08", text: "Perhimpunan depan Parlimen, memo Zara Qairina" },
-      { date: "2026-02", text: "Rali Mansuh AUKU, memorandum diserah kepada Parlimen" },
-      { date: "2026-08", text: "Desak kerajaan umum garis masa pemansuhan" },
+      { date: "2024", text: "The Liga Mahasiswa movement is formed" },
+      { date: "2025-08", text: "Assembly in front of Parliament, Zara Qairina memo handed over" },
+      { date: "2026-02", text: "Mansuh AUKU rally, memorandum submitted to Parliament" },
+      { date: "2026-08", text: "Pushing the government to announce an abolition timeline" },
     ],
     hasTicker: true,
   },
@@ -184,13 +187,13 @@ export const campaigns: Campaign[] = [
     slug: "dialog-terbuka-kpt",
     chapterSlug: "malaysia",
     title: "Dialog Terbuka dengan KPT",
-    status: "Menang",
+    status: "Won",
     summary:
-      "Kami cabar Timbalan Menteri Pengajian Tinggi berdialog secara terbuka. Dia setuju. Dialog berlangsung.",
-    demands: ["Dialog terbuka di kampus", "Nota dialog diterbitkan untuk umum"],
+      "We challenged the Deputy Higher Education Minister to an open dialogue. He agreed. The dialogue happened.",
+    demands: ["An open dialogue on campus", "A public record of the dialogue notes"],
     timeline: [
-      { date: "2026-01-19", text: "Jemputan terbuka dibuat, jawapan: jumpa nanti" },
-      { date: "2026-05", text: "Dialog KPT dan Liga Mahasiswa berlangsung" },
+      { date: "2026-01-19", text: "Open invitation issued. Reply: we will meet" },
+      { date: "2026-05", text: "The KPT and Liga Mahasiswa dialogue takes place" },
     ],
     hasTicker: false,
   },
@@ -198,44 +201,45 @@ export const campaigns: Campaign[] = [
     slug: "keadilan-zara-qairina",
     chapterSlug: "malaysia",
     title: "Keadilan Zara Qairina",
-    status: "Aktif",
+    status: "Active",
     summary:
-      "Buli sistematik dalam sistem asrama pelajar tidak boleh dianggap kes terpencil.",
-    demands: ["Siasatan telus", "Perlindungan untuk mangsa buli"],
-    timeline: [{ date: "2025-08-12", text: "Perarakan ke Parlimen, memo diserahkan" }],
+      "Systematic bullying inside the student housing system is not one isolated case.",
+    demands: ["A transparent investigation", "Protection for bullying survivors"],
+    timeline: [{ date: "2025-08-12", text: "March to Parliament, memo handed over" }],
     hasTicker: false,
   },
   {
     slug: "um-rumah-mandiri",
     chapterSlug: "um",
     title: "Rumah Mandiri UM",
-    status: "Aktif",
-    summary:
-      "Kampus ancam saman pelajar yang bercakap. Kami kata tak boleh.",
-    demands: ["Tarik balik ancaman saman", "Kebebasan bersuara dalam kampus"],
-    timeline: [{ date: "2026-03", text: "Sidang media menolak ancaman undang-undang" }],
+    status: "Active",
+    summary: "The campus threatened to sue students for speaking up. We say no.",
+    demands: ["Withdraw the legal threats", "Freedom of speech on campus"],
+    timeline: [{ date: "2026-03", text: "Press conference rejecting the legal threats" }],
     hasTicker: false,
   },
   {
     slug: "gabungan-palestin",
     chapterSlug: "malaysia",
     title: "GMMP: Solidariti Palestin",
-    status: "On-going",
+    status: "Ongoing",
     summary:
-      "Sebahagian dari Gabungan Mahasiswa Memperjuangkan Palestin bersama bab UM, UniSZA dan lain-lain.",
-    demands: ["Boikot akademik dan ekonomi", "Suara mahasiswa untuk Palestin"],
-    timeline: [{ date: "2025-03", text: "Gabungan ditubuhkan" }],
+      "Part of the Gabungan Mahasiswa Memperjuangkan Palestin together with the UM, UniSZA and other chapters.",
+    demands: ["Academic and economic boycott", "A student voice for Palestine"],
+    timeline: [{ date: "2025-03", text: "The coalition is formed" }],
     hasTicker: false,
   },
   {
     slug: "sekolah-migran",
     chapterSlug: "malaysia",
     title: "Pendidikan Inklusif",
-    status: "On-going",
+    status: "Ongoing",
     summary:
-      "Pendidikan sejatinya hak semua orang. Kami sokong sanggar belajar kanak-kanak migran di Semenyih.",
-    demands: ["Akses pendidikan untuk semua"],
-    timeline: [{ date: "2025-05", text: "Sumbangan buku dan peralatan ke Sanggar Belajar Beranang" }],
+      "Education is everyone's right. We support the migrant children learning centres in Semenyih.",
+    demands: ["Access to education for all"],
+    timeline: [
+      { date: "2025-05", text: "Books and supplies donated to Sanggar Belajar Beranang" },
+    ],
     hasTicker: false,
   },
 ];
@@ -244,12 +248,13 @@ export const events: EventItem[] = [
   {
     slug: "kuliah-hak-mahasiswa-101",
     chapterSlug: "malaysia",
-    title: "Kuliah Umum: Hak Mahasiswa 101",
+    title: "Open Lecture: Student Rights 101",
     date: "2026-10-17",
     time: "8:00 PM",
     place: "Kuala Lumpur",
     type: "Forum",
-    blurb: "Apa itu AUKU, apa hak kau, dan apa boleh dibuat. Sesi terbuka untuk semua.",
+    blurb:
+      "What AUKU is, what your rights are, and what you can do about it. Open session for everyone.",
   },
   {
     slug: "gerak-jalan-mansuh-auku",
@@ -258,18 +263,18 @@ export const events: EventItem[] = [
     date: "2026-11-14",
     time: "9:00 AM",
     place: "Dataran Merdeka",
-    type: "Perhimpunan",
-    blurb: "Bawa baju merah. Bawa kawan. Bawa sebab kita belum habis.",
+    type: "Assembly",
+    blurb: "Wear red. Bring a friend. Bring the reasons we are not done yet.",
   },
   {
     slug: "dialog-suara-pelajar-utm",
     chapterSlug: "utm",
-    title: "Dialog Terbuka: Suara Pelajar UTM",
+    title: "Open Dialogue: The UTM Student Voice",
     date: "2026-09-26",
     time: "7:30 PM",
     place: "Skudai",
-    type: "Dialog",
-    blurb: "Peraturan lama, saman tak munasabah. Masa pelajar jawab.",
+    type: "Dialogue",
+    blurb: "Outdated rules, unreasonable lawsuits. Time for students to answer back.",
   },
 ];
 
@@ -277,50 +282,52 @@ export const mediaItems: MediaItem[] = [
   {
     slug: "kinitv-kad-merah",
     outlet: "KiniTV",
-    title: "Demo anti-AUKU: Mahasiswa beri kad merah pada Adam Adli",
+    title: "Anti-AUKU demo: Students show a red card to Adam Adli",
     date: "2026-08",
     kind: "Video",
-    blurb: "Liputan penuh demo. Kad merah adalah mesej kami.",
+    blurb: "Full coverage of the demo. The red card is our message.",
   },
   {
     slug: "awani-dialog",
     outlet: "Astro AWANI",
-    title: "Jumpa nanti: Adam Adli setuju berdialog dengan Liga Mahasiswa Malaysia",
+    title: "We will meet: Adam Adli agrees to a dialogue with Liga Mahasiswa Malaysia",
     date: "2026-01-19",
-    kind: "Artikel",
-    blurb: "Cabar kami dijemput. Balasan menteri: setuju.",
+    kind: "Article",
+    blurb: "We issued the challenge. The minister's reply: agreed.",
   },
   {
     slug: "syok-podcast",
     outlet: "SYOK Podcast",
-    title: "Life Confessions S4E25 bersama Alyaah Hani",
+    title: "Life Confessions S4E25 with Alyaah Hani",
     date: "2025-09-29",
     kind: "Podcast",
-    blurb: "Presiden Liga bercerita tentang AUKU, kebebasan kampus, dan kenapa ia peribadi.",
+    blurb:
+      "The league president on AUKU, campus freedom, and why it is personal.",
   },
   {
     slug: "utusan-rally",
     outlet: "Utusan Malaysia",
-    title: "Liga Mahasiswa berhimpun desak AUKU dimansuhkan",
+    title: "Liga Mahasiswa rallies to demand AUKU be abolished",
     date: "2026-02-09",
-    kind: "Artikel",
-    blurb: "Perhimpunan aman depan Parlimen disokong puluhan organisasi mahasiswa.",
+    kind: "Article",
+    blurb:
+      "A peaceful assembly in front of Parliament, backed by dozens of student organisations.",
   },
   {
     slug: "fmt-parliament-march",
     outlet: "Free Malaysia Today",
     title: "Protesters march on Parliament with memo seeking justice for Zara Qairina",
     date: "2025-08-12",
-    kind: "Artikel",
-    blurb: "Perarakan dan penyerahan memo ke Parlimen.",
+    kind: "Article",
+    blurb: "The march and the memo handed over to Parliament.",
   },
   {
     slug: "bernama-dialog-may",
     outlet: "Bernama",
     title: "MOHE-LMM dialogue expected to take place in May",
     date: "2026-04-18",
-    kind: "Artikel",
-    blurb: "Dialog rasmi antara KPT dan Liga Mahasiswa dijadualkan.",
+    kind: "Article",
+    blurb: "An official dialogue between KPT and Liga Mahasiswa is scheduled.",
   },
 ];
 
@@ -329,36 +336,36 @@ export const zinePosts: ZinePost[] = [
     slug: "surat-bakal-presiden",
     author: "Alyaah Hani",
     chapterSlug: "malaysia",
-    title: "Surat terbuka kepada bakal presiden",
+    title: "Open letter to the next president",
     excerpt:
-      "Kepada sesiapa yang bakal pegang jawatan. Ingat: kau bukan bos, kau adalah pekerja rakyat.",
+      "To whoever takes office next. Remember: you are not a boss, you are a public servant.",
     likes: 214,
   },
   {
     slug: "auku-dan-sewa-bilik",
     author: "Irfan Wafiy",
     chapterSlug: "unisza",
-    title: "AUKU dan sewa bilik",
+    title: "AUKU and the rent bill",
     excerpt:
-      "Kadang aku tertanya, yang mana lebih mahal: yuran aku atau sewa bilik aku. Jawapan dia menyedihkan.",
+      "Sometimes I wonder which costs more: my tuition or my room rent. The answer is depressing.",
     likes: 158,
   },
   {
     slug: "nota-dari-perhimpunan",
     author: "Adam Raiyan",
     chapterSlug: "utm",
-    title: "Nota dari perhimpunan",
+    title: "Notes from the assembly",
     excerpt:
-      "Hujan turun tapi tak seorang pun balik. Itu kali pertama aku rasa apa makna kemenangan kecil.",
+      "It rained, and no one left. That was the first time I understood what a small victory feels like.",
     likes: 342,
   },
   {
     slug: "zine-apa-makna-merdeka",
     author: "Ammar Daniel",
     chapterSlug: "um",
-    title: "Apa makna merdeka untuk pelajar",
+    title: "What independence means for a student",
     excerpt:
-      "Merdeka bukan hanya bendera. Merdeka ialah bila kau boleh bercakap tanpa takut disaman.",
+      "Independence is not just a flag. It is being able to speak without fearing a lawsuit.",
     likes: 189,
   },
 ];
@@ -367,7 +374,7 @@ export const products: Product[] = [
   {
     slug: "tee-mansuh-auku",
     chapterSlug: "malaysia",
-    name: "Tee Mansuh AUKU",
+    name: "Mansuh AUKU Tee",
     price: "RM39",
     tag: "Preorder",
     memberOnly: false,
@@ -375,7 +382,7 @@ export const products: Product[] = [
   {
     slug: "pin-kad-merah",
     chapterSlug: "malaysia",
-    name: "Pin Kad Merah",
+    name: "Red Card Pin",
     price: "RM12",
     tag: "Ready stock",
     memberOnly: false,
@@ -383,7 +390,7 @@ export const products: Product[] = [
   {
     slug: "sticker-kampung",
     chapterSlug: "malaysia",
-    name: "Sticker Pack Kampung Liga",
+    name: "Kampung Liga Sticker Pack",
     price: "RM10",
     tag: "Ready stock",
     memberOnly: false,
@@ -391,7 +398,7 @@ export const products: Product[] = [
   {
     slug: "tote-kampus-bebas",
     chapterSlug: "malaysia",
-    name: "Tote Kampus Bebas",
+    name: "Free Campus Tote",
     price: "RM35",
     tag: "Ready stock",
     memberOnly: false,
@@ -399,7 +406,7 @@ export const products: Product[] = [
   {
     slug: "hoodie-liga",
     chapterSlug: "malaysia",
-    name: "Hoodie Liga Members Only",
+    name: "Liga Members-Only Hoodie",
     price: "RM89",
     tag: "Member exclusive",
     memberOnly: true,
@@ -407,7 +414,7 @@ export const products: Product[] = [
   {
     slug: "lanyard-member",
     chapterSlug: "malaysia",
-    name: "Lanyard Member ID",
+    name: "Member ID Lanyard",
     price: "RM15",
     tag: "Member exclusive",
     memberOnly: true,
@@ -417,15 +424,15 @@ export const products: Product[] = [
 export const stories = [
   {
     name: "Ammar, UM",
-    text: "Bilik sewa aku lebih mahal dari yuran aku. Ada yang patut berubah.",
+    text: "My room rent costs more than my tuition. Something has to change.",
   },
   {
     name: "Alyaah, Malaysia",
-    text: "Aku bosan dengar orang cakap jangan ganggu. Bila aku diam, aku marah.",
+    text: "I am tired of being told not to cause trouble. When I stay quiet, I get angry.",
   },
   {
     name: "Adam, UTM",
-    text: "Bila kampus saman pelajar sendiri, aku tahu kena ada yang lawan balik.",
+    text: "When a campus sues its own students, I knew someone had to fight back.",
   },
 ];
 

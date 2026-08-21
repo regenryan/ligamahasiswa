@@ -1,214 +1,83 @@
 "use client";
 
-import { Suspense, useState } from "react";
-import { VariantFrame } from "@/components/VariantFrame";
-import { NavA, FooterA, NavB, FooterB, NavC, FooterC, NavD, FooterD, NavE, FooterE } from "@/components/shells";
-import { Placeholder } from "@/components/Placeholder";
-import { zinePosts } from "@/lib/mock";
+import { useState } from "react";
+import { Shell } from "@/components/shells";
+import {
+  PageHead,
+  SectionHead,
+  Btn,
+  JoinBand,
+  NewsletterBand,
+} from "@/components/sections";
+import { Reveal, FilterPills } from "@/components/interactive";
+import { ZineCard } from "@/components/sections";
+import { chapters, zinePosts } from "@/lib/mock";
 
-const NAMES = ["A Kad Merah", "B Skuad Kampus", "C Midnight Demo", "D Zine Print", "E Flat Signal"];
+const DIR = 27;
 
-function ZineCard({
-  title,
-  author,
-  excerpt,
-  likes,
-  tone,
-}: {
-  title: string;
-  author: string;
-  excerpt: string;
-  likes: number;
-  tone: "a" | "b" | "c" | "d" | "e";
-}) {
-  const issue = "Zine vol. 3";
-  const readTime = "4 min";
-  const [count, setCount] = useState(likes);
-  const [liked, setLiked] = useState(false);
-  const card =
-    tone === "a"
-      ? "border-2 border-ink bg-paper"
-      : tone === "b"
-        ? "rounded-3xl bg-paper shadow-[0_2px_16px_rgba(17,17,17,0.06)]"
-        : tone === "c"
-          ? "border border-white/10 bg-mist"
-          : tone === "d"
-            ? "border-2 border-ink bg-paper rotate-[-0.3deg]"
-            : "border-2 border-paper/15 bg-mist";
-  const meta = tone === "c" ? "text-paper/50" : "text-ink/50";
-  const likeActive = tone === "c" ? "text-glow border-glow" : "text-brand border-brand";
+type ChapterFilter = "All" | "Malaysia" | "UM" | "UTM" | "UniSZA";
+const FILTERS: ChapterFilter[] = ["All", "Malaysia", "UM", "UTM", "UniSZA"];
+
+function ZineGrid() {
+  const [filter, setFilter] = useState<ChapterFilter>("All");
+  const slug =
+    filter === "All" ? null : (chapters.find((c) => c.short === filter)?.slug ?? null);
+  const items = slug === null ? zinePosts : zinePosts.filter((z) => z.chapterSlug === slug);
   return (
-    <article className={`${card} flex flex-col overflow-hidden`}>
-      <Placeholder
-        ratio="16/10"
-        caption={`Zine cover or illustration: ${title}. Risograph feel, flat colours`}
-        className={tone === "b" ? "rounded-none border-0" : "border-0"}
-      />
-      <div className={`flex flex-1 flex-col ${tone === "b" ? "p-5" : "p-5"}`}>
-        <div className="flex items-center gap-2">
-          <span className={`text-[11px] font-black uppercase tracking-[0.18em] ${tone === "c" ? "text-glow" : "text-brand"}`}>
-            {issue}
-          </span>
-          <span className={`text-[11px] uppercase tracking-widest ${meta}`}>- {readTime} baca</span>
-        </div>
-        <h2 className="display mt-3 text-2xl leading-[1.02]">{title}</h2>
-        <p className={`mt-3 max-w-prose text-sm leading-relaxed ${tone === "c" ? "text-paper/60" : "text-ink/60"}`}>{excerpt}</p>
-        <p className={`mt-3 text-xs ${meta}`}>oleh {author}</p>
-        <div className="mt-5 flex flex-1 items-end justify-between gap-3">
-          <button
-            type="button"
-            onClick={() => {
-              setLiked((v) => !v);
-              setCount((c) => (liked ? c - 1 : c + 1));
-            }}
-            className={`press border-2 px-4 py-2 text-xs font-black uppercase tracking-widest ${
-              liked ? likeActive : tone === "c" ? "border-paper/25 text-paper/60 hover:border-glow hover:text-glow" : "border-ink text-ink/60 hover:bg-ink hover:text-paper"
-            }`}
-          >
-            {liked ? "Suka!" : "Suka"} - {count}
-          </button>
-          <span className={`text-[11px] uppercase tracking-widest ${meta}`}>Baca penuh</span>
+    <section className="border-b border-line">
+      <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+        <Reveal>
+          <SectionHead
+            index={1}
+            title="Latest posts"
+            sub="Letters from the movement, filed by chapter. New ones drop weekly."
+          />
+        </Reveal>
+        <Reveal className="mb-8">
+          <FilterPills options={FILTERS} value={filter} onChange={setFilter} label="Chapter" />
+        </Reveal>
+        <div className="grid gap-5 md:grid-cols-2">
+          {items.map((z, i) => (
+            <Reveal key={z.slug} delay={i * 60}>
+              <ZineCard z={z} />
+            </Reveal>
+          ))}
         </div>
       </div>
-    </article>
+    </section>
   );
 }
 
-function ZineHeader({ tone }: { tone: "a" | "b" | "c" | "d" | "e" }) {
-  const sub = "Zine mingguan Liga. Kisah kampus, tulisan mahasiswa, dan beberapa baris harapan.";
+function WriteBand() {
   return (
-    <div className="flex flex-wrap items-end justify-between gap-6">
-      <div>
-        <h1 className="display text-5xl sm:text-6xl">ZINE</h1>
-        <p className={`mt-4 max-w-md text-sm leading-relaxed ${tone === "c" ? "text-paper/60" : "text-ink/60"}`}>{sub}</p>
+    <section className="border-b border-line bg-midnight">
+      <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-6 px-4 py-12 sm:px-6">
+        <div>
+          <p className="display text-2xl sm:text-3xl">Write for the zine</p>
+          <p className="mt-2 max-w-xl text-[14px] text-ink/60">
+            Essays, letters, comics, field notes from any campus. Bylines always.
+          </p>
+        </div>
+        <Btn kind="ghost" href="#join">
+          Pitch a story
+        </Btn>
       </div>
-      <span className={`text-xs font-bold uppercase tracking-[0.2em] ${tone === "c" ? "text-glow" : "text-brand"}`}>
-        Keluaran mingguan
-      </span>
-    </div>
+    </section>
   );
 }
-
-/* ================= A ================= */
-
-function ZineA() {
-  return (
-    <div className="dir-a min-h-screen bg-paper text-ink">
-      <NavA />
-      <main className="mx-auto max-w-7xl px-5 py-16">
-        <ZineHeader tone="a" />
-        <div className="mt-12 grid gap-6 sm:grid-cols-2">
-          {zinePosts.map((z) => (
-            <ZineCard key={z.slug} {...z} tone="a" />
-          ))}
-        </div>
-      </main>
-      <FooterA />
-    </div>
-  );
-}
-
-/* ================= B ================= */
-
-function ZineB() {
-  return (
-    <div className="dir-b min-h-screen bg-cream text-ink">
-      <NavB />
-      <main className="mx-auto max-w-6xl px-4 py-14">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <h1 className="font-baloo text-4xl font-bold sm:text-5xl">Zine</h1>
-            <p className="mt-3 max-w-md text-[15px] leading-relaxed text-ink/65">
-              Zine mingguan Liga. Kisah kampus, tulisan mahasiswa, dan beberapa baris harapan.
-            </p>
-          </div>
-          <span className="text-xs font-bold uppercase tracking-widest text-brand">Keluaran mingguan</span>
-        </div>
-        <div className="mt-10 grid gap-6 sm:grid-cols-2">
-          {zinePosts.map((z) => (
-            <ZineCard key={z.slug} {...z} tone="b" />
-          ))}
-        </div>
-      </main>
-      <FooterB />
-    </div>
-  );
-}
-
-/* ================= C ================= */
-
-function ZineC() {
-  return (
-    <div className="dir-c min-h-screen bg-midnight text-paper">
-      <NavC />
-      <main className="mx-auto max-w-7xl px-5 py-16">
-        <ZineHeader tone="c" />
-        <div className="mt-12 grid gap-5 sm:grid-cols-2">
-          {zinePosts.map((z) => (
-            <ZineCard key={z.slug} {...z} tone="c" />
-          ))}
-        </div>
-      </main>
-      <FooterC />
-    </div>
-  );
-}
-
-/* ================= D ================= */
-
-function ZineD() {
-  return (
-    <div className="dir-d grain relative min-h-screen bg-paper text-ink">
-      <NavD />
-      <main className="mx-auto max-w-5xl px-5 py-16">
-        <p className="stamp text-xs text-brand">Edisi cetak</p>
-        <h1 className="display mt-5 text-4xl sm:text-5xl">ZINE</h1>
-        <p className="mt-4 max-w-md text-sm leading-relaxed text-ink/65">
-          Zine mingguan Liga. Kisah kampus, tulisan mahasiswa, dan beberapa baris harapan.
-        </p>
-        <div className="mt-12 grid gap-6 sm:grid-cols-2">
-          {zinePosts.map((z) => (
-            <ZineCard key={z.slug} {...z} tone="d" />
-          ))}
-        </div>
-      </main>
-      <FooterD />
-    </div>
-  );
-}
-
-/* ================= E ================= */
-
-function ZineE() {
-  return (
-    <div className="dir-e min-h-screen bg-ink text-paper">
-      <NavE />
-      <main className="mx-auto max-w-7xl px-5 py-16">
-        <ZineHeader tone="e" />
-        <div className="mt-12 grid gap-4 sm:grid-cols-2">
-          {zinePosts.map((z) => (
-            <ZineCard key={z.slug} {...z} tone="e" />
-          ))}
-        </div>
-      </main>
-      <FooterE />
-    </div>
-  );
-}
-
-/* ================= PAGE ================= */
 
 export default function ZinePage() {
-  const variants = [
-    <ZineA key="a" />,
-    <ZineB key="b" />,
-    <ZineC key="c" />,
-    <ZineD key="d" />,
-    <ZineE key="e" />,
-  ];
   return (
-    <Suspense fallback={null}>
-      <VariantFrame names={NAMES}>{variants}</VariantFrame>
-    </Suspense>
+    <Shell dir={DIR}>
+      <PageHead
+        kicker="Zine"
+        title="The zine"
+        sub="Essays, letters, and notes from the movement. Written by students, printed when we can afford it."
+      />
+      <ZineGrid />
+      <WriteBand />
+      <JoinBand />
+      <NewsletterBand />
+    </Shell>
   );
 }

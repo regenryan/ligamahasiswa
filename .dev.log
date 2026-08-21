@@ -1,0 +1,1337 @@
+
+> ligamahasiswa@0.1.0 dev
+> next dev
+
+▲ Next.js 16.3.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.59:3000
+✓ Ready in 497ms
+⚠ Warning: Next.js ignored pnpm-lock.yaml in C:\Users\adamraiyan because it is outside the current Git repository (C:\Users\adamraiyan\Desktop\ligamahasiswa).
+ To use this directory, set `turbopack.root` in your Next.js config.
+
+✓ Running next.config.ts took 45ms
+
+ GET /?v=1 200 in 702ms (next.js: 196ms, application-code: 507ms)
+ GET /?v=15 200 in 904ms (next.js: 9ms, application-code: 895ms)
+ GET /?v=1 200 in 419ms (next.js: 13ms, application-code: 406ms)
+ GET /dashboard/card?v=11 200 in 82ms (next.js: 27ms, application-code: 55ms)
+ GET /?v=3 200 in 318ms (next.js: 3ms, application-code: 314ms)
+ GET /?v=9 200 in 273ms (next.js: 4ms, application-code: 269ms)
+ GET /?v=22 200 in 343ms (next.js: 3ms, application-code: 340ms)
+ GET /?v=11 200 in 316ms (next.js: 5ms, application-code: 311ms)
+ GET /chapters/um/campaigns/mansuh-auku?v=15 200 in 484ms (next.js: 436ms, application-code: 48ms)
+ GET /dashboard/card?v=19 200 in 34ms (next.js: 4ms, application-code: 31ms)
+ GET /dashboard/card?v=15 200 in 35ms (next.js: 3ms, application-code: 32ms)
+ GET /?v=12 200 in 258ms (next.js: 3ms, application-code: 255ms)
+ GET /shop?v=15 200 in 59ms (next.js: 26ms, application-code: 33ms)
+ GET /dashboard/card?v=11 200 in 34ms (next.js: 4ms, application-code: 31ms)
+ GET /dashboard/card?v=19 200 in 46ms (next.js: 4ms, application-code: 42ms)
+ GET /?v=12 200 in 284ms (next.js: 3ms, application-code: 281ms)
+ GET /?v=22 200 in 247ms (next.js: 3ms, application-code: 244ms)
+ GET /dashboard/card?v=15 200 in 73ms (next.js: 20ms, application-code: 53ms)
+ GET /chapters/um/campaigns/mansuh-auku?v=15 200 in 56ms (next.js: 12ms, application-code: 44ms)
+ GET /shop?v=15 200 in 35ms (next.js: 3ms, application-code: 31ms)
+ GET /dashboard/card?v=15 200 in 36ms (next.js: 3ms, application-code: 33ms)
+ GET /dashboard/card?v=15 200 in 30ms (next.js: 3ms, application-code: 28ms)
+ GET /?v=12 200 in 287ms (next.js: 3ms, application-code: 284ms)
+ GET /dashboard/card?v=15 200 in 53ms (next.js: 4ms, application-code: 49ms)
+ GET /dashboard/card?v=11 200 in 51ms (next.js: 4ms, application-code: 47ms)
+ GET /dashboard/card?v=19 200 in 48ms (next.js: 4ms, application-code: 44ms)
+ GET /shop?v=15 200 in 38ms (next.js: 4ms, application-code: 34ms)
+ GET /chapters/um/campaigns/mansuh-auku?v=15 200 in 67ms (next.js: 11ms, application-code: 56ms)
+ GET /dashboard/card?v=15 200 in 30ms (next.js: 3ms, application-code: 27ms)
+ GET /dashboard/card?v=11 200 in 37ms (next.js: 3ms, application-code: 34ms)
+ GET /dashboard/card?v=19 200 in 34ms (next.js: 4ms, application-code: 30ms)
+ GET /shop?v=15 200 in 36ms (next.js: 3ms, application-code: 33ms)
+ GET /chapters/um/campaigns/mansuh-auku?v=15 200 in 46ms (next.js: 9ms, application-code: 37ms)
+ GET /dashboard/card?v=15 200 in 42ms (next.js: 3ms, application-code: 39ms)
+ GET /dashboard/card?v=11 200 in 72ms (next.js: 4ms, application-code: 68ms)
+ GET /dashboard/card?v=19 200 in 53ms (next.js: 3ms, application-code: 50ms)
+ GET /shop?v=15 200 in 37ms (next.js: 3ms, application-code: 34ms)
+ GET /chapters/um/campaigns/mansuh-auku?v=15 200 in 56ms (next.js: 14ms, application-code: 42ms)
+ GET /dashboard/card?v=15 200 in 51ms (next.js: 4ms, application-code: 48ms)
+ GET /dashboard/card?v=15 200 in 63ms (next.js: 4ms, application-code: 59ms)
+ GET /dashboard/card?v=11 200 in 52ms (next.js: 4ms, application-code: 47ms)
+ GET /dashboard/card?v=19 200 in 63ms (next.js: 6ms, application-code: 57ms)
+ GET /shop?v=15 200 in 47ms (next.js: 3ms, application-code: 44ms)
+ GET /chapters/um/campaigns/mansuh-auku?v=15 200 in 97ms (next.js: 13ms, application-code: 84ms)
+ GET /dashboard/card?v=15 200 in 50ms (next.js: 4ms, application-code: 45ms)
+ GET /dashboard/card?v=11 200 in 43ms (next.js: 4ms, application-code: 39ms)
+ GET /dashboard/card?v=19 200 in 33ms (next.js: 3ms, application-code: 30ms)
+ GET /shop?v=15 200 in 33ms (next.js: 3ms, application-code: 30ms)
+ GET /chapters/um/campaigns/mansuh-auku?v=15 200 in 51ms (next.js: 12ms, application-code: 39ms)
+ GET /dashboard/card?v=15 200 in 68ms (next.js: 6ms, application-code: 62ms)
+ GET /dashboard/card?v=15 200 in 81ms (next.js: 14ms, application-code: 67ms)
+ GET /dashboard/card?v=11 200 in 43ms (next.js: 4ms, application-code: 40ms)
+ GET /dashboard/card?v=19 200 in 41ms (next.js: 3ms, application-code: 38ms)
+ GET /shop?v=15 200 in 31ms (next.js: 3ms, application-code: 28ms)
+ GET /chapters/um/campaigns/mansuh-auku?v=15 200 in 59ms (next.js: 12ms, application-code: 47ms)
+ GET /dashboard/card?v=15 200 in 51ms (next.js: 4ms, application-code: 47ms)
+ GET /dashboard/card?v=11 200 in 38ms (next.js: 3ms, application-code: 35ms)
+ GET /dashboard/card?v=15 200 in 66ms (next.js: 6ms, application-code: 61ms)
+ GET /dashboard/card?v=11 200 in 42ms (next.js: 4ms, application-code: 38ms)
+ GET /dashboard/card?v=19 200 in 47ms (next.js: 3ms, application-code: 44ms)
+ GET /shop?v=15 200 in 35ms (next.js: 4ms, application-code: 31ms)
+ GET /chapters/um/campaigns/mansuh-auku?v=15 200 in 48ms (next.js: 11ms, application-code: 38ms)
+ GET /?v=15 200 in 279ms (next.js: 3ms, application-code: 277ms)
+ GET /dashboard/card?v=15 200 in 39ms (next.js: 3ms, application-code: 36ms)
+ GET /dashboard/card?v=11 200 in 45ms (next.js: 3ms, application-code: 42ms)
+ GET /dashboard/card?v=19 200 in 33ms (next.js: 4ms, application-code: 30ms)
+ GET /shop?v=15 200 in 38ms (next.js: 4ms, application-code: 34ms)
+ GET /chapters/um/campaigns/mansuh-auku?v=15 200 in 49ms (next.js: 9ms, application-code: 40ms)
+ GET /?v=15 200 in 272ms (next.js: 3ms, application-code: 269ms)
+ GET /?v=15 200 in 285ms (next.js: 4ms, application-code: 281ms)
+ GET /?v=15 200 in 253ms (next.js: 4ms, application-code: 249ms)
+ GET / 200 in 367ms (next.js: 7ms, application-code: 360ms)
+ GET /chapters/um 200 in 475ms (next.js: 453ms, application-code: 22ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /shop 200 in 16ms (next.js: 4ms, application-code: 13ms)
+ GET /chapters/um 200 in 31ms (next.js: 12ms, application-code: 20ms)
+ GET / 200 in 161ms (next.js: 3ms, application-code: 157ms)
+ GET /chapters/um 200 in 26ms (next.js: 9ms, application-code: 17ms)
+ GET /shop 200 in 16ms (next.js: 4ms, application-code: 12ms)
+ GET /zine 200 in 43ms (next.js: 28ms, application-code: 15ms)
+ GET /chapters/um 200 in 30ms (next.js: 10ms, application-code: 19ms)
+ GET / 200 in 173ms (next.js: 3ms, application-code: 170ms)
+ GET /zine 200 in 18ms (next.js: 4ms, application-code: 14ms)
+ GET /media 200 in 43ms (next.js: 27ms, application-code: 16ms)
+ GET / 200 in 181ms (next.js: 3ms, application-code: 177ms)
+ GET /chapters/um 200 in 28ms (next.js: 10ms, application-code: 18ms)
+ GET /shop 200 in 18ms (next.js: 4ms, application-code: 14ms)
+ GET /zine 200 in 18ms (next.js: 3ms, application-code: 14ms)
+ GET /media 200 in 17ms (next.js: 3ms, application-code: 14ms)
+ GET /dashboard/card 200 in 20ms (next.js: 4ms, application-code: 17ms)
+ GET /shop 200 in 19ms (next.js: 3ms, application-code: 16ms)
+ GET /chapters/um 200 in 27ms (next.js: 10ms, application-code: 17ms)
+ GET /shop 200 in 18ms (next.js: 3ms, application-code: 14ms)
+ GET /media 200 in 19ms (next.js: 4ms, application-code: 15ms)
+ GET /zine 200 in 21ms (next.js: 4ms, application-code: 17ms)
+ GET /shop 200 in 20ms (next.js: 4ms, application-code: 16ms)
+ GET /shop?v=11 200 in 35ms (next.js: 4ms, application-code: 31ms)
+ GET / 200 in 183ms (next.js: 3ms, application-code: 180ms)
+ GET /chapters/um 200 in 29ms (next.js: 11ms, application-code: 18ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /zine 200 in 17ms (next.js: 4ms, application-code: 13ms)
+ GET / 200 in 158ms (next.js: 3ms, application-code: 154ms)
+ GET /chapters/um 200 in 28ms (next.js: 10ms, application-code: 18ms)
+ GET / 200 in 169ms (next.js: 4ms, application-code: 165ms)
+ GET /shop 200 in 18ms (next.js: 4ms, application-code: 14ms)
+ GET /media 200 in 17ms (next.js: 4ms, application-code: 13ms)
+ GET /zine 200 in 17ms (next.js: 4ms, application-code: 13ms)
+ GET /media 200 in 16ms (next.js: 4ms, application-code: 12ms)
+ GET /zine 200 in 17ms (next.js: 4ms, application-code: 13ms)
+ GET /media 200 in 16ms (next.js: 3ms, application-code: 13ms)
+ GET /shop 200 in 18ms (next.js: 4ms, application-code: 14ms)
+ GET /zine 200 in 18ms (next.js: 4ms, application-code: 14ms)
+ GET /chapters/um 200 in 30ms (next.js: 10ms, application-code: 20ms)
+ GET / 200 in 168ms (next.js: 3ms, application-code: 165ms)
+ GET /dashboard/card 200 in 20ms (next.js: 4ms, application-code: 16ms)
+ GET / 200 in 160ms (next.js: 4ms, application-code: 157ms)
+ GET /chapters/um 200 in 32ms (next.js: 11ms, application-code: 21ms)
+ GET /shop 200 in 17ms (next.js: 3ms, application-code: 14ms)
+ GET /zine 200 in 20ms (next.js: 4ms, application-code: 16ms)
+ GET /media 200 in 17ms (next.js: 3ms, application-code: 13ms)
+ GET /zine 200 in 18ms (next.js: 4ms, application-code: 14ms)
+ GET /shop 200 in 17ms (next.js: 3ms, application-code: 14ms)
+ GET /chapters/um 200 in 30ms (next.js: 10ms, application-code: 20ms)
+ GET / 200 in 168ms (next.js: 3ms, application-code: 165ms)
+ GET /chapters/um 200 in 25ms (next.js: 9ms, application-code: 16ms)
+ GET / 200 in 152ms (next.js: 3ms, application-code: 149ms)
+ GET /chapters/um 200 in 30ms (next.js: 9ms, application-code: 20ms)
+ GET /shop 200 in 18ms (next.js: 5ms, application-code: 13ms)
+ GET / 200 in 168ms (next.js: 3ms, application-code: 164ms)
+ GET /chapters/um 200 in 25ms (next.js: 10ms, application-code: 16ms)
+ GET /shop 200 in 15ms (next.js: 3ms, application-code: 12ms)
+ GET /zine 200 in 16ms (next.js: 3ms, application-code: 13ms)
+ GET /media 200 in 17ms (next.js: 3ms, application-code: 14ms)
+ GET /zine 200 in 18ms (next.js: 3ms, application-code: 14ms)
+ GET /chapters/um 200 in 28ms (next.js: 10ms, application-code: 18ms)
+ GET / 200 in 189ms (next.js: 3ms, application-code: 186ms)
+ GET /chapters/um 200 in 28ms (next.js: 10ms, application-code: 19ms)
+ GET /shop 200 in 15ms (next.js: 3ms, application-code: 11ms)
+ GET /zine 200 in 18ms (next.js: 3ms, application-code: 15ms)
+ GET /media 200 in 22ms (next.js: 3ms, application-code: 19ms)
+ GET /zine 200 in 17ms (next.js: 3ms, application-code: 13ms)
+ GET /shop 200 in 17ms (next.js: 3ms, application-code: 14ms)
+ GET /chapters/um 200 in 30ms (next.js: 10ms, application-code: 21ms)
+ GET / 200 in 167ms (next.js: 4ms, application-code: 163ms)
+ GET /?v=2 200 in 178ms (next.js: 3ms, application-code: 175ms)
+[browser] The result of getSnapshot should be cached to avoid an infinite loop 
+    at useNow (src/components/clock.tsx:18:30)
+    at Countdown (src/components/sections/head.tsx:744:21)
+  16 |
+  17 | export function useNow() {
+> 18 |   return useSyncExternalStore(subscribe, getSnapshot, () => null);
+     |                              ^
+  19 | }
+  20 |
+  21 | export function useCountdown(target: Date, now: Date | null) { (src/components/clock.tsx:18:30)
+✓ Compiled in 143ms
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+(Use `node --trace-warnings ...` to show where the warning was created)
+ GET /?v=2 200 in 366ms (next.js: 44ms, application-code: 323ms)
+✓ Compiled in 323ms
+✓ Compiled in 201ms
+✓ Compiled in 126ms
+✓ Compiled in 127ms
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 232ms (next.js: 12ms, application-code: 220ms)
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 243ms (next.js: 14ms, application-code: 229ms)
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 221ms (next.js: 13ms, application-code: 208ms)
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 220ms (next.js: 11ms, application-code: 209ms)
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 220ms (next.js: 11ms, application-code: 209ms)
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 231ms (next.js: 12ms, application-code: 219ms)
+✓ Compiled in 88ms
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 204ms (next.js: 10ms, application-code: 195ms)
+✓ Compiled in 83ms
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 187ms (next.js: 9ms, application-code: 177ms)
+✓ Compiled in 116ms
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 211ms (next.js: 10ms, application-code: 201ms)
+✓ Compiled in 119ms
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 213ms (next.js: 9ms, application-code: 204ms)
+✓ Compiled in 76ms
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 196ms (next.js: 13ms, application-code: 184ms)
+✓ Compiled in 69ms
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 199ms (next.js: 8ms, application-code: 191ms)
+✓ Compiled in 152ms
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 251ms (next.js: 16ms, application-code: 235ms)
+✓ Compiled in 85ms
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 225ms (next.js: 18ms, application-code: 207ms)
+✓ Compiled in 134ms
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 213ms (next.js: 14ms, application-code: 199ms)
+✓ Compiled in 93ms
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 210ms (next.js: 10ms, application-code: 200ms)
+✓ Compiled in 82ms
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 207ms (next.js: 9ms, application-code: 197ms)
+✓ Compiled in 76ms
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 247ms (next.js: 9ms, application-code: 237ms)
+✓ Compiled in 77ms
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 225ms (next.js: 10ms, application-code: 216ms)
+✓ Compiled in 72ms
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 235ms (next.js: 10ms, application-code: 225ms)
+✓ Compiled in 74ms
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 197ms (next.js: 10ms, application-code: 187ms)
+✓ Compiled in 85ms
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 257ms (next.js: 10ms, application-code: 247ms)
+✓ Compiled in 93ms
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 286ms (next.js: 13ms, application-code: 272ms)
+✓ Compiled in 85ms
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 224ms (next.js: 9ms, application-code: 215ms)
+✓ Compiled in 85ms
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 236ms (next.js: 12ms, application-code: 225ms)
+⚠ Fast Refresh had to perform a full reload when ./src/components/interactive.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+✓ Compiled in 93ms
+ GET /?v=2 200 in 1298ms (next.js: 4ms, application-code: 1294ms)
+ GET /?v=2 200 in 1540ms (next.js: 13ms, application-code: 1527ms)
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+⚠ Fast Refresh had to perform a full reload when ./src/components/interactive.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+✓ Compiled in 97ms
+ GET /?v=2 200 in 364ms (next.js: 6ms, application-code: 358ms)
+ GET /?v=2 200 in 1008ms (next.js: 24ms, application-code: 984ms)
+⚠ Fast Refresh had to perform a full reload when ./src/components/interactive.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+✓ Compiled in 126ms
+ GET /?v=2 200 in 599ms (next.js: 12ms, application-code: 587ms)
+ GET /?v=2 200 in 348ms (next.js: 4ms, application-code: 345ms)
+[browser] The result of getSnapshot should be cached to avoid an infinite loop 
+    at useNow (src/components/clock.tsx:18:30)
+    at Countdown (src/components/sections/head.tsx:924:21)
+  16 |
+  17 | export function useNow() {
+> 18 |   return useSyncExternalStore(subscribe, getSnapshot, () => null);
+     |                              ^
+  19 | }
+  20 |
+  21 | export function useCountdown(target: Date, now: Date | null) { (src/components/clock.tsx:18:30)
+✓ Compiled in 97ms
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=2 200 in 287ms (next.js: 15ms, application-code: 272ms)
+ GET / 200 in 226ms (next.js: 5ms, application-code: 222ms)
+ GET /?v=23 200 in 289ms (next.js: 4ms, application-code: 285ms)
+ GET /?v=24 200 in 348ms (next.js: 4ms, application-code: 344ms)
+ GET /?v=25 200 in 404ms (next.js: 5ms, application-code: 399ms)
+ GET /?v=26 200 in 516ms (next.js: 5ms, application-code: 511ms)
+ GET /?v=27 200 in 1064ms (next.js: 13ms, application-code: 1051ms)
+ GET /?v=28 200 in 540ms (next.js: 9ms, application-code: 531ms)
+ GET /?v=23 200 in 397ms (next.js: 8ms, application-code: 389ms)
+ GET / 200 in 598ms (next.js: 82ms, application-code: 516ms)
+ GET /?v=23 200 in 312ms (next.js: 5ms, application-code: 306ms)
+ GET / 200 in 331ms (next.js: 5ms, application-code: 325ms)
+ GET /?v=24 200 in 301ms (next.js: 4ms, application-code: 297ms)
+ GET / 200 in 282ms (next.js: 5ms, application-code: 277ms)
+ GET /?v=25 200 in 278ms (next.js: 4ms, application-code: 274ms)
+ GET / 200 in 371ms (next.js: 5ms, application-code: 366ms)
+ GET /?v=26 200 in 313ms (next.js: 5ms, application-code: 308ms)
+ GET / 200 in 252ms (next.js: 4ms, application-code: 247ms)
+ GET /?v=27 200 in 243ms (next.js: 3ms, application-code: 240ms)
+ GET / 200 in 257ms (next.js: 3ms, application-code: 255ms)
+ GET /?v=28 200 in 290ms (next.js: 4ms, application-code: 286ms)
+ GET / 200 in 551ms (next.js: 7ms, application-code: 544ms)
+ GET /?v=23 200 in 315ms (next.js: 5ms, application-code: 310ms)
+ GET / 200 in 474ms (next.js: 12ms, application-code: 462ms)
+ GET /?v=23 200 in 311ms (next.js: 4ms, application-code: 307ms)
+ GET / 200 in 437ms (next.js: 8ms, application-code: 430ms)
+ GET /?v=23 200 in 277ms (next.js: 4ms, application-code: 273ms)
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=1 200 in 214ms (next.js: 14ms, application-code: 200ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=1 200 in 275ms (next.js: 5ms, application-code: 270ms)
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=1 200 in 259ms (next.js: 4ms, application-code: 254ms)
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=1 200 in 217ms (next.js: 4ms, application-code: 213ms)
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=1 200 in 288ms (next.js: 4ms, application-code: 283ms)
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=1 200 in 175ms (next.js: 3ms, application-code: 172ms)
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=1 200 in 208ms (next.js: 3ms, application-code: 206ms)
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=1 200 in 246ms (next.js: 3ms, application-code: 243ms)
+ GET /?v=23 200 in 1318ms (next.js: 53ms, application-code: 1265ms)
+ GET / 200 in 394ms (next.js: 5ms, application-code: 389ms)
+ GET /?v=24 200 in 365ms (next.js: 4ms, application-code: 360ms)
+ GET / 200 in 346ms (next.js: 4ms, application-code: 343ms)
+ GET /?v=25 200 in 343ms (next.js: 3ms, application-code: 341ms)
+ GET / 200 in 334ms (next.js: 4ms, application-code: 329ms)
+ GET /?v=26 200 in 330ms (next.js: 5ms, application-code: 326ms)
+ GET / 200 in 315ms (next.js: 3ms, application-code: 312ms)
+ GET /?v=27 200 in 327ms (next.js: 3ms, application-code: 324ms)
+ GET / 200 in 323ms (next.js: 4ms, application-code: 319ms)
+ GET /?v=28 200 in 323ms (next.js: 3ms, application-code: 320ms)
+ GET / 200 in 688ms (next.js: 102ms, application-code: 586ms)
+ GET /?v=24 200 in 345ms (next.js: 5ms, application-code: 341ms)
+ GET / 200 in 569ms (next.js: 77ms, application-code: 492ms)
+ GET /?v=23 200 in 368ms (next.js: 4ms, application-code: 364ms)
+ GET / 200 in 376ms (next.js: 7ms, application-code: 369ms)
+ GET /?v=24 200 in 346ms (next.js: 4ms, application-code: 342ms)
+ GET / 200 in 326ms (next.js: 4ms, application-code: 322ms)
+ GET /?v=25 200 in 323ms (next.js: 3ms, application-code: 320ms)
+ GET / 200 in 348ms (next.js: 4ms, application-code: 344ms)
+ GET /?v=26 200 in 360ms (next.js: 4ms, application-code: 357ms)
+ GET / 200 in 297ms (next.js: 4ms, application-code: 293ms)
+ GET /?v=27 200 in 298ms (next.js: 3ms, application-code: 295ms)
+ GET / 200 in 346ms (next.js: 4ms, application-code: 342ms)
+ GET /?v=28 200 in 354ms (next.js: 4ms, application-code: 350ms)
+ GET / 200 in 614ms (next.js: 8ms, application-code: 606ms)
+ GET /?v=23 200 in 375ms (next.js: 6ms, application-code: 369ms)
+ GET / 200 in 394ms (next.js: 5ms, application-code: 389ms)
+ GET /?v=24 200 in 334ms (next.js: 4ms, application-code: 331ms)
+ GET / 200 in 269ms (next.js: 4ms, application-code: 266ms)
+ GET /?v=25 200 in 308ms (next.js: 3ms, application-code: 305ms)
+ GET / 200 in 358ms (next.js: 4ms, application-code: 354ms)
+ GET /?v=26 200 in 290ms (next.js: 3ms, application-code: 287ms)
+ GET / 200 in 281ms (next.js: 3ms, application-code: 278ms)
+ GET /?v=27 200 in 285ms (next.js: 3ms, application-code: 283ms)
+ GET / 200 in 274ms (next.js: 3ms, application-code: 272ms)
+ GET /?v=28 200 in 284ms (next.js: 3ms, application-code: 281ms)
+ GET /?v=1 200 in 580ms (next.js: 7ms, application-code: 573ms)
+ GET /?v=1 200 in 378ms (next.js: 4ms, application-code: 374ms)
+ GET /shop?v=26 200 in 83ms (next.js: 25ms, application-code: 58ms)
+ GET /shop?v=26 200 in 31ms (next.js: 3ms, application-code: 29ms)
+ GET /zine?v=23 200 in 49ms (next.js: 21ms, application-code: 27ms)
+ GET /zine?v=23 200 in 33ms (next.js: 3ms, application-code: 30ms)
+ GET /?v=1 200 in 312ms (next.js: 6ms, application-code: 306ms)
+ GET /chapters/malaysia/campaigns/dialog-terbuka-kpt 200 in 57ms (next.js: 33ms, application-code: 24ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET / 200 in 203ms (next.js: 3ms, application-code: 200ms)
+ GET / 200 in 8ms (next.js: 3ms, application-code: 5ms)
+✓ Compiled in 113ms
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=1 200 in 335ms (next.js: 13ms, application-code: 322ms)
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=1 200 in 317ms (next.js: 4ms, application-code: 314ms)
+✓ Compiled in 261ms
+ GET /chapters/um 200 in 39ms (next.js: 18ms, application-code: 21ms)
+ GET /shop 200 in 22ms (next.js: 9ms, application-code: 14ms)
+ GET /zine 200 in 26ms (next.js: 10ms, application-code: 16ms)
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET / 200 in 169ms (next.js: 4ms, application-code: 165ms)
+ GET /chapters/um 200 in 28ms (next.js: 10ms, application-code: 19ms)
+ GET /shop 200 in 18ms (next.js: 3ms, application-code: 15ms)
+ GET /chapters/um 200 in 27ms (next.js: 9ms, application-code: 17ms)
+ GET /shop 200 in 18ms (next.js: 3ms, application-code: 15ms)
+ GET /zine 200 in 19ms (next.js: 3ms, application-code: 16ms)
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET / 200 in 182ms (next.js: 4ms, application-code: 178ms)
+✓ Compiled in 79ms
+(node:6784) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 drain listeners added to [Gzip]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /?v=1 200 in 271ms (next.js: 12ms, application-code: 259ms)
+ GET / 200 in 644ms (next.js: 44ms, application-code: 600ms)
+ GET /?v=1 200 in 486ms (next.js: 4ms, application-code: 482ms)
+[browser] The result of getSnapshot should be cached to avoid an infinite loop 
+    at useNow (src/components/VariantFrame.tsx:189:65)
+    at Countdown (src/components/sections/head.tsx:924:21)
+  187 |         >
+  188 |           <span className="proto-picker-index">{String(current + 1).padStart(2, "0")}</span>
+> 189 |           <span className="proto-picker-current">{names[current]}</span>
+      |                                                                 ^
+  190 |           <svg
+  191 |             className="proto-picker-chevron"
+  192 |             width="12" (src/components/VariantFrame.tsx:189:65)
+ GET /?v=28 200 in 81ms (next.js: 13ms, application-code: 68ms)
+[browser] Uncaught TypeError: Cannot read properties of undefined (reading 'name')
+    at Hero (src/components/sections/hero.tsx:1787:110)
+    at HomeVariant (src\app\page.tsx:22:7)
+    at eval (src\app\page.tsx:63:9)
+    at Array.from (<anonymous>:1:19)
+    at Home (src\app\page.tsx:62:14)
+  1785 |                 <span aria-hidden="true" className="h-4 w-4 bg-cyan" />
+  1786 |                 <span aria-hidden="true" className="h-4 w-4 bg-ink" />
+> 1787 |                 <span className="mono ml-2 text-[11px] uppercase tracking-[0.24em] text-ink/50">Bauhaus / {d.name}</span>
+       |                                                                                                              ^
+  1788 |               </p>
+  1789 |               <p className="mono text-[11px] uppercase tracking-[0.24em] text-ink/50">{chapterName.toUpperCase()}</p>
+  1790 |             </div>
+ GET /? 200 in 89ms (next.js: 13ms, application-code: 76ms)
+[browser] The result of getSnapshot should be cached to avoid an infinite loop 
+    at useNow (src/components/clock.tsx:18:30)
+    at useNowDaysSince (src/components/clock.tsx:40:15)
+    at AukuYears (src/components/sections/head.tsx:1135:31)
+  16 |
+  17 | export function useNow() {
+> 18 |   return useSyncExternalStore(subscribe, getSnapshot, () => null);
+     |                              ^
+  19 | }
+  20 |
+  21 | export function useCountdown(target: Date, now: Date | null) { (src/components/clock.tsx:18:30)
+ GET /?v=3 200 in 66ms (next.js: 4ms, application-code: 62ms)
+ GET /?v=3 200 in 66ms (next.js: 3ms, application-code: 63ms)
+ GET /?v=3 200 in 67ms (next.js: 4ms, application-code: 63ms)
+ GET /?v=3 200 in 46ms (next.js: 3ms, application-code: 43ms)
+ GET /dashboard/card 200 in 65ms (next.js: 40ms, application-code: 25ms)
+ GET / 200 in 241ms (next.js: 55ms, application-code: 186ms)
+ GET /?v=1 200 in 214ms (next.js: 6ms, application-code: 208ms)
+ GET / 200 in 258ms (next.js: 20ms, application-code: 238ms)
+ GET /?v=1 200 in 177ms (next.js: 6ms, application-code: 171ms)
+[browser] The result of getSnapshot should be cached to avoid an infinite loop 
+    at useNow (src/components/clock.tsx:18:30)
+    at Countdown (src/components/sections/head.tsx:924:21)
+  16 |
+  17 | export function useNow() {
+> 18 |   return useSyncExternalStore(subscribe, getSnapshot, () => null);
+     |                              ^
+  19 | }
+  20 |
+  21 | export function useCountdown(target: Date, now: Date | null) { (src/components/clock.tsx:18:30)
+ GET / 200 in 227ms (next.js: 51ms, application-code: 176ms)
+ GET /?v=26 200 in 164ms (next.js: 4ms, application-code: 160ms)
+ GET /media 200 in 47ms (next.js: 22ms, application-code: 26ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /zine 200 in 34ms (next.js: 12ms, application-code: 21ms)
+ GET /media 200 in 27ms (next.js: 3ms, application-code: 24ms)
+ GET /zine 200 in 23ms (next.js: 4ms, application-code: 20ms)
+ GET /shop 200 in 32ms (next.js: 11ms, application-code: 22ms)
+ GET /chapters/um 200 in 45ms (next.js: 21ms, application-code: 24ms)
+ GET /zine 200 in 26ms (next.js: 3ms, application-code: 22ms)
+ GET /shop 200 in 24ms (next.js: 3ms, application-code: 21ms)
+ GET /chapters/um 200 in 35ms (next.js: 11ms, application-code: 23ms)
+ GET / 200 in 60ms (next.js: 3ms, application-code: 57ms)
+ GET /chapters/um 200 in 32ms (next.js: 8ms, application-code: 23ms)
+ GET / 200 in 237ms (next.js: 24ms, application-code: 213ms)
+ GET /?v=1 200 in 167ms (next.js: 4ms, application-code: 162ms)
+ GET /shop 200 in 32ms (next.js: 4ms, application-code: 28ms)
+ GET /shop?v=1 200 in 21ms (next.js: 4ms, application-code: 17ms)
+ GET /shop?v=1 200 in 28ms (next.js: 3ms, application-code: 26ms)
+ GET /shop?v=1 200 in 19ms (next.js: 3ms, application-code: 16ms)
+ GET /shop?v=1 200 in 24ms (next.js: 9ms, application-code: 15ms)
+ GET /shop?v=1 200 in 19ms (next.js: 3ms, application-code: 16ms)
+ GET /shop?v=1 200 in 19ms (next.js: 4ms, application-code: 15ms)
+ GET /shop?v=1 200 in 20ms (next.js: 3ms, application-code: 18ms)
+ GET /shop?v=1 200 in 20ms (next.js: 3ms, application-code: 17ms)
+ GET /shop?v=1 200 in 40ms (next.js: 10ms, application-code: 30ms)
+ GET / 200 in 359ms (next.js: 74ms, application-code: 285ms)
+ GET /?v=1 200 in 124ms (next.js: 5ms, application-code: 120ms)
+[browser] Uncaught TypeError: Cannot read properties of undefined (reading 'name')
+    at Hero (src/components/sections/hero.tsx:1627:31)
+    at HomeVariant (src\app\page.tsx:22:7)
+    at eval (src\app\page.tsx:63:9)
+    at Array.map (<anonymous>:1:18)
+    at Home (src\app\page.tsx:62:13)
+  1625 |           className="absolute right-6 top-12 hidden -rotate-90 text-[10px] font-bold uppercase tracking-[0.3em] text-ink/40 lg:block"
+  1626 |         >
+> 1627 |           Liga Mahasiswa / {d.name}
+       |                               ^
+  1628 |         </span>
+  1629 |         <div className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6 sm:py-24">
+  1630 |           <Reveal>
+ GET / 200 in 185ms (next.js: 8ms, application-code: 177ms)
+ GET /?v=1 200 in 129ms (next.js: 6ms, application-code: 123ms)
+[browser] Uncaught TypeError: Cannot read properties of undefined (reading 'name')
+    at Hero (src/components/sections/hero.tsx:1627:31)
+    at HomeVariant (src\app\page.tsx:22:7)
+    at eval (src\app\page.tsx:63:9)
+    at Array.map (<anonymous>:1:18)
+    at Home (src\app\page.tsx:62:13)
+  1625 |           className="absolute right-6 top-12 hidden -rotate-90 text-[10px] font-bold uppercase tracking-[0.3em] text-ink/40 lg:block"
+  1626 |         >
+> 1627 |           Liga Mahasiswa / {d.name}
+       |                               ^
+  1628 |         </span>
+  1629 |         <div className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6 sm:py-24">
+  1630 |           <Reveal>
+✓ Compiled in 152ms
+ GET /shop?v=1 200 in 53ms (next.js: 28ms, application-code: 26ms)
+ GET /shop?v=1 200 in 35ms (next.js: 12ms, application-code: 23ms)
+ GET / 200 in 177ms (next.js: 22ms, application-code: 155ms)
+ GET /?v=1 200 in 153ms (next.js: 4ms, application-code: 149ms)
+[browser] The result of getSnapshot should be cached to avoid an infinite loop 
+    at useNow (src/components/clock.tsx:18:30)
+    at useNowDaysSince (src/components/clock.tsx:40:15)
+    at AukuYears (src/components/sections/head.tsx:1135:31)
+  16 |
+  17 | export function useNow() {
+> 18 |   return useSyncExternalStore(subscribe, getSnapshot, () => null);
+     |                              ^
+  19 | }
+  20 |
+  21 | export function useCountdown(target: Date, now: Date | null) { (src/components/clock.tsx:18:30)
+ GET /shop 200 in 130ms (next.js: 66ms, application-code: 65ms)
+ GET /shop 200 in 84ms (next.js: 10ms, application-code: 75ms)
+ GET /zine 200 in 60ms (next.js: 14ms, application-code: 46ms)
+ GET /zine 200 in 42ms (next.js: 5ms, application-code: 37ms)
+ GET /media 200 in 54ms (next.js: 14ms, application-code: 40ms)
+ GET /media 200 in 33ms (next.js: 3ms, application-code: 30ms)
+ GET /dashboard/card 200 in 64ms (next.js: 15ms, application-code: 49ms)
+ GET /dashboard/card 200 in 40ms (next.js: 4ms, application-code: 36ms)
+ GET /shop 200 in 103ms (next.js: 22ms, application-code: 81ms)
+ GET /shop 200 in 58ms (next.js: 7ms, application-code: 51ms)
+ GET /shop 200 in 136ms (next.js: 9ms, application-code: 127ms)
+ GET /shop 200 in 125ms (next.js: 11ms, application-code: 114ms)
+ GET /shop 200 in 112ms (next.js: 14ms, application-code: 99ms)
+ GET /shop?v=4 200 in 43ms (next.js: 4ms, application-code: 38ms)
+ GET /shop?v=3 200 in 34ms (next.js: 3ms, application-code: 31ms)
+ GET /dashboard/card 200 in 17ms (next.js: 4ms, application-code: 14ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET / 200 in 38ms (next.js: 3ms, application-code: 35ms)
+ GET /chapters/um 200 in 37ms (next.js: 17ms, application-code: 20ms)
+ GET / 200 in 42ms (next.js: 3ms, application-code: 38ms)
+ GET /chapters/um 200 in 28ms (next.js: 9ms, application-code: 19ms)
+ GET /shop 200 in 20ms (next.js: 3ms, application-code: 17ms)
+ GET /dashboard/card 200 in 23ms (next.js: 4ms, application-code: 19ms)
+ GET /dashboard/card 200 in 17ms (next.js: 3ms, application-code: 14ms)
+ GET /media 200 in 19ms (next.js: 3ms, application-code: 15ms)
+ GET /zine 200 in 19ms (next.js: 3ms, application-code: 16ms)
+ GET /shop 200 in 18ms (next.js: 3ms, application-code: 14ms)
+ GET /chapters/um 200 in 29ms (next.js: 10ms, application-code: 19ms)
+ GET / 200 in 43ms (next.js: 3ms, application-code: 40ms)
+[browser] The result of getSnapshot should be cached to avoid an infinite loop 
+    at useNow (src/components/clock.tsx:18:30)
+    at Countdown (src/components/sections/head.tsx:924:21)
+  16 |
+  17 | export function useNow() {
+> 18 |   return useSyncExternalStore(subscribe, getSnapshot, () => null);
+     |                              ^
+  19 | }
+  20 |
+  21 | export function useCountdown(target: Date, now: Date | null) { (src/components/clock.tsx:18:30)
+ GET / 200 in 8ms (next.js: 3ms, application-code: 5ms)
+ GET / 200 in 54ms (next.js: 4ms, application-code: 50ms)
+ GET / 200 in 7ms (next.js: 3ms, application-code: 4ms)
+ GET / 200 in 43ms (next.js: 3ms, application-code: 41ms)
+ GET /dashboard/card 200 in 18ms (next.js: 3ms, application-code: 15ms)
+ GET / 200 in 39ms (next.js: 3ms, application-code: 36ms)
+✓ Compiled in 329ms
+✓ Compiled in 214ms
+✓ Compiled in 156ms
+✓ Compiled in 140ms
+[browser] ./src/components/shells.tsx:2:10
+Error: You're importing a module that depends on `usePathname` into a React Server Component module. This API is only available in Client Components. To fix, mark the file (or its parent) with the `"use client"` directive.
+    Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+  1 | import Link from "next/link";
+> 2 | import { usePathname } from "next/navigation";
+    |          ^^^^^^^^^^^
+  3 | import type { ReactNode } from "react";
+  4 | import { directions } from "@/lib/directions";
+  5 | import { Marquee } from "@/components/Marquee";
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./src/components/shells.tsx
+    ./src/app/page.tsx 
+[browser] ./src/components/shells.tsx:2:10
+Error: You're importing a module that depends on `usePathname` into a React Server Component module. This API is only available in Client Components. To fix, mark the file (or its parent) with the `"use client"` directive.
+    Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+  1 | import Link from "next/link";
+> 2 | import { usePathname } from "next/navigation";
+    |          ^^^^^^^^^^^
+  3 | import type { ReactNode } from "react";
+  4 | import { directions } from "@/lib/directions";
+  5 | import { Marquee } from "@/components/Marquee";
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./src/components/shells.tsx
+    ./src/app/page.tsx 
+✓ Compiled in 155ms
+⨯ ReferenceError: MetroClock is not defined
+    at TopStrip (src\components\shells.tsx:270:12)
+  268 |             PLATFORM 5
+  269 |           </span>
+> 270 |           <MetroClock />
+      |            ^
+  271 |           <span className="accent">NEXT: FREEDOM</span>
+  272 |           <ThemeToggle />
+  273 |         </div> {
+  digest: '3199140735'
+}
+ GET / 200 in 139ms (next.js: 17ms, application-code: 123ms)
+[browser] Uncaught ReferenceError: MetroClock is not defined
+    at TopStrip (src\components\shells.tsx:270:12)
+    at Shell (src\components\shells.tsx:1621:7)
+    at HomeVariant (src\app\page.tsx:21:5)
+    at eval (src\app\page.tsx:63:9)
+    at Array.map (<anonymous>:1:18)
+    at Home (src\app\page.tsx:62:13)
+  268 |             PLATFORM 5
+  269 |           </span>
+> 270 |           <MetroClock />
+      |            ^
+  271 |           <span className="accent">NEXT: FREEDOM</span>
+  272 |           <ThemeToggle />
+  273 |         </div>
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[browser] Uncaught ReferenceError: MetroClock is not defined
+    at TopStrip (src\components\shells.tsx:270:12)
+    at Shell (src\components\shells.tsx:1621:7)
+    at HomeVariant (src\app\page.tsx:21:5)
+    at eval (src\app\page.tsx:63:9)
+    at Array.map (<anonymous>:1:18)
+    at Home (src\app\page.tsx:62:13)
+  268 |             PLATFORM 5
+  269 |           </span>
+> 270 |           <MetroClock />
+      |            ^
+  271 |           <span className="accent">NEXT: FREEDOM</span>
+  272 |           <ThemeToggle />
+  273 |         </div>
+✓ Compiled in 201ms
+ GET / 200 in 416ms (next.js: 19ms, application-code: 397ms)
+✓ Compiled in 147ms
+ GET /?v=4 200 in 85ms (next.js: 22ms, application-code: 64ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+✓ Compiled in 132ms
+ GET /?v=4 200 in 89ms (next.js: 14ms, application-code: 75ms)
+✓ Compiled in 98ms
+ GET /?v=4 200 in 68ms (next.js: 11ms, application-code: 57ms)
+✓ Compiled in 85ms
+ GET /?v=4 200 in 72ms (next.js: 10ms, application-code: 61ms)
+ GET /?v=4 200 in 68ms (next.js: 9ms, application-code: 59ms)
+ GET /?v=4 200 in 81ms (next.js: 14ms, application-code: 67ms)
+✓ Compiled in 103ms
+ GET /?v=4 200 in 66ms (next.js: 13ms, application-code: 53ms)
+✓ Compiled in 75ms
+ GET /?v=4 200 in 75ms (next.js: 12ms, application-code: 63ms)
+✓ Compiled in 75ms
+ GET /?v=4 200 in 79ms (next.js: 14ms, application-code: 65ms)
+✓ Compiled in 85ms
+ GET /?v=4 200 in 71ms (next.js: 11ms, application-code: 60ms)
+✓ Compiled in 90ms
+ GET /?v=4 200 in 72ms (next.js: 9ms, application-code: 63ms)
+ GET / 200 in 308ms (next.js: 2ms, application-code: 306ms)
+ GET /?v=4 200 in 142ms (next.js: 31ms, application-code: 111ms)
+ GET /?v=4 200 in 101ms (next.js: 4ms, application-code: 96ms)
+[browser] The result of getSnapshot should be cached to avoid an infinite loop 
+    at useNow (src/components/clock.tsx:18:30)
+    at Countdown (src/components/sections/head.tsx:924:21)
+  16 |
+  17 | export function useNow() {
+> 18 |   return useSyncExternalStore(subscribe, getSnapshot, () => null);
+     |                              ^
+  19 | }
+  20 |
+  21 | export function useCountdown(target: Date, now: Date | null) { (src/components/clock.tsx:18:30)
+ GET /?v=4 200 in 211ms (next.js: 78ms, application-code: 133ms)
+ GET /?v=4 200 in 158ms (next.js: 4ms, application-code: 154ms)
+✓ Compiled in 105ms
+ GET /?v=4 200 in 68ms (next.js: 11ms, application-code: 57ms)
+ GET /?v=4 200 in 189ms (next.js: 7ms, application-code: 182ms)
+ GET /?v=4 200 in 193ms (next.js: 5ms, application-code: 188ms)
+ GET /?v=4 200 in 67ms (next.js: 3ms, application-code: 64ms)
+ GET /?v=4 200 in 70ms (next.js: 3ms, application-code: 68ms)
+ GET /?v=4 200 in 95ms (next.js: 4ms, application-code: 91ms)
+ GET /?v=4 200 in 99ms (next.js: 3ms, application-code: 96ms)
+ GET /dashboard/card 200 in 27ms (next.js: 10ms, application-code: 16ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET / 200 in 61ms (next.js: 3ms, application-code: 58ms)
+ GET / 200 in 71ms (next.js: 3ms, application-code: 67ms)
+ GET /media 200 in 25ms (next.js: 10ms, application-code: 15ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /shop 200 in 23ms (next.js: 10ms, application-code: 13ms)
+ GET /chapters/um 200 in 32ms (next.js: 17ms, application-code: 16ms)
+ GET / 200 in 38ms (next.js: 3ms, application-code: 35ms)
+ GET /shop 200 in 18ms (next.js: 3ms, application-code: 15ms)
+ GET /chapters/um 200 in 29ms (next.js: 11ms, application-code: 18ms)
+ GET /zine 200 in 21ms (next.js: 9ms, application-code: 12ms)
+ GET /media 200 in 17ms (next.js: 3ms, application-code: 14ms)
+ GET /chapters/um 200 in 23ms (next.js: 9ms, application-code: 14ms)
+ GET / 200 in 38ms (next.js: 3ms, application-code: 35ms)
+[browser] The result of getSnapshot should be cached to avoid an infinite loop 
+    at useNow (src/components/clock.tsx:18:30)
+    at Countdown (src/components/sections/head.tsx:924:21)
+  16 |
+  17 | export function useNow() {
+> 18 |   return useSyncExternalStore(subscribe, getSnapshot, () => null);
+     |                              ^
+  19 | }
+  20 |
+  21 | export function useCountdown(target: Date, now: Date | null) { (src/components/clock.tsx:18:30)
+ GET /dashboard/card 200 in 20ms (next.js: 3ms, application-code: 17ms)
+ GET / 200 in 48ms (next.js: 13ms, application-code: 35ms)
+ GET / 200 in 8ms (next.js: 3ms, application-code: 5ms)
+ GET /chapters/um 200 in 32ms (next.js: 15ms, application-code: 17ms)
+ GET /shop 200 in 20ms (next.js: 7ms, application-code: 13ms)
+ GET /media 200 in 22ms (next.js: 7ms, application-code: 15ms)
+ GET /zine 200 in 26ms (next.js: 6ms, application-code: 20ms)
+ GET /media 200 in 18ms (next.js: 3ms, application-code: 14ms)
+ GET /zine 200 in 18ms (next.js: 4ms, application-code: 14ms)
+ GET /media 200 in 18ms (next.js: 3ms, application-code: 15ms)
+ GET /zine 200 in 18ms (next.js: 4ms, application-code: 14ms)
+ GET /chapters/um 200 in 25ms (next.js: 9ms, application-code: 15ms)
+ GET / 200 in 42ms (next.js: 3ms, application-code: 38ms)
+ GET /media 200 in 18ms (next.js: 3ms, application-code: 15ms)
+ GET /shop 200 in 19ms (next.js: 3ms, application-code: 16ms)
+ GET /zine 200 in 19ms (next.js: 3ms, application-code: 16ms)
+ GET / 200 in 43ms (next.js: 4ms, application-code: 40ms)
+ GET /shop 200 in 18ms (next.js: 3ms, application-code: 15ms)
+ GET /media 200 in 19ms (next.js: 3ms, application-code: 16ms)
+ GET /chapters/um 200 in 29ms (next.js: 9ms, application-code: 20ms)
+ GET /shop 200 in 22ms (next.js: 3ms, application-code: 19ms)
+ GET /zine 200 in 19ms (next.js: 3ms, application-code: 15ms)
+ GET /media 200 in 17ms (next.js: 3ms, application-code: 14ms)
+ GET / 200 in 42ms (next.js: 3ms, application-code: 39ms)
+ GET / 200 in 40ms (next.js: 3ms, application-code: 37ms)
+ GET / 200 in 41ms (next.js: 3ms, application-code: 38ms)
+ GET / 200 in 39ms (next.js: 3ms, application-code: 36ms)
+ GET / 200 in 40ms (next.js: 3ms, application-code: 37ms)
+ GET /chapters/malaysia/campaigns/dialog-terbuka-kpt 200 in 38ms (next.js: 20ms, application-code: 18ms)
+ GET /chapters/malaysia/campaigns/gabungan-palestin 200 in 27ms (next.js: 9ms, application-code: 17ms)
+ GET /chapters/um 200 in 25ms (next.js: 9ms, application-code: 16ms)
+ GET / 200 in 46ms (next.js: 4ms, application-code: 42ms)
+ GET /chapters/um 200 in 24ms (next.js: 9ms, application-code: 15ms)
+ GET /shop 200 in 16ms (next.js: 3ms, application-code: 14ms)
+ GET /zine 200 in 17ms (next.js: 3ms, application-code: 14ms)
+ GET /media 200 in 18ms (next.js: 3ms, application-code: 15ms)
+ GET /shop 200 in 17ms (next.js: 3ms, application-code: 14ms)
+ GET /chapters/um 200 in 26ms (next.js: 8ms, application-code: 18ms)
+ GET / 200 in 42ms (next.js: 4ms, application-code: 38ms)
+ GET /?v=4 200 in 56ms (next.js: 4ms, application-code: 52ms)
+ GET /?v=4 200 in 58ms (next.js: 4ms, application-code: 54ms)
+ GET /?v=4 200 in 54ms (next.js: 19ms, application-code: 36ms)
+ GET /?v=4 200 in 34ms (next.js: 3ms, application-code: 32ms)
+ GET /?v=4 200 in 39ms (next.js: 4ms, application-code: 35ms)
+ GET /?v=4 200 in 30ms (next.js: 3ms, application-code: 27ms)
+ GET /?v=4 200 in 28ms (next.js: 3ms, application-code: 25ms)
+ GET /?v=4 200 in 33ms (next.js: 4ms, application-code: 28ms)
+ GET /?v=4 200 in 58ms (next.js: 15ms, application-code: 44ms)
+ GET /?v=4 200 in 48ms (next.js: 13ms, application-code: 35ms)
+ GET /?v=4 200 in 58ms (next.js: 19ms, application-code: 40ms)
+✓ Compiled in 161ms
+ GET /?v=4 200 in 63ms (next.js: 13ms, application-code: 50ms)
+⚠ Fast Refresh had to perform a full reload when ./src/components/interactive.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+✓ Compiled in 153ms
+ GET /?v=4 200 in 260ms (next.js: 23ms, application-code: 237ms)
+ GET /?v=4 200 in 255ms (next.js: 210ms, application-code: 45ms)
+[browser] The result of getSnapshot should be cached to avoid an infinite loop 
+    at useNow (src/components/clock.tsx:18:30)
+    at Countdown (src/components/sections/head.tsx:95:21)
+  16 |
+  17 | export function useNow() {
+> 18 |   return useSyncExternalStore(subscribe, getSnapshot, () => null);
+     |                              ^
+  19 | }
+  20 |
+  21 | export function useCountdown(target: Date, now: Date | null) { (src/components/clock.tsx:18:30)
+✓ Compiled in 120ms
+ GET /?v=4 200 in 56ms (next.js: 12ms, application-code: 43ms)
+ GET /media 200 in 23ms (next.js: 9ms, application-code: 13ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /media 200 in 16ms (next.js: 3ms, application-code: 13ms)
+ GET /zine 200 in 24ms (next.js: 10ms, application-code: 14ms)
+ GET /shop 200 in 28ms (next.js: 12ms, application-code: 16ms)
+ GET /chapters/um 200 in 36ms (next.js: 20ms, application-code: 16ms)
+ GET / 200 in 21ms (next.js: 3ms, application-code: 18ms)
+ GET /chapters/um 200 in 25ms (next.js: 9ms, application-code: 16ms)
+ GET / 200 in 21ms (next.js: 3ms, application-code: 18ms)
+ GET / 200 in 25ms (next.js: 2ms, application-code: 22ms)
+ GET / 200 in 22ms (next.js: 3ms, application-code: 19ms)
+ GET / 200 in 21ms (next.js: 3ms, application-code: 18ms)
+ GET / 200 in 24ms (next.js: 3ms, application-code: 21ms)
+ GET / 200 in 29ms (next.js: 3ms, application-code: 26ms)
+ GET / 200 in 29ms (next.js: 8ms, application-code: 21ms)
+✓ Compiled in 72ms
+✓ Compiled in 73ms
+ GET / 200 in 47ms (next.js: 11ms, application-code: 36ms)
+✓ Compiled in 80ms
+ GET / 200 in 40ms (next.js: 9ms, application-code: 32ms)
+ GET / 200 in 42ms (next.js: 9ms, application-code: 33ms)
+✓ Compiled in 71ms
+✓ Compiled in 77ms
+ GET / 200 in 44ms (next.js: 13ms, application-code: 31ms)
+✓ Compiled in 83ms
+ GET / 200 in 43ms (next.js: 10ms, application-code: 33ms)
+✓ Compiled in 112ms
+ GET / 200 in 51ms (next.js: 12ms, application-code: 39ms)
+ GET / 200 in 41ms (next.js: 12ms, application-code: 30ms)
+✓ Compiled in 121ms
+✓ Compiled in 95ms
+ GET / 200 in 47ms (next.js: 11ms, application-code: 35ms)
+✓ Compiled in 107ms
+ GET / 200 in 48ms (next.js: 17ms, application-code: 31ms)
+✓ Compiled in 79ms
+ GET / 200 in 40ms (next.js: 10ms, application-code: 30ms)
+✓ Compiled in 88ms
+ GET / 200 in 46ms (next.js: 11ms, application-code: 36ms)
+ GET / 200 in 24ms (next.js: 3ms, application-code: 22ms)
+ GET / 200 in 23ms (next.js: 3ms, application-code: 21ms)
+ GET / 200 in 23ms (next.js: 3ms, application-code: 20ms)
+ GET / 200 in 24ms (next.js: 3ms, application-code: 21ms)
+ GET / 200 in 24ms (next.js: 3ms, application-code: 21ms)
+ GET / 200 in 23ms (next.js: 3ms, application-code: 20ms)
+ GET / 200 in 31ms (next.js: 3ms, application-code: 28ms)
+ GET / 200 in 27ms (next.js: 3ms, application-code: 24ms)
+ GET / 200 in 24ms (next.js: 3ms, application-code: 22ms)
+ GET / 200 in 27ms (next.js: 4ms, application-code: 23ms)
+ GET / 200 in 30ms (next.js: 4ms, application-code: 26ms)
+ GET / 200 in 27ms (next.js: 3ms, application-code: 24ms)
+ GET / 200 in 26ms (next.js: 3ms, application-code: 22ms)
+ GET / 200 in 33ms (next.js: 3ms, application-code: 30ms)
+ GET / 200 in 32ms (next.js: 3ms, application-code: 29ms)
+ GET / 200 in 27ms (next.js: 3ms, application-code: 24ms)
+ GET / 200 in 34ms (next.js: 3ms, application-code: 31ms)
+ GET / 200 in 27ms (next.js: 4ms, application-code: 24ms)
+ GET / 200 in 36ms (next.js: 3ms, application-code: 33ms)
+ GET / 200 in 29ms (next.js: 3ms, application-code: 26ms)
+ GET / 200 in 33ms (next.js: 3ms, application-code: 30ms)
+ GET / 200 in 37ms (next.js: 4ms, application-code: 33ms)
+ GET / 200 in 36ms (next.js: 3ms, application-code: 32ms)
+ GET / 200 in 39ms (next.js: 3ms, application-code: 36ms)
+ GET / 200 in 35ms (next.js: 3ms, application-code: 32ms)
+ GET / 200 in 41ms (next.js: 4ms, application-code: 38ms)
+✓ Compiled in 196ms
+ GET / 200 in 61ms (next.js: 20ms, application-code: 40ms)
+ GET / 200 in 30ms (next.js: 3ms, application-code: 27ms)
+✓ Compiled in 61ms
+ GET / 200 in 39ms (next.js: 10ms, application-code: 29ms)
+✓ Compiled in 77ms
+ GET / 200 in 44ms (next.js: 9ms, application-code: 35ms)
+ GET / 200 in 33ms (next.js: 8ms, application-code: 26ms)
+✓ Compiled in 55ms
+ GET / 200 in 25ms (next.js: 2ms, application-code: 23ms)
+✓ Compiled in 59ms
+ GET / 200 in 45ms (next.js: 10ms, application-code: 34ms)
+ GET / 200 in 70ms (next.js: 2ms, application-code: 68ms)
+ GET /chapters/um 200 in 89ms (next.js: 19ms, application-code: 70ms)
+ GET / 200 in 58ms (next.js: 2ms, application-code: 55ms)
+ GET /zine 200 in 57ms (next.js: 13ms, application-code: 44ms)
+ GET /media 200 in 56ms (next.js: 12ms, application-code: 44ms)
+ GET /shop 200 in 54ms (next.js: 12ms, application-code: 43ms)
+ GET /dashboard/card 200 in 58ms (next.js: 12ms, application-code: 45ms)
+ GET /chapters/um 200 in 48ms (next.js: 9ms, application-code: 39ms)
+ GET /chapters/um/team 200 in 500ms (next.js: 456ms, application-code: 45ms)
+ GET /chapters/um/campaigns/mansuh-auku 200 in 85ms (next.js: 19ms, application-code: 66ms)
+ GET / 200 in 56ms (next.js: 2ms, application-code: 54ms)
+ GET / 200 in 62ms (next.js: 2ms, application-code: 60ms)
+ GET / 200 in 69ms (next.js: 2ms, application-code: 67ms)
+ GET / 200 in 71ms (next.js: 2ms, application-code: 69ms)
+ GET / 200 in 63ms (next.js: 2ms, application-code: 60ms)
+[browser] The result of getSnapshot should be cached to avoid an infinite loop 
+    at useNow (src/components/clock.tsx:18:30)
+    at useNowDaysSince (src/components/clock.tsx:40:15)
+    at AukuYears (src/components/sections/head.tsx:123:31)
+  16 |
+  17 | export function useNow() {
+> 18 |   return useSyncExternalStore(subscribe, getSnapshot, () => null);
+     |                              ^
+  19 | }
+  20 |
+  21 | export function useCountdown(target: Date, now: Date | null) { (src/components/clock.tsx:18:30)
+ GET / 200 in 66ms (next.js: 3ms, application-code: 63ms)
+ GET / 200 in 37ms (next.js: 11ms, application-code: 27ms)
+ GET / 200 in 34ms (next.js: 9ms, application-code: 26ms)
+✓ Compiled in 60ms
+✓ Compiled in 126ms
+ GET / 200 in 43ms (next.js: 10ms, application-code: 32ms)
+[browser] The result of getSnapshot should be cached to avoid an infinite loop 
+    at useNow (src/components/clock.tsx:18:30)
+    at useNowDaysSince (src/components/clock.tsx:40:15)
+    at AukuYears (src/components/sections/head.tsx:123:31)
+  16 |
+  17 | export function useNow() {
+> 18 |   return useSyncExternalStore(subscribe, getSnapshot, () => null);
+     |                              ^
+  19 | }
+  20 |
+  21 | export function useCountdown(target: Date, now: Date | null) { (src/components/clock.tsx:18:30)
+ GET / 200 in 40ms (next.js: 9ms, application-code: 32ms)
+✓ Compiled in 59ms
+✓ Compiled in 83ms
+ GET / 200 in 40ms (next.js: 9ms, application-code: 30ms)
+✓ Compiled in 58ms
+ GET / 200 in 36ms (next.js: 10ms, application-code: 26ms)
+✓ Compiled in 58ms
+ GET / 200 in 89ms (next.js: 11ms, application-code: 78ms)
+✓ Compiled in 60ms
+ GET / 200 in 43ms (next.js: 11ms, application-code: 32ms)
+ GET / 200 in 40ms (next.js: 12ms, application-code: 29ms)
+✓ Compiled in 110ms
+ GET / 200 in 30ms (next.js: 4ms, application-code: 26ms)
+✓ Compiled in 76ms
+✓ Compiled in 79ms
+✓ Compiled in 73ms
+✓ Compiled in 63ms
+✓ Compiled in 78ms
+✓ Compiled in 70ms
+✓ Compiled in 75ms
+✓ Compiled in 73ms
+✓ Compiled in 72ms
+✓ Compiled in 70ms
+ GET / 200 in 26ms (next.js: 3ms, application-code: 23ms)
+ GET / 200 in 23ms (next.js: 2ms, application-code: 21ms)
+✓ Compiled in 58ms
+ GET / 200 in 39ms (next.js: 10ms, application-code: 29ms)
+ GET / 200 in 24ms (next.js: 3ms, application-code: 21ms)
+ GET / 200 in 31ms (next.js: 9ms, application-code: 22ms)
+✓ Compiled in 46ms
+ GET / 200 in 32ms (next.js: 8ms, application-code: 24ms)
+✓ Compiled in 54ms
+ GET / 200 in 27ms (next.js: 3ms, application-code: 24ms)
+ GET / 200 in 23ms (next.js: 3ms, application-code: 20ms)
+ GET / 200 in 28ms (next.js: 2ms, application-code: 26ms)
+ GET / 200 in 31ms (next.js: 3ms, application-code: 28ms)
+ GET / 200 in 29ms (next.js: 3ms, application-code: 26ms)
+ GET / 200 in 35ms (next.js: 3ms, application-code: 32ms)
+ GET / 200 in 34ms (next.js: 3ms, application-code: 31ms)
+ GET / 200 in 48ms (next.js: 12ms, application-code: 37ms)
+ GET / 200 in 33ms (next.js: 9ms, application-code: 24ms)
+✓ Compiled in 57ms
+ GET / 200 in 97ms (next.js: 3ms, application-code: 93ms)
+ GET /zine 200 in 60ms (next.js: 8ms, application-code: 52ms)
+ GET /media 200 in 84ms (next.js: 12ms, application-code: 72ms)
+ GET /shop 200 in 70ms (next.js: 12ms, application-code: 58ms)
+ GET /dashboard/card 200 in 60ms (next.js: 9ms, application-code: 51ms)
+ GET /chapters/um 200 in 97ms (next.js: 19ms, application-code: 79ms)
+ GET /chapters/um/team 200 in 92ms (next.js: 23ms, application-code: 69ms)
+ GET /chapters/um/campaigns/mansuh-auku 200 in 91ms (next.js: 17ms, application-code: 75ms)
+✓ Compiled in 74ms
+ GET / 200 in 39ms (next.js: 9ms, application-code: 30ms)
+ GET / 200 in 23ms (next.js: 3ms, application-code: 20ms)
+ GET / 200 in 24ms (next.js: 3ms, application-code: 20ms)
+ GET / 200 in 22ms (next.js: 3ms, application-code: 19ms)
+ GET / 200 in 25ms (next.js: 3ms, application-code: 23ms)
+ GET / 200 in 37ms (next.js: 4ms, application-code: 33ms)
+ GET / 200 in 29ms (next.js: 3ms, application-code: 26ms)
+ GET / 200 in 33ms (next.js: 8ms, application-code: 25ms)
+ GET / 200 in 26ms (next.js: 3ms, application-code: 23ms)
+ GET / 200 in 32ms (next.js: 3ms, application-code: 29ms)
+ GET / 200 in 30ms (next.js: 8ms, application-code: 21ms)
+✓ Compiled in 50ms
+ GET / 200 in 39ms (next.js: 9ms, application-code: 29ms)
+✓ Compiled in 50ms
+ GET /dashboard/card 200 in 22ms (next.js: 8ms, application-code: 14ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /dashboard/card 200 in 17ms (next.js: 3ms, application-code: 14ms)
+ GET / 200 in 21ms (next.js: 3ms, application-code: 18ms)
+ GET / 200 in 23ms (next.js: 3ms, application-code: 20ms)
+ GET / 200 in 23ms (next.js: 3ms, application-code: 20ms)
+ GET / 200 in 19ms (next.js: 3ms, application-code: 16ms)
+ GET /chapters/um 200 in 30ms (next.js: 14ms, application-code: 16ms)
+ GET /shop 200 in 21ms (next.js: 9ms, application-code: 13ms)
+ GET /zine 200 in 23ms (next.js: 9ms, application-code: 15ms)
+ GET /shop 200 in 16ms (next.js: 3ms, application-code: 13ms)
+ GET /chapters/um 200 in 24ms (next.js: 9ms, application-code: 15ms)
+ GET / 200 in 23ms (next.js: 2ms, application-code: 21ms)
+ GET /chapters/um 200 in 24ms (next.js: 9ms, application-code: 16ms)
+ GET / 200 in 22ms (next.js: 3ms, application-code: 19ms)
+ GET /dashboard/card 200 in 17ms (next.js: 3ms, application-code: 14ms)
+ GET / 200 in 25ms (next.js: 3ms, application-code: 22ms)
+ GET / 200 in 19ms (next.js: 3ms, application-code: 17ms)
+ GET / 200 in 21ms (next.js: 3ms, application-code: 18ms)
+ GET / 200 in 24ms (next.js: 3ms, application-code: 20ms)
+ GET / 200 in 22ms (next.js: 3ms, application-code: 19ms)
+ GET / 200 in 21ms (next.js: 3ms, application-code: 18ms)
+ GET /chapters/um 200 in 25ms (next.js: 9ms, application-code: 16ms)
+ GET / 200 in 21ms (next.js: 3ms, application-code: 18ms)
+ GET /chapters/um 200 in 26ms (next.js: 9ms, application-code: 17ms)
+ GET / 200 in 22ms (next.js: 3ms, application-code: 19ms)
+ GET /chapters/um 200 in 25ms (next.js: 8ms, application-code: 16ms)
+ GET / 200 in 21ms (next.js: 3ms, application-code: 19ms)
+ GET / 200 in 21ms (next.js: 3ms, application-code: 18ms)
+ GET / 200 in 23ms (next.js: 3ms, application-code: 20ms)
+ GET / 200 in 20ms (next.js: 3ms, application-code: 17ms)
+ GET / 200 in 22ms (next.js: 3ms, application-code: 19ms)
+ GET / 200 in 21ms (next.js: 4ms, application-code: 18ms)
+ GET / 200 in 22ms (next.js: 3ms, application-code: 19ms)
+ GET / 200 in 23ms (next.js: 3ms, application-code: 21ms)
+ GET / 200 in 21ms (next.js: 2ms, application-code: 19ms)
+ GET / 200 in 21ms (next.js: 3ms, application-code: 19ms)
+ GET /chapters/um 200 in 26ms (next.js: 9ms, application-code: 17ms)
+ GET /shop 200 in 20ms (next.js: 3ms, application-code: 17ms)
+ GET /zine 200 in 18ms (next.js: 4ms, application-code: 14ms)
+ GET /chapters/um 200 in 25ms (next.js: 9ms, application-code: 16ms)
+ GET / 200 in 21ms (next.js: 3ms, application-code: 18ms)
+ GET /chapters/um 200 in 24ms (next.js: 8ms, application-code: 15ms)
+ GET /shop 200 in 16ms (next.js: 2ms, application-code: 14ms)
+ GET /media 200 in 22ms (next.js: 9ms, application-code: 13ms)
+ GET /zine 200 in 17ms (next.js: 3ms, application-code: 15ms)
+ GET /shop 200 in 17ms (next.js: 3ms, application-code: 14ms)
+ GET /chapters/um 200 in 29ms (next.js: 9ms, application-code: 20ms)
+ GET /shop 200 in 21ms (next.js: 3ms, application-code: 18ms)
+ GET /media 200 in 17ms (next.js: 3ms, application-code: 15ms)
+ GET /chapters/um 200 in 26ms (next.js: 9ms, application-code: 17ms)
+ GET / 200 in 23ms (next.js: 2ms, application-code: 20ms)
+ GET / 200 in 21ms (next.js: 3ms, application-code: 18ms)
+ GET /media 200 in 18ms (next.js: 2ms, application-code: 15ms)
+ GET /zine 200 in 17ms (next.js: 3ms, application-code: 14ms)
+ GET /shop 200 in 17ms (next.js: 3ms, application-code: 15ms)
+ GET /chapters/um 200 in 24ms (next.js: 9ms, application-code: 15ms)
+ GET / 200 in 20ms (next.js: 2ms, application-code: 18ms)
+ GET /dashboard/card 200 in 20ms (next.js: 3ms, application-code: 17ms)
+ GET /chapters/um 200 in 26ms (next.js: 9ms, application-code: 17ms)
+ GET /chapters/um/team 200 in 32ms (next.js: 15ms, application-code: 17ms)
+ GET /shop 200 in 17ms (next.js: 3ms, application-code: 14ms)
+ GET /dashboard/card 200 in 19ms (next.js: 3ms, application-code: 16ms)
+ GET /media 200 in 17ms (next.js: 3ms, application-code: 14ms)
+ GET / 200 in 23ms (next.js: 3ms, application-code: 20ms)
+ GET /zine 200 in 19ms (next.js: 4ms, application-code: 15ms)
+ GET /shop 200 in 17ms (next.js: 3ms, application-code: 13ms)
+ GET /chapters/um 200 in 26ms (next.js: 9ms, application-code: 16ms)
+ GET /chapters/um 200 in 49ms (next.js: 8ms, application-code: 42ms)
+ GET /chapters/um 200 in 57ms (next.js: 9ms, application-code: 48ms)
+ GET / 200 in 70ms (next.js: 3ms, application-code: 68ms)
+[browser] The result of getSnapshot should be cached to avoid an infinite loop 
+    at useNow (src/components/clock.tsx:18:30)
+    at useNowDaysSince (src/components/clock.tsx:40:15)
+    at AukuYears (src/components/sections/head.tsx:117:31)
+  16 |
+  17 | export function useNow() {
+> 18 |   return useSyncExternalStore(subscribe, getSnapshot, () => null);
+     |                              ^
+  19 | }
+  20 |
+  21 | export function useCountdown(target: Date, now: Date | null) { (src/components/clock.tsx:18:30)
+ GET /chapters/um 200 in 26ms (next.js: 8ms, application-code: 18ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET / 200 in 21ms (next.js: 2ms, application-code: 19ms)
+ GET / 200 in 46ms (next.js: 11ms, application-code: 35ms)
+✓ Compiled in 54ms
+ GET / 200 in 42ms (next.js: 10ms, application-code: 32ms)
+ GET / 200 in 41ms (next.js: 11ms, application-code: 30ms)
+✓ Compiled in 82ms
+ GET / 200 in 39ms (next.js: 11ms, application-code: 28ms)
+✓ Compiled in 97ms
+✓ Compiled in 297ms
+ GET / 200 in 95ms (next.js: 51ms, application-code: 44ms)
+✓ Compiled in 82ms
+ GET / 200 in 62ms (next.js: 4ms, application-code: 58ms)
+✓ Compiled in 81ms
+✓ Compiled in 84ms
+ GET / 200 in 88ms (next.js: 3ms, application-code: 85ms)
+ GET /zine 200 in 59ms (next.js: 10ms, application-code: 48ms)
+ GET /media 200 in 60ms (next.js: 12ms, application-code: 49ms)
+ GET /shop 200 in 69ms (next.js: 11ms, application-code: 58ms)
+ GET /dashboard/card 200 in 69ms (next.js: 12ms, application-code: 57ms)
+ GET /chapters/um 200 in 93ms (next.js: 21ms, application-code: 72ms)
+ GET /chapters/um/team 200 in 109ms (next.js: 22ms, application-code: 86ms)
+ GET /chapters/um/campaigns/mansuh-auku 200 in 119ms (next.js: 25ms, application-code: 94ms)
+ GET / 200 in 66ms (next.js: 3ms, application-code: 63ms)
+ GET / 200 in 59ms (next.js: 2ms, application-code: 56ms)
+ GET /chapters/um 200 in 30ms (next.js: 10ms, application-code: 20ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET / 200 in 22ms (next.js: 3ms, application-code: 19ms)
+ GET /shop 200 in 19ms (next.js: 3ms, application-code: 16ms)
+ GET /chapters/um 200 in 29ms (next.js: 11ms, application-code: 18ms)
+ GET / 200 in 21ms (next.js: 3ms, application-code: 18ms)
+ GET /chapters/um 200 in 27ms (next.js: 9ms, application-code: 17ms)
+ GET /shop 200 in 17ms (next.js: 3ms, application-code: 14ms)
+ GET /media 200 in 19ms (next.js: 3ms, application-code: 16ms)
+ GET /zine 200 in 25ms (next.js: 4ms, application-code: 21ms)
+ GET /chapters/um 200 in 28ms (next.js: 9ms, application-code: 19ms)
+ GET /zine 200 in 18ms (next.js: 3ms, application-code: 16ms)
+ GET /media 200 in 17ms (next.js: 3ms, application-code: 14ms)
+ GET / 200 in 22ms (next.js: 3ms, application-code: 19ms)
+ GET / 200 in 9ms (next.js: 3ms, application-code: 6ms)
+ GET / 200 in 23ms (next.js: 2ms, application-code: 21ms)
+ GET /chapters/um 200 in 26ms (next.js: 9ms, application-code: 16ms)
+ GET / 200 in 23ms (next.js: 2ms, application-code: 21ms)
+ GET /chapters/um 200 in 26ms (next.js: 9ms, application-code: 16ms)
+ GET /shop 200 in 22ms (next.js: 4ms, application-code: 18ms)
+ GET /zine 200 in 16ms (next.js: 3ms, application-code: 13ms)
+ GET /media 200 in 17ms (next.js: 2ms, application-code: 14ms)
+ GET / 200 in 23ms (next.js: 4ms, application-code: 18ms)
+ GET /chapters/um 200 in 33ms (next.js: 11ms, application-code: 22ms)
+ GET /shop 200 in 18ms (next.js: 3ms, application-code: 16ms)
+ GET /chapters/um 200 in 31ms (next.js: 9ms, application-code: 22ms)
+ GET / 200 in 52ms (next.js: 4ms, application-code: 48ms)
+ GET /chapters/malaysia/campaigns/keadilan-zara-qairina 200 in 32ms (next.js: 9ms, application-code: 22ms)
+ GET /shop 200 in 19ms (next.js: 3ms, application-code: 16ms)
+ GET / 200 in 22ms (next.js: 3ms, application-code: 20ms)
+ GET /chapters/um 200 in 31ms (next.js: 11ms, application-code: 20ms)
+ GET /shop 200 in 20ms (next.js: 3ms, application-code: 17ms)
+ GET /media 200 in 18ms (next.js: 3ms, application-code: 15ms)
+ GET /media 200 in 17ms (next.js: 3ms, application-code: 14ms)
+ GET /zine 200 in 17ms (next.js: 3ms, application-code: 14ms)
+ GET /chapters/um 200 in 27ms (next.js: 8ms, application-code: 19ms)
+ GET / 200 in 22ms (next.js: 2ms, application-code: 20ms)
+ GET /media 200 in 17ms (next.js: 3ms, application-code: 13ms)
+ GET /shop 200 in 19ms (next.js: 3ms, application-code: 15ms)
+ GET /zine 200 in 18ms (next.js: 3ms, application-code: 15ms)
+ GET /shop 200 in 17ms (next.js: 5ms, application-code: 13ms)
+ GET /chapters/um 200 in 26ms (next.js: 10ms, application-code: 16ms)
+ GET / 200 in 25ms (next.js: 3ms, application-code: 22ms)
+ GET /chapters/um 200 in 26ms (next.js: 10ms, application-code: 16ms)
+ GET /shop 200 in 16ms (next.js: 3ms, application-code: 14ms)
+ GET /zine 200 in 19ms (next.js: 3ms, application-code: 16ms)
+ GET /media 200 in 18ms (next.js: 3ms, application-code: 15ms)
+ GET /zine 200 in 15ms (next.js: 3ms, application-code: 13ms)
+ GET /shop 200 in 18ms (next.js: 3ms, application-code: 15ms)
+ GET /chapters/um 200 in 31ms (next.js: 9ms, application-code: 21ms)
+ GET / 200 in 25ms (next.js: 3ms, application-code: 22ms)
+ GET /chapters/um 200 in 29ms (next.js: 9ms, application-code: 20ms)
+ GET / 200 in 24ms (next.js: 3ms, application-code: 21ms)
+ GET /dashboard/card 200 in 20ms (next.js: 3ms, application-code: 17ms)
+ GET / 200 in 25ms (next.js: 4ms, application-code: 21ms)
+ GET /chapters/um 200 in 30ms (next.js: 10ms, application-code: 20ms)
+ GET /shop 200 in 18ms (next.js: 3ms, application-code: 15ms)
+ GET /zine 200 in 19ms (next.js: 3ms, application-code: 16ms)
+ GET /media 200 in 17ms (next.js: 3ms, application-code: 14ms)
+⚠ Fast Refresh had to perform a full reload when ./src/components/interactive.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+✓ Compiled in 371ms
+ GET /media 200 in 121ms (next.js: 87ms, application-code: 34ms)
+ GET /media 200 in 122ms (next.js: 14ms, application-code: 108ms)
+✓ Compiled in 93ms
+ GET /media 200 in 140ms (next.js: 68ms, application-code: 72ms)
+ GET /media 200 in 104ms (next.js: 5ms, application-code: 100ms)
+ GET /media 200 in 115ms (next.js: 5ms, application-code: 110ms)
+ GET /media 200 in 71ms (next.js: 4ms, application-code: 67ms)
+ GET /media 200 in 53ms (next.js: 5ms, application-code: 48ms)
+ GET /media 200 in 52ms (next.js: 3ms, application-code: 49ms)
+ GET /media 200 in 50ms (next.js: 4ms, application-code: 46ms)
+ GET /media 200 in 47ms (next.js: 3ms, application-code: 43ms)
+ GET /media 200 in 48ms (next.js: 3ms, application-code: 45ms)
+ GET /media 200 in 53ms (next.js: 3ms, application-code: 50ms)
+ GET /media 200 in 47ms (next.js: 4ms, application-code: 44ms)
+ GET /media 200 in 61ms (next.js: 4ms, application-code: 57ms)
+ GET /media 200 in 60ms (next.js: 3ms, application-code: 57ms)
+ GET /media 200 in 45ms (next.js: 3ms, application-code: 42ms)
+ GET /media 200 in 48ms (next.js: 3ms, application-code: 44ms)
+ GET /media 200 in 46ms (next.js: 3ms, application-code: 43ms)
+ GET /media 200 in 48ms (next.js: 3ms, application-code: 45ms)
+ GET /media 200 in 45ms (next.js: 5ms, application-code: 40ms)
+ GET /media 200 in 42ms (next.js: 3ms, application-code: 39ms)
+ GET /media 200 in 44ms (next.js: 4ms, application-code: 40ms)
+ GET /media 200 in 44ms (next.js: 3ms, application-code: 41ms)
+ GET /media 200 in 22ms (next.js: 3ms, application-code: 19ms)
+✓ Compiled in 142ms
+ GET /media 200 in 140ms (next.js: 80ms, application-code: 60ms)
+ GET /media 200 in 69ms (next.js: 4ms, application-code: 65ms)
+ GET /media 200 in 62ms (next.js: 15ms, application-code: 47ms)
+ GET /media 200 in 46ms (next.js: 3ms, application-code: 43ms)
+ GET /media 200 in 49ms (next.js: 3ms, application-code: 46ms)
+ GET /media 200 in 26ms (next.js: 4ms, application-code: 22ms)
+ GET /media 200 in 50ms (next.js: 4ms, application-code: 46ms)
+ GET /media 200 in 50ms (next.js: 4ms, application-code: 46ms)
+ GET /media 200 in 43ms (next.js: 3ms, application-code: 40ms)
+ GET /media 200 in 43ms (next.js: 3ms, application-code: 39ms)
+ GET /media 200 in 44ms (next.js: 3ms, application-code: 40ms)
+ GET /media 200 in 63ms (next.js: 3ms, application-code: 60ms)
+ GET /media 200 in 68ms (next.js: 19ms, application-code: 50ms)
+ GET /media 200 in 55ms (next.js: 4ms, application-code: 51ms)
+ GET /media 200 in 60ms (next.js: 5ms, application-code: 55ms)
+ GET /media 200 in 59ms (next.js: 3ms, application-code: 55ms)
+ GET /media 200 in 49ms (next.js: 3ms, application-code: 45ms)
+ GET /media 200 in 45ms (next.js: 4ms, application-code: 41ms)
+ GET /media 200 in 43ms (next.js: 3ms, application-code: 40ms)
+ GET /media 200 in 45ms (next.js: 3ms, application-code: 41ms)
+ GET /media 200 in 72ms (next.js: 3ms, application-code: 69ms)
+ GET /media 200 in 83ms (next.js: 3ms, application-code: 80ms)
+ GET /media 200 in 54ms (next.js: 4ms, application-code: 50ms)
+ GET /media 200 in 22ms (next.js: 3ms, application-code: 19ms)
+ GET /media 200 in 115ms (next.js: 57ms, application-code: 58ms)
+ GET /media 200 in 50ms (next.js: 5ms, application-code: 45ms)
+ GET /media 200 in 56ms (next.js: 4ms, application-code: 52ms)
+ GET /media 200 in 120ms (next.js: 5ms, application-code: 115ms)
+ GET /media 200 in 113ms (next.js: 4ms, application-code: 109ms)
+ GET /media 200 in 48ms (next.js: 5ms, application-code: 43ms)
+ GET /media 200 in 48ms (next.js: 3ms, application-code: 45ms)
+ GET /media 200 in 49ms (next.js: 4ms, application-code: 45ms)
+ GET /media 200 in 47ms (next.js: 4ms, application-code: 43ms)
+ GET /media 200 in 42ms (next.js: 4ms, application-code: 38ms)
+ GET /media 200 in 41ms (next.js: 3ms, application-code: 38ms)
+ GET /media 200 in 42ms (next.js: 3ms, application-code: 39ms)
+ GET /media 200 in 60ms (next.js: 4ms, application-code: 56ms)
+ GET /media 200 in 59ms (next.js: 3ms, application-code: 55ms)
+ GET /media 200 in 41ms (next.js: 3ms, application-code: 38ms)
+ GET /media 200 in 40ms (next.js: 3ms, application-code: 37ms)
+ GET /media 200 in 40ms (next.js: 3ms, application-code: 37ms)
+ GET /media 200 in 39ms (next.js: 3ms, application-code: 36ms)
+ GET /media 200 in 46ms (next.js: 3ms, application-code: 44ms)
+ GET /media 200 in 57ms (next.js: 3ms, application-code: 54ms)
+ GET /media 200 in 51ms (next.js: 3ms, application-code: 48ms)
+ GET /media 200 in 42ms (next.js: 3ms, application-code: 39ms)
+ GET /media 200 in 60ms (next.js: 3ms, application-code: 57ms)
+ GET /media 200 in 59ms (next.js: 3ms, application-code: 56ms)
+ GET /media 200 in 42ms (next.js: 3ms, application-code: 39ms)
+ GET /media 200 in 23ms (next.js: 3ms, application-code: 20ms)
+✓ Compiled in 992ms
+ GET /media 200 in 35ms (next.js: 16ms, application-code: 19ms)
+ GET /media 200 in 58ms (next.js: 23ms, application-code: 35ms)
+ GET /media 200 in 41ms (next.js: 18ms, application-code: 22ms)
+✓ Compiled in 72ms
+ GET /media 200 in 178ms (next.js: 60ms, application-code: 118ms)
+ GET /media 200 in 54ms (next.js: 7ms, application-code: 47ms)
+ GET /media 200 in 49ms (next.js: 4ms, application-code: 45ms)
+ GET /media 200 in 58ms (next.js: 4ms, application-code: 54ms)
+ GET /media 200 in 60ms (next.js: 4ms, application-code: 56ms)
+ GET /media 200 in 54ms (next.js: 4ms, application-code: 50ms)
+ GET /media 200 in 77ms (next.js: 4ms, application-code: 73ms)
+ GET /media 200 in 80ms (next.js: 4ms, application-code: 76ms)
+ GET /media 200 in 57ms (next.js: 11ms, application-code: 45ms)
+ GET /media 200 in 52ms (next.js: 4ms, application-code: 48ms)
+ GET /media 200 in 61ms (next.js: 5ms, application-code: 56ms)
+ GET /media 200 in 56ms (next.js: 4ms, application-code: 52ms)
+ GET /media 200 in 49ms (next.js: 4ms, application-code: 45ms)
+ GET /media 200 in 54ms (next.js: 4ms, application-code: 50ms)
+ GET /media 200 in 86ms (next.js: 4ms, application-code: 82ms)
+ GET /media 200 in 90ms (next.js: 7ms, application-code: 83ms)
+ GET /media 200 in 61ms (next.js: 4ms, application-code: 57ms)
+ GET /media 200 in 55ms (next.js: 3ms, application-code: 52ms)
+ GET /media 200 in 56ms (next.js: 3ms, application-code: 53ms)
+ GET /media 200 in 67ms (next.js: 4ms, application-code: 63ms)
+ GET /media 200 in 64ms (next.js: 5ms, application-code: 59ms)
+ GET /media 200 in 56ms (next.js: 5ms, application-code: 51ms)
+ GET /media 200 in 72ms (next.js: 3ms, application-code: 69ms)
+ GET /media 200 in 72ms (next.js: 20ms, application-code: 52ms)
+ GET /media 200 in 66ms (next.js: 5ms, application-code: 61ms)
+ GET /media 200 in 66ms (next.js: 4ms, application-code: 62ms)
+ GET /media 200 in 65ms (next.js: 5ms, application-code: 60ms)
+ GET /media 200 in 34ms (next.js: 5ms, application-code: 30ms)
+✓ Compiled in 63ms
+ GET /media 200 in 52ms (next.js: 29ms, application-code: 23ms)
+✓ Compiled in 128ms
+ GET /media 200 in 44ms (next.js: 13ms, application-code: 31ms)
+ GET /media 200 in 62ms (next.js: 24ms, application-code: 39ms)
+ GET /media 200 in 46ms (next.js: 13ms, application-code: 33ms)
+ GET /media 200 in 188ms (next.js: 90ms, application-code: 98ms)
+ GET /media 200 in 78ms (next.js: 4ms, application-code: 74ms)
+ GET /media 200 in 113ms (next.js: 5ms, application-code: 107ms)
+ GET /media 200 in 112ms (next.js: 5ms, application-code: 106ms)
+ GET /media 200 in 66ms (next.js: 4ms, application-code: 62ms)
+ GET /media 200 in 86ms (next.js: 5ms, application-code: 81ms)
+ GET /media 200 in 108ms (next.js: 5ms, application-code: 103ms)
+ GET /media 200 in 59ms (next.js: 4ms, application-code: 55ms)
+ GET /media 200 in 66ms (next.js: 4ms, application-code: 62ms)
+ GET /media 200 in 76ms (next.js: 3ms, application-code: 73ms)
+ GET /media 200 in 68ms (next.js: 5ms, application-code: 64ms)
+ GET /media 200 in 70ms (next.js: 6ms, application-code: 64ms)
+ GET /media 200 in 91ms (next.js: 5ms, application-code: 86ms)
+ GET /media 200 in 81ms (next.js: 4ms, application-code: 77ms)
+ GET /media 200 in 66ms (next.js: 5ms, application-code: 62ms)
+ GET /media 200 in 100ms (next.js: 5ms, application-code: 94ms)
+ GET /media 200 in 71ms (next.js: 5ms, application-code: 66ms)
+ GET /media 200 in 62ms (next.js: 3ms, application-code: 59ms)
+ GET /media 200 in 65ms (next.js: 5ms, application-code: 60ms)
+ GET /media 200 in 76ms (next.js: 4ms, application-code: 72ms)
+ GET /media 200 in 79ms (next.js: 5ms, application-code: 73ms)
+ GET /media 200 in 82ms (next.js: 6ms, application-code: 76ms)
+ GET /media 200 in 107ms (next.js: 4ms, application-code: 103ms)
+ GET /media 200 in 74ms (next.js: 4ms, application-code: 69ms)
+ GET /media 200 in 63ms (next.js: 4ms, application-code: 59ms)
+ GET /media 200 in 47ms (next.js: 6ms, application-code: 40ms)
+ GET /media 200 in 46ms (next.js: 3ms, application-code: 43ms)
+ GET /media 200 in 76ms (next.js: 3ms, application-code: 73ms)
+ GET /media 200 in 77ms (next.js: 4ms, application-code: 74ms)
+ GET /media 200 in 30ms (next.js: 4ms, application-code: 26ms)
+ GET /media 200 in 163ms (next.js: 80ms, application-code: 82ms)
+ GET /media 200 in 90ms (next.js: 4ms, application-code: 86ms)
+ GET /media 200 in 67ms (next.js: 5ms, application-code: 62ms)
+ GET /media 200 in 75ms (next.js: 4ms, application-code: 70ms)
+ GET /media 200 in 76ms (next.js: 5ms, application-code: 71ms)
+ GET /media 200 in 76ms (next.js: 6ms, application-code: 70ms)
+ GET /media 200 in 77ms (next.js: 5ms, application-code: 72ms)
+ GET /media 200 in 78ms (next.js: 5ms, application-code: 73ms)
+ GET /media 200 in 80ms (next.js: 6ms, application-code: 74ms)
+ GET /media 200 in 77ms (next.js: 4ms, application-code: 72ms)
+ GET /media 200 in 124ms (next.js: 4ms, application-code: 119ms)
+ GET /media 200 in 118ms (next.js: 6ms, application-code: 112ms)
+ GET /media 200 in 108ms (next.js: 5ms, application-code: 103ms)
+ GET /media 200 in 68ms (next.js: 4ms, application-code: 64ms)
+ GET /media 200 in 84ms (next.js: 4ms, application-code: 81ms)
+ GET /media 200 in 94ms (next.js: 4ms, application-code: 90ms)
+ GET /media 200 in 95ms (next.js: 6ms, application-code: 89ms)
+ GET /media 200 in 95ms (next.js: 6ms, application-code: 89ms)
+ GET /media 200 in 109ms (next.js: 4ms, application-code: 104ms)
+ GET /media 200 in 107ms (next.js: 5ms, application-code: 102ms)
+ GET /media 200 in 109ms (next.js: 5ms, application-code: 105ms)
+ GET /media 200 in 81ms (next.js: 5ms, application-code: 76ms)
+ GET /media 200 in 72ms (next.js: 6ms, application-code: 66ms)
+ GET /media 200 in 75ms (next.js: 5ms, application-code: 70ms)
+ GET /media 200 in 77ms (next.js: 5ms, application-code: 72ms)
+ GET /media 200 in 74ms (next.js: 6ms, application-code: 69ms)
+ GET /media 200 in 82ms (next.js: 4ms, application-code: 78ms)
+ GET /media 200 in 129ms (next.js: 4ms, application-code: 125ms)
+ GET /media 200 in 106ms (next.js: 7ms, application-code: 100ms)
+ GET /media 200 in 129ms (next.js: 8ms, application-code: 120ms)
+ GET /media 200 in 73ms (next.js: 5ms, application-code: 68ms)
+ GET /media 200 in 37ms (next.js: 4ms, application-code: 33ms)
+✓ Compiled in 94ms
+ GET /media 200 in 41ms (next.js: 11ms, application-code: 30ms)
+✓ Compiled in 72ms
+ GET /media 200 in 46ms (next.js: 15ms, application-code: 32ms)
+ GET /media 200 in 37ms (next.js: 13ms, application-code: 24ms)
+✓ Compiled in 75ms
+ GET / 200 in 190ms (next.js: 19ms, application-code: 171ms)
+ GET /zine 200 in 120ms (next.js: 19ms, application-code: 101ms)
+ GET /media 200 in 61ms (next.js: 3ms, application-code: 58ms)
+ GET /shop 200 in 74ms (next.js: 23ms, application-code: 51ms)
+ GET /shop/checkout 200 in 454ms (next.js: 405ms, application-code: 48ms)
+ GET /shop/checkout/success?ref=test 200 in 277ms (next.js: 198ms, application-code: 79ms)
+ GET /dashboard/card 200 in 68ms (next.js: 17ms, application-code: 51ms)
+ GET /contact 200 in 267ms (next.js: 222ms, application-code: 45ms)
+ GET /chapters/malaysia 200 in 85ms (next.js: 23ms, application-code: 62ms)
+ GET /chapters/malaysia/team 200 in 110ms (next.js: 25ms, application-code: 85ms)
+ GET /chapters/malaysia/campaigns/mansuh-auku 200 in 116ms (next.js: 30ms, application-code: 85ms)
+ GET /chapters/um 200 in 87ms (next.js: 12ms, application-code: 75ms)
+ GET /sitemap.xml 200 in 496ms (next.js: 470ms, application-code: 26ms)
+ GET /robots.txt 200 in 148ms (next.js: 140ms, application-code: 7ms)
+ GET / 200 in 88ms (next.js: 12ms, application-code: 76ms)
+ GET /contact 200 in 55ms (next.js: 8ms, application-code: 48ms)
+ GET /shop 200 in 62ms (next.js: 7ms, application-code: 55ms)
+ GET /shop/checkout 200 in 51ms (next.js: 6ms, application-code: 45ms)
+ GET /chapters/malaysia 200 in 62ms (next.js: 12ms, application-code: 50ms)
+ GET /zine 200 in 59ms (next.js: 7ms, application-code: 52ms)
+ GET /media 200 in 49ms (next.js: 9ms, application-code: 40ms)
+ GET /media 200 in 51ms (next.js: 4ms, application-code: 48ms)
+ GET /media 200 in 37ms (next.js: 3ms, application-code: 34ms)
+ GET /media 200 in 40ms (next.js: 2ms, application-code: 37ms)
+ GET /media 200 in 45ms (next.js: 3ms, application-code: 42ms)
+ GET /media 200 in 54ms (next.js: 3ms, application-code: 52ms)

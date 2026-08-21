@@ -50,6 +50,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { AuthProvider } from "@/components/auth-provider";
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
@@ -57,7 +59,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`h-full antialiased ${fontVars}`}
     >
       <body className="min-h-full">
-        {children}
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );

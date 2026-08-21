@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { config } from "@/lib/config";
+import { writeSheet } from "@/lib/sheets-db";
 
 export async function POST(req: NextRequest) {
   try {
@@ -21,9 +22,22 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: false, error: "Invalid signature" }, { status: 401 });
     }
 
-    const { reference_no, status, payment_id } = body;
+    const { reference_no, status, payment_id, amount, currency } = body;
 
     console.log(`[HitPay] Payment ${payment_id}: ${status} (${reference_no})`);
+
+    await writeSheet("Orders", {
+      id: reference_no ?? `order_${Date.now()}`,
+      hitpay_id: payment_id ?? "",
+      amount: amount ?? "0",
+      currency: currency ?? "MYR",
+      payment_method: "hitpay",
+      payment_status: status ?? "unknown",
+      items: "",
+      buyer_email: "",
+      buyer_name: "",
+      created_at: new Date().toISOString(),
+    });
 
     return NextResponse.json({ ok: true });
   } catch (err) {

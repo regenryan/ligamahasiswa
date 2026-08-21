@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { ActiveLink } from "@/components/ActiveLink";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { MetroClock } from "@/components/MetroClock";
+import { NavAuth } from "@/components/nav-auth";
 
 const NAV_LINKS = [
   { href: "/#campaigns", label: "Campaigns" },
@@ -38,14 +39,7 @@ function Logo() {
 }
 
 function NavCta() {
-  return (
-    <Link
-      href="/dashboard/card"
-      className="press inline-flex items-center gap-2 px-4 py-2.5 text-[13px] font-extrabold uppercase tracking-[0.12em] bg-brand text-white hover:opacity-90 transition-opacity duration-150"
-    >
-      Join now
-    </Link>
-  );
+  return <NavAuth />;
 }
 
 function Nav() {

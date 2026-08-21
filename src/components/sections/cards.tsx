@@ -63,7 +63,8 @@ export function CampaignCard({ c }: { c: Campaign }) {
 
 /* ---------- ShopCard ---------- */
 
-export function ShopCard({ p, onAdd }: { p: Product; onAdd: () => void }) {
+export function ShopCard({ p, onAdd, isMember = false }: { p: Product; onAdd: () => void; isMember?: boolean }) {
+  const canAdd = !p.memberOnly || isMember;
   return (
     <div className={`flex h-full flex-col p-5 ${FRAME}`}>
       <div className="flex items-center justify-between">
@@ -76,9 +77,15 @@ export function ShopCard({ p, onAdd }: { p: Product; onAdd: () => void }) {
       <p className="mt-2 display text-2xl leading-none">{p.price}</p>
       <p className="mono mt-1 text-[10px] uppercase tracking-[0.14em] text-ink/40">{p.memberOnly ? "Members only" : "Open to all"}</p>
       <div className="mt-4 flex-1" />
-      <Btn kind={p.memberOnly ? "ghost" : "join"} className="w-full" onClick={onAdd}>
-        {p.memberOnly ? "Unlock as member" : "Add to cart"}
-      </Btn>
+      {canAdd ? (
+        <Btn kind="join" className="w-full" onClick={onAdd}>
+          Add to cart
+        </Btn>
+      ) : (
+        <Btn kind="ghost" className="w-full" href="/register">
+          Join to unlock
+        </Btn>
+      )}
     </div>
   );
 }

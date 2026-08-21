@@ -5,6 +5,7 @@ import { CampaignCard, ShopCard } from "@/components/sections/cards";
 import { CartDrawerSlot } from "@/components/sections/cart";
 import { Marquee } from "@/components/Marquee";
 import { Reveal, NewsletterForm, JoinForm, useCart } from "@/components/interactive";
+import { useAuth } from "@/components/auth-provider";
 import { mediaItems, products as allProducts, stories, allies, campaigns as allCampaigns, type Product, type Campaign } from "@/lib/mock";
 
 export function Evidence() {
@@ -120,6 +121,8 @@ export function CampaignSection({
 
 export function ShopStrip({ items = allProducts }: { items?: Product[] }) {
   const { add } = useCart();
+  const { user } = useAuth();
+  const isMember = user?.status === "approved";
   const onAdd = (p: Product) => add(p);
   return (
     <section className="border-b border-line bg-midnight">
@@ -128,7 +131,7 @@ export function ShopStrip({ items = allProducts }: { items?: Product[] }) {
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {items.slice(0, 4).map((p, i) => (
             <Reveal key={p.slug} delay={i * 60}>
-              <ShopCard p={p} onAdd={() => onAdd(p)} />
+              <ShopCard p={p} onAdd={() => onAdd(p)} isMember={isMember} />
             </Reveal>
           ))}
         </div>

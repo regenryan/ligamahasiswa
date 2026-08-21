@@ -11,6 +11,7 @@ import {
   NewsletterBand,
 } from "@/components/sections";
 import { Reveal, CartProvider, FilterPills, useCart } from "@/components/interactive";
+import { useAuth } from "@/components/auth-provider";
 import { Marquee } from "@/components/Marquee";
 import { ShopCard } from "@/components/sections";
 import { products } from "@/lib/mock";
@@ -39,6 +40,8 @@ function ShopMarquee() {
 function ShopGrid() {
   const [filter, setFilter] = useState<ShopFilter>("All");
   const { add } = useCart();
+  const { user } = useAuth();
+  const isMember = user?.status === "approved";
   const items = filter === "All" ? products : products.filter((p) => p.memberOnly);
   return (
     <section className="border-b border-line">
@@ -56,7 +59,7 @@ function ShopGrid() {
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((p, i) => (
             <Reveal key={p.slug} delay={i * 60}>
-              <ShopCard p={p} onAdd={() => add(p)} />
+              <ShopCard p={p} onAdd={() => add(p)} isMember={isMember} />
             </Reveal>
           ))}
         </div>

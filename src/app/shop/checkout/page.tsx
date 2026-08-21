@@ -4,14 +4,20 @@ import { Suspense, useState } from "react";
 import { Shell } from "@/components/shells";
 import { PageHead, Btn } from "@/components/sections";
 import { CartProvider, useCart } from "@/components/interactive";
-import { submitOrder } from "@/lib/sheets";
 
 const DIR = 27;
+
+const PAYMENT_METHODS = [
+  { id: "fpx", label: "FPX", desc: "Online banking" },
+  { id: "tng", label: "TnG", desc: "Touch 'n Go eWallet" },
+  { id: "duitnow", label: "DuitNow", desc: "QR / bank transfer" },
+] as const;
 
 function CheckoutInner() {
   const { items, clear } = useCart();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState<string>("fpx");
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
 
@@ -26,21 +32,10 @@ function CheckoutInner() {
     setError(null);
     setSending(true);
 
-    const itemsStr = items.map((p) => p.name).join(", ");
-
-    await submitOrder({
-      name: name.trim(),
-      email: email.trim(),
-      items: itemsStr,
-      total,
-      paymentMethod: "pending",
-      paymentStatus: "initiated",
-    });
-
     const res = await fetch("/api/checkout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items }),
+      body: JSON.stringify({ items, paymentMethod }),
     });
     const data = await res.json();
     setSending(false);
@@ -113,13 +108,23 @@ function CheckoutInner() {
             <div className="mt-6 space-y-3">
               <p className="mono text-[11px] uppercase tracking-[0.16em] text-ink/50">Payment method</p>
               <div className="grid grid-cols-3 gap-2">
-                {["FPX", "TnG", "DuitNow"].map((m) => (
-                  <div key={m} className="flex items-center justify-center border border-line bg-cream px-3 py-2.5 text-[12px] font-bold uppercase tracking-[0.08em]">
-                    {m}
-                  </div>
+                {PAYMENT_METHODS.map((m) => (
+                  <button
+                    key={m.id}
+                    type="button"
+                    onClick={() => setPaymentMethod(m.id)}
+                    className={`flex flex-col items-center justify-center border px-3 py-2.5 text-[12px] font-bold uppercase tracking-[0.08em] transition-colors ${
+                      paymentMethod === m.id
+                        ? "border-2 border-brand bg-brand/10 text-brand"
+                        : "border border-line bg-cream text-ink/60 hover:border-ink hover:text-ink"
+                    }`}
+                  >
+                    <span>{m.label}</span>
+                    <span className="mt-0.5 text-[10px] normal-case tracking-normal text-ink/40">{m.desc}</span>
+                  </button>
                 ))}
               </div>
-              <p className="mono text-[10px] text-ink/40">You will be redirected to choose your bank or e-wallet.</p>
+              <p className="mono text-[10px] text-ink/40">You will be redirected to complete payment.</p>
             </div>
 
             <button

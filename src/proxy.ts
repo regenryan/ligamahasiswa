@@ -1,9 +1,20 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { decrypt } from "@/lib/session";
 
 const PROTECTED_ROUTES = ["/dashboard", "/member/edit"];
 const MEMBER_ROUTES = ["/constitution"];
+
+function decodeToken(token: string): Record<string, unknown> | null {
+  try {
+    const parts = token.split(".");
+    if (parts.length !== 3) return null;
+    const payload = JSON.parse(Buffer.from(parts[1], "base64url").toString("utf-8"));
+    if (payload.exp && payload.exp < Math.floor(Date.now() / 1000)) return null;
+    return payload;
+  } catch {
+    return null;
+  }
+}
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -21,20 +32,23 @@ export function proxy(request: NextRequest) {
 
   const token = request.cookies.get("liga-session")?.value;
 
-  if (isProtected) {
+  if (isProtected && !token) {
+    const loginUrl = new URL("/login", request.url);
+    loginUrl.searchParams.set("from", pathname);
+    return NextResponse.redirect(loginUrl);
+  }
+
+  if (isMemberOnly) {
     if (!token) {
       const loginUrl = new URL("/login", request.url);
       loginUrl.searchParams.set("from", pathname);
       return NextResponse.redirect(loginUrl);
     }
-  }
 
-  if (isMemberOnly && token) {
-    decrypt(token).then((session) => {
-      if (session?.status !== "approved") {
-        return NextResponse.redirect(new URL("/", request.url));
-      }
-    });
+    const payload = decodeToken(token);
+    if (!payload || payload.status !== "approved") {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
   }
 
   return NextResponse.next();

@@ -9,12 +9,12 @@ async function getCampaigns(): Promise<Campaign[]> {
   try {
     const rows = await readSheet("Campaigns");
     if (rows.length === 0) return mockCampaigns;
-    return rows.map((r) => ({
+      return rows.map((r) => ({
       slug: r.slug ?? "",
       chapterSlug: r.chapter_slug ?? "",
       title: r.title ?? "",
       status: (r.status as Campaign["status"]) ?? "Active",
-      summary: r.summary ?? "",
+      summary: r.summary ?? r.description ?? "",
       demands: r.demands ? JSON.parse(r.demands) : [],
       timeline: r.timeline ? JSON.parse(r.timeline) : [],
       hasTicker: r.has_ticker === "true",

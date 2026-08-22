@@ -2,6 +2,7 @@ import { Shell } from "@/components/shells";
 import { PageHead } from "@/components/sections/head";
 import { readSheet } from "@/lib/sheets-db";
 import Link from "next/link";
+import { ShareKit } from "@/components/ShareKit";
 
 async function getStatement(slug: string) {
   try {
@@ -64,6 +65,9 @@ export default async function StatementDetailPage({
           <Link href="/statements" className="press mt-8 inline-flex border border-line px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-ink hover:border-ink hover:text-brand transition-colors">
             {"\u2190"} All statements
           </Link>
+          <div className="mt-8">
+            <ShareKit title={statement.title} url={`https://ligamahasiswa.vercel.app/statements/${slug}`} />
+          </div>
         </div>
       </section>
     </Shell>

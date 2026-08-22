@@ -9,15 +9,15 @@ async function getEvents(): Promise<EventItem[]> {
   try {
     const rows = await readSheet("Events");
     if (rows.length === 0) return mockEvents;
-    return rows.map((r) => ({
+      return rows.map((r) => ({
       slug: r.slug ?? "",
       chapterSlug: r.chapter_slug ?? "",
       title: r.title ?? "",
       date: r.date ?? "",
       time: r.time ?? "",
-      place: r.place ?? "",
+      place: r.place ?? r.location ?? "",
       type: (r.type as EventItem["type"]) ?? "Forum",
-      blurb: r.blurb ?? "",
+      blurb: r.blurb ?? r.description ?? "",
     }));
   } catch {
     return mockEvents;

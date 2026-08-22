@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: false, error: "Invalid signature" }, { status: 401 });
     }
 
-    const { reference_no, status, payment_id, amount, currency } = body;
+    const { reference_no, status, payment_id, amount, currency, buyer_name, buyer_email, payment_method } = body;
 
     console.log(`[HitPay] Payment ${payment_id}: ${status} (${reference_no})`);
 
@@ -31,11 +31,11 @@ export async function POST(req: NextRequest) {
       hitpay_id: payment_id ?? "",
       amount: amount ?? "0",
       currency: currency ?? "MYR",
-      payment_method: "hitpay",
+      payment_method: payment_method ?? "hitpay",
       payment_status: status ?? "unknown",
-      items: "",
-      buyer_email: "",
-      buyer_name: "",
+      items: body.purpose ?? "",
+      buyer_email: buyer_email ?? "",
+      buyer_name: buyer_name ?? "",
       created_at: new Date().toISOString(),
     });
 

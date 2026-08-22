@@ -35,7 +35,7 @@ function CheckoutInner() {
     const res = await fetch("/api/checkout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items, paymentMethod }),
+      body: JSON.stringify({ items, paymentMethod, buyerName: name, buyerEmail: email }),
     });
     const data = await res.json();
     setSending(false);

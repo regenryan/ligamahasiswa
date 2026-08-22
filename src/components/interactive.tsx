@@ -136,22 +136,52 @@ export function useCart() {
 export function LikeButton({
   initial,
   label = "Likes",
+  targetType = "",
+  targetSlug = "",
 }: {
   initial: number;
   label?: string;
+  targetType?: string;
+  targetSlug?: string;
 }) {
   const [liked, setLiked] = useState(false);
   const [count, setCount] = useState(initial);
+  const [loading, setLoading] = useState(false);
+
+  const toggle = async () => {
+    if (loading) return;
+    if (!targetType || !targetSlug) {
+      setLiked((v) => {
+        setCount((c) => c + (v ? -1 : 1));
+        return !v;
+      });
+      return;
+    }
+    setLoading(true);
+    try {
+      const res = await fetch("/api/likes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ targetType, targetSlug }),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        setLiked(true);
+        setCount(data.count ?? count + 1);
+      }
+    } catch {
+      // ignore
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <button
       type="button"
       aria-pressed={liked}
-      onClick={() => {
-        setLiked((v) => {
-          setCount((c) => c + (v ? -1 : 1));
-          return !v;
-        });
-      }}
+      onClick={toggle}
+      disabled={loading}
       className={`press inline-flex items-center gap-2 border px-3 py-2 text-[12px] font-bold uppercase tracking-[0.12em] transition-colors ${
         liked
           ? "border-brand bg-brand/10 text-brand-text"

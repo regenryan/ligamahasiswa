@@ -4,6 +4,8 @@ import { readSheet } from "@/lib/sheets-db";
 import { events as mockEvents } from "@/lib/mock";
 import type { EventItem } from "@/lib/mock";
 import Link from "next/link";
+import { RsvpButton } from "@/components/RsvpButton";
+import { ShareKit } from "@/components/ShareKit";
 
 async function getEvent(slug: string): Promise<EventItem | null> {
   try {
@@ -16,9 +18,9 @@ async function getEvent(slug: string): Promise<EventItem | null> {
         title: r.title ?? "",
         date: r.date ?? "",
         time: r.time ?? "",
-        place: r.place ?? "",
+        place: r.place ?? r.location ?? "",
         type: (r.type as EventItem["type"]) ?? "Forum",
-        blurb: r.blurb ?? "",
+        blurb: r.blurb ?? r.description ?? "",
       };
     }
   } catch {
@@ -83,17 +85,15 @@ export default async function EventDetailPage({
                   <p className="text-[14px]">{event.type}</p>
                 </div>
               </div>
-              <Link
-                href="/register"
-                className="press mt-6 block w-full border border-2 border-ink bg-brand px-5 py-3 text-center text-[13px] font-extrabold uppercase tracking-[0.12em] text-white hover:opacity-90 transition-opacity duration-150"
-              >
-                RSVP
-              </Link>
+              <RsvpButton eventSlug={slug} />
             </div>
           </div>
           <Link href="/events" className="press mt-8 inline-flex border border-line px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-ink hover:border-ink hover:text-brand transition-colors">
             {"\u2190"} All events
           </Link>
+          <div className="mt-8">
+            <ShareKit title={event.title} url={`https://ligamahasiswa.vercel.app/events/${slug}`} />
+          </div>
         </div>
       </section>
     </Shell>

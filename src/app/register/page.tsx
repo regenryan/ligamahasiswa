@@ -4,7 +4,14 @@ import { useActionState } from "react";
 import Link from "next/link";
 import { registerAction, type AuthState } from "@/app/actions/auth";
 
-const CHAPTERS = ["Malaysia (national)", "UM", "UTM", "USM", "UniSZA", "SPARC UTeM"];
+const CHAPTERS: { slug: string; label: string }[] = [
+  { slug: "malaysia", label: "Malaysia (national)" },
+  { slug: "um", label: "UM" },
+  { slug: "utm", label: "UTM" },
+  { slug: "usm", label: "USM" },
+  { slug: "unisza", label: "UniSZA" },
+  { slug: "utem", label: "SPARC UTeM" },
+];
 
 function FieldError({ name, state }: { name: string; state: AuthState }) {
   const msg = state?.fieldErrors?.[name];
@@ -112,8 +119,8 @@ export default function RegisterPage() {
             >
               <option value="">Pick your chapter...</option>
               {CHAPTERS.map((c) => (
-                <option key={c} value={c}>
-                  {c}
+                <option key={c.slug} value={c.slug}>
+                  {c.label}
                 </option>
               ))}
             </select>

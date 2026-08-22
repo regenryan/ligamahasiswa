@@ -12,7 +12,7 @@ async function getConstitution() {
       section: r.section ?? "",
       title: r.title ?? "",
       content: r.content ?? "",
-      version: r.version ?? "1.0",
+      version: r.version ?? r.order ?? "1.0",
     }));
   } catch {
     return [];

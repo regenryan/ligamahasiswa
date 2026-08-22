@@ -1479,3 +1479,34 @@ Error: Module not found: Can't resolve './perks-grid'
 https://nextjs.org/docs/messages/module-not-found
 
 
+✓ Compiled in 483ms
+⨯ ./src/app/shop/page.tsx:12:1
+Error: Module not found: Can't resolve './shop-grid-client'
+  [90m10 |[0m [36mimport[0m { products [36mas[0m mockProducts } [36mfrom[0m [32m"@/lib/mock"[0m;
+  [90m11 |[0m [36mimport[0m [36mtype[0m { [33mProduct[0m } [36mfrom[0m [32m"@/lib/mock"[0m;
+[31m[1m>[0m [90m12 |[0m [36mimport[0m { [33mShopGridClient[0m } [36mfrom[0m [32m"./shop-grid-client"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m13 |[0m
+  [90m14 |[0m [36mconst[0m [33mDIR[0m = [35m27[0m;
+  [90m15 |[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/shop/page.tsx:12:1
+Error: Module not found: Can't resolve './shop-grid-client'
+  [90m10 |[0m [36mimport[0m { products [36mas[0m mockProducts } [36mfrom[0m [32m"@/lib/mock"[0m;
+  [90m11 |[0m [36mimport[0m [36mtype[0m { [33mProduct[0m } [36mfrom[0m [32m"@/lib/mock"[0m;
+[31m[1m>[0m [90m12 |[0m [36mimport[0m { [33mShopGridClient[0m } [36mfrom[0m [32m"./shop-grid-client"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m13 |[0m
+  [90m14 |[0m [36mconst[0m [33mDIR[0m = [35m27[0m;
+  [90m15 |[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+

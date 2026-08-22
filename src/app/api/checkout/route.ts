@@ -5,8 +5,11 @@ const HITPAY_API = "https://api.hit-pay.com/v1";
 
 export async function POST(req: Request) {
   try {
-    const { items } = (await req.json()) as {
+    const { items, paymentMethod, buyerName, buyerEmail } = (await req.json()) as {
       items: { name: string; price: string; tag: string }[];
+      paymentMethod?: string;
+      buyerName?: string;
+      buyerEmail?: string;
     };
 
     if (!items || items.length === 0) {
@@ -25,6 +28,7 @@ export async function POST(req: Request) {
       0,
     );
     const ref = `LM-${Date.now()}`;
+    const method = paymentMethod || "fpx";
 
     const params = new URLSearchParams({
       amount: String(total.toFixed(2)),
@@ -32,8 +36,12 @@ export async function POST(req: Request) {
       purpose: `Liga Mahasiswa - ${items.map((p) => p.name).join(", ")}`,
       reference_number: ref,
       redirect_url: `${config.siteUrl}/shop/checkout/success?ref=${ref}`,
-      "payment_methods[]": "fpx",
+      webhook_url: `${config.siteUrl}/api/payment/webhook`,
+      "payment_methods[]": method,
     });
+
+    if (buyerName) params.set("buyer_name", buyerName);
+    if (buyerEmail) params.set("buyer_email", buyerEmail);
 
     const res = await fetch(`${HITPAY_API}/payment-requests`, {
       method: "POST",

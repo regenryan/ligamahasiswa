@@ -4,7 +4,14 @@ import { useActionState } from "react";
 import Link from "next/link";
 import { submitZine } from "@/app/actions/zine";
 
-const CHAPTERS = ["Malaysia (national)", "UM", "UTM", "USM", "UniSZA", "SPARC UTeM"];
+const CHAPTERS: { slug: string; label: string }[] = [
+  { slug: "malaysia", label: "Malaysia (national)" },
+  { slug: "um", label: "UM" },
+  { slug: "utm", label: "UTM" },
+  { slug: "usm", label: "USM" },
+  { slug: "unisza", label: "UniSZA" },
+  { slug: "utem", label: "SPARC UTeM" },
+];
 
 export default function ZineSubmitPage() {
   const [state, action, pending] = useActionState(submitZine, undefined);
@@ -57,8 +64,8 @@ export default function ZineSubmitPage() {
             >
               <option value="">Pick your chapter...</option>
               {CHAPTERS.map((c) => (
-                <option key={c} value={c}>
-                  {c}
+                <option key={c.slug} value={c.slug}>
+                  {c.label}
                 </option>
               ))}
             </select>

@@ -7,10 +7,10 @@ async function getNominations() {
     const rows = await readSheet("PRK_Nominations");
     return rows.map((r) => ({
       id: r.id ?? "",
-      userId: r.user_id ?? "",
+      userId: r.user_id ?? r.name ?? "",
       chapterSlug: r.chapter_slug ?? "",
       position: r.position ?? "",
-      statement: r.statement ?? "",
+      statement: r.statement ?? r.platform ?? "",
       status: r.status ?? "pending",
     }));
   } catch {

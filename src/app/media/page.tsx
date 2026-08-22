@@ -7,7 +7,7 @@ const DIR = 27;
 
 type MediaEntry = {
   id: string;
-  type: "Article" | "Statement" | "Zine" | "Event";
+  type: "Article" | "Statement" | "Zine" | "Event" | "Social";
   title: string;
   excerpt: string;
   chapter: string;
@@ -82,6 +82,21 @@ async function getMediaEntries(): Promise<MediaEntry[]> {
     }
   } catch { /* */ }
 
+  try {
+    const social = await readSheet("Social");
+    for (const r of social) {
+      entries.push({
+        id: r.id ?? `social-${r.url}`,
+        type: "Social",
+        title: r.caption ?? r.platform ?? "Social post",
+        excerpt: `${(r.platform ?? "social").charAt(0).toUpperCase() + (r.platform ?? "social").slice(1)}`,
+        chapter: "malaysia",
+        date: r.date ?? r.created_at ?? "",
+        url: r.url ?? "#",
+      });
+    }
+  } catch { /* */ }
+
   return entries.sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
 }
 
@@ -90,6 +105,7 @@ const TYPE_SKIN: Record<MediaEntry["type"], string> = {
   Statement: "border-term/40 bg-term/10 text-term",
   Zine: "border-pink/40 bg-pink/10 text-pink",
   Event: "border-hi/40 bg-hi/10 text-hi",
+  Social: "border-ink/30 bg-ink/10 text-ink",
 };
 
 function chapterLabel(ch: string) {
@@ -114,7 +130,7 @@ export default async function MediaPage({
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const entries = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
-  const types = ["Article", "Statement", "Zine", "Event"] as const;
+  const types = ["Article", "Statement", "Zine", "Event", "Social"] as const;
 
   return (
     <Shell dir={DIR}>

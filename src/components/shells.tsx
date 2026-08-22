@@ -10,6 +10,7 @@ const NAV_LINKS = [
   { href: "/chapters/malaysia", label: "Chapters" },
   { href: "/shop", label: "Shop" },
   { href: "/zine", label: "Zine" },
+  { href: "/social", label: "Social" },
   { href: "/media", label: "Media" },
 ];
 
@@ -82,10 +83,14 @@ function Footer() {
   );
   const social = (
     <ul className="space-y-2.5 text-sm">
-      {["Instagram", "TikTok", "YouTube"].map((s) => (
-        <li key={s}>
-          <a className="text-fog/75 hover:text-brand transition-colors" href={`https://${s.toLowerCase()}.com`} target="_blank" rel="noreferrer">
-            {s}
+      {[
+        { name: "Instagram", href: "https://instagram.com/ligamahasiswa" },
+        { name: "TikTok", href: "https://tiktok.com/@ligamahasiswa" },
+        { name: "YouTube", href: "https://youtube.com/@ligamahasiswa" },
+      ].map((s) => (
+        <li key={s.name}>
+          <a className="text-fog/75 hover:text-brand transition-colors" href={s.href} target="_blank" rel="noreferrer">
+            {s.name}
           </a>
         </li>
       ))}

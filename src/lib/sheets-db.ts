@@ -17,7 +17,8 @@ type SheetName =
   | "Contact"
   | "News"
   | "Constitution"
-  | "Committee";
+  | "Committee"
+  | "Social";
 
 async function request(
   params: Record<string, string>,

@@ -115,9 +115,13 @@ function ContactInner() {
               <div>
                 <h3 className="display text-xl">Social</h3>
                 <div className="mt-2 flex flex-wrap gap-2">
-                  {["Instagram", "TikTok", "YouTube"].map((s) => (
-                    <a key={s} href={`https://${s.toLowerCase()}.com`} target="_blank" rel="noreferrer" className="border border-line px-3 py-2 text-[12px] font-bold uppercase tracking-[0.1em] text-ink/60 hover:border-ink hover:text-ink">
-                      {s}
+                  {[
+                    { name: "Instagram", href: "https://instagram.com/ligamahasiswa" },
+                    { name: "TikTok", href: "https://tiktok.com/@ligamahasiswa" },
+                    { name: "YouTube", href: "https://youtube.com/@ligamahasiswa" },
+                  ].map((s) => (
+                    <a key={s.name} href={s.href} target="_blank" rel="noreferrer" className="border border-line px-3 py-2 text-[12px] font-bold uppercase tracking-[0.1em] text-ink/60 hover:border-ink hover:text-ink">
+                      {s.name}
                     </a>
                   ))}
                 </div>

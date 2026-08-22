@@ -5,4 +5,5 @@ export const config = {
   hitpaySalt: process.env.HITPAY_SALT ?? "",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://ligamahasiswa.vercel.app",
   sessionSecret: process.env.SESSION_SECRET ?? "",
+  youtubeApiKey: process.env.YOUTUBE_API_KEY ?? "",
 } as const;

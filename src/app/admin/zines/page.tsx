@@ -20,6 +20,11 @@ export default async function AdminZinesPage() {
     );
   }
 
-  const zines = await readSheet("Zines").catch(() => []);
+  const isAdmin = user.role === "admin";
+
+  const zines = isAdmin
+    ? await readSheet("Zines").catch(() => [])
+    : await readSheet("Zines", { chapter_slug: user.chapterSlug }).catch(() => []);
+
   return <AdminZinesClient zines={zines} />;
 }

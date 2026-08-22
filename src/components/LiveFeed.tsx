@@ -7,23 +7,33 @@ interface NewsItem {
   title: string;
   url: string;
   fetchedAt: string;
+  topic: string;
 }
+
+const TOPICS = ["", "AUKU", "PTPTN", "campus", "policy", "rights"];
 
 export function LiveFeed() {
   const [items, setItems] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [topic, setTopic] = useState("");
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const LIMIT = 8;
 
   useEffect(() => {
     let active = true;
 
     const fetchNews = async () => {
       try {
-        const res = await fetch("/api/news");
+        const params = new URLSearchParams({ page: String(page), limit: String(LIMIT) });
+        if (topic) params.set("topic", topic);
+        const res = await fetch(`/api/news?${params}`);
         if (res.ok) {
           const data = await res.json();
           if (active && data.ok) {
             startTransition(() => {
               setItems(data.items ?? []);
+              setTotal(data.total ?? 0);
             });
           }
         }
@@ -35,13 +45,8 @@ export function LiveFeed() {
     };
 
     fetchNews();
-    const interval = setInterval(fetchNews, 60000);
-
-    return () => {
-      active = false;
-      clearInterval(interval);
-    };
-  }, []);
+    return () => { active = false; };
+  }, [page, topic]);
 
   if (loading && items.length === 0) {
     return null;
@@ -50,6 +55,8 @@ export function LiveFeed() {
   if (items.length === 0) {
     return null;
   }
+
+  const totalPages = Math.max(1, Math.ceil(total / LIMIT));
 
   return (
     <div className="overflow-hidden border-b border-line bg-midnight">
@@ -80,6 +87,24 @@ export function LiveFeed() {
             </div>
           </div>
         </div>
+        {TOPICS.length > 1 ? (
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            {TOPICS.map((t) => (
+              <button
+                key={t}
+                type="button"
+                onClick={() => { setTopic(t); setPage(1); }}
+                className={`mono border px-2 py-0.5 text-[10px] uppercase tracking-[0.1em] transition-colors ${
+                  topic === t
+                    ? "border-brand bg-brand/10 text-brand"
+                    : "border-fog/20 text-fog/50 hover:border-fog/40 hover:text-fog/70"
+                }`}
+              >
+                {t || "All"}
+              </button>
+            ))}
+          </div>
+        ) : null}
       </div>
     </div>
   );

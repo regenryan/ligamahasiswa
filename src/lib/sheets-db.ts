@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { config } from "@/lib/config";
 
 type SheetName =
@@ -20,7 +21,13 @@ type SheetName =
   | "Committee"
   | "Social";
 
-async function request(
+type ReadOptions = {
+  filters?: Record<string, string>;
+  limit?: number;
+  offset?: number;
+};
+
+async function rawRequest(
   params: Record<string, string>,
 ): Promise<unknown> {
   if (!config.appsScriptUrl) {
@@ -40,21 +47,31 @@ async function request(
   return res.json();
 }
 
-export async function readSheet(
+async function readSheetImpl(
   sheet: SheetName,
-  filters?: Record<string, string>,
+  options?: ReadOptions | Record<string, string>,
 ): Promise<Record<string, string>[]> {
+  const opts: ReadOptions = options && "filters" in options ? options : { filters: options as Record<string, string> | undefined };
   const params: Record<string, string> = { sheet, action: "read" };
-  if (filters) {
-    for (const [k, v] of Object.entries(filters)) {
+  if (opts.filters) {
+    for (const [k, v] of Object.entries(opts.filters)) {
       params[`filter_${k}`] = v;
     }
   }
-  const data = (await request(params)) as {
+  const data = (await rawRequest(params)) as {
     rows?: Record<string, string>[];
   };
-  return data.rows ?? [];
+  let rows = data.rows ?? [];
+  if (opts.offset && opts.offset > 0) {
+    rows = rows.slice(opts.offset);
+  }
+  if (opts.limit && opts.limit > 0) {
+    rows = rows.slice(0, opts.limit);
+  }
+  return rows;
 }
+
+export const readSheet = cache(readSheetImpl) as typeof readSheetImpl;
 
 export async function findRow(
   sheet: SheetName,
@@ -67,7 +84,7 @@ export async function findRow(
     field,
     value,
   };
-  const data = (await request(params)) as { row?: Record<string, string> };
+  const data = (await rawRequest(params)) as { row?: Record<string, string> };
   return data.row ?? null;
 }
 
@@ -127,4 +144,4 @@ export async function updateSheet(
   }
 }
 
-export type { SheetName };
+export type { SheetName, ReadOptions };

@@ -1,7 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { StatusChip, Btn } from "@/components/sections/head";
-import { LikeButton } from "@/components/interactive";
+import { LikeButton, ShareButton } from "@/components/interactive";
 import type { Campaign, EventItem, MediaItem, Member, Product, ZinePost } from "@/lib/mock";
 
 const FRAME = "border border-line bg-cream card-hover";
@@ -67,19 +68,27 @@ export function ShopCard({ p, onAdd, isMember = false }: { p: Product; onAdd: ()
   const canAdd = !p.memberOnly || isMember;
   return (
     <div className={`flex h-full flex-col p-5 ${FRAME}`}>
-      <div className="flex items-center justify-between">
-        <span className="mono text-[11px] uppercase tracking-[0.16em] text-ink/50">{p.tag}</span>
-      </div>
-      <div className="my-4 flex aspect-square items-center justify-center border border-line bg-midnight">
-        <span className="mono text-[11px] uppercase tracking-[0.16em] text-ink/30">{p.tag}</span>
-      </div>
-      <p className="display text-xl leading-tight font-bold">{p.name}</p>
-      <p className="mt-2 display text-2xl leading-none">{p.price}</p>
-      <p className="mono mt-1 text-[10px] uppercase tracking-[0.14em] text-ink/40">{p.memberOnly ? "Members only" : "Open to all"}</p>
+      <Link href={`/shop/${p.slug}`} className="block">
+        <div className="flex items-center justify-between">
+          <span className="mono text-[11px] uppercase tracking-[0.16em] text-ink/50">{p.tag}</span>
+          {p.preorder ? (
+            <span className="border border-hi/40 bg-hi/10 px-1.5 py-0.5 text-[9px] font-extrabold uppercase tracking-[0.12em] text-hi">Preorder</span>
+          ) : null}
+        </div>
+        <div className="my-4 flex aspect-square items-center justify-center border border-line bg-midnight">
+          <span className="mono text-[11px] uppercase tracking-[0.16em] text-ink/30">{p.tag}</span>
+        </div>
+        <p className="display text-xl leading-tight font-bold">{p.name}</p>
+        <p className="mt-2 display text-2xl leading-none">{p.price}</p>
+        <p className="mono mt-1 text-[10px] uppercase tracking-[0.14em] text-ink/40">{p.memberOnly ? "Members only" : "Open to all"}</p>
+        {p.preorder && p.deliveryEstimate ? (
+          <p className="mono mt-1 text-[10px] uppercase tracking-[0.14em] text-hi">Est. delivery: {p.deliveryEstimate}</p>
+        ) : null}
+      </Link>
       <div className="mt-4 flex-1" />
       {canAdd ? (
         <Btn kind="join" className="w-full" onClick={onAdd}>
-          Add to cart
+          {p.preorder ? "Preorder" : "Add to cart"}
         </Btn>
       ) : (
         <Btn kind="ghost" className="w-full" href="/register">
@@ -103,7 +112,10 @@ export function ZineCard({ z }: { z: ZinePost }) {
       <p className="mt-3 flex-1 text-[14px] leading-relaxed text-ink/70">{z.excerpt}</p>
       <div className="mt-5 flex items-center justify-between border-t border-line pt-4">
         <span className="text-[13px] font-bold text-ink/60">{z.author}</span>
-        <LikeButton initial={z.likes} />
+        <div className="flex items-center gap-3">
+          <LikeButton initial={z.likes} />
+          <ShareButton title={z.title} url={`https://ligamahasiswa.vercel.app/zine`} />
+        </div>
       </div>
     </article>
   );

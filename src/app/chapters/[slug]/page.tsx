@@ -8,6 +8,7 @@ import { MalaysiaMap } from "@/components/MalaysiaMap";
 import { ShareKit } from "@/components/ShareKit";
 
 type CommitteeMember = { name: string; role: string; email: string; id: string };
+type SocialPost = { id: string; platform: string; url: string; caption: string };
 
 const DIR = 27;
 
@@ -85,6 +86,20 @@ async function getChapterLeadership(slug: string): Promise<CommitteeMember[]> {
     .map((m) => ({ id: m.name.toLowerCase().replace(/\s+/g, ""), name: m.name, role: m.role, email: "" }));
 }
 
+async function getChapterSocialPosts(slug: string): Promise<SocialPost[]> {
+  try {
+    const rows = await readSheet("Social", { chapter_slug: slug });
+    return rows.slice(0, 4).map((r) => ({
+      id: r.id ?? `social-${r.url}`,
+      platform: (r.platform ?? "instagram").toLowerCase(),
+      url: r.url ?? "#",
+      caption: r.caption ?? "",
+    }));
+  } catch {
+    return [];
+  }
+}
+
 function StatsStrip({
   memberCount,
   campaignCount,
@@ -124,6 +139,7 @@ export default async function ChapterPage({
   const events = await getChapterEvents(slug);
   const memberCount = await getChapterMemberCount(slug);
   const leadership = await getChapterLeadership(slug);
+  const socialPosts = await getChapterSocialPosts(slug);
   const leadCampaign = campaigns[0];
 
   return (
@@ -183,6 +199,28 @@ export default async function ChapterPage({
           </div>
         </div>
       </section>
+      {socialPosts.length > 0 ? (
+        <section className="border-b border-line">
+          <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+            <SectionHead index={3} title="Social" sub="Latest from our social channels." />
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              {socialPosts.map((p) => (
+                <a key={p.id} href={p.url} target="_blank" rel="noreferrer" className="border border-line bg-cream p-4 hover:border-brand transition-colors">
+                  <span className={`inline-flex border px-1.5 py-0.5 text-[9px] font-extrabold uppercase tracking-[0.12em] ${
+                    p.platform === "instagram" ? "border-pink/40 bg-pink/10 text-pink" :
+                    p.platform === "youtube" ? "border-brand/40 bg-brand/10 text-brand-text" :
+                    "border-ink/40 bg-ink/10 text-ink"
+                  }`}>{p.platform}</span>
+                  <p className="mt-2 text-[14px] text-ink/70 line-clamp-2">{p.caption}</p>
+                </a>
+              ))}
+            </div>
+            <Link href="/social" className="press mt-6 inline-flex border border-line px-4 py-2 text-[12px] font-bold uppercase tracking-[0.1em] text-ink/60 hover:border-ink hover:text-ink transition-colors">
+              View all social
+            </Link>
+          </div>
+        </section>
+      ) : null}
       <section className="border-b border-line">
         <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-3 px-4 py-10 sm:px-6">
           <span className="mono mr-1 text-[11px] uppercase tracking-[0.2em] text-ink/50">Jump to</span>

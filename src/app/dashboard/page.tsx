@@ -3,6 +3,7 @@ import { Shell } from "@/components/shells";
 import { PageHead } from "@/components/sections";
 import { requireAuth } from "@/lib/auth";
 import { readSheet } from "@/lib/sheets-db";
+import { ProfileForm } from "./profile-form";
 
 const DIR = 27;
 
@@ -127,6 +128,16 @@ export default async function DashboardPage() {
               </Link>
             </div>
           )}
+        </div>
+      </section>
+
+      <section className="border-b border-line">
+        <div className="mx-auto w-full max-w-3xl px-4 py-14 sm:px-6">
+          <h2 className="display text-2xl">Edit profile</h2>
+          <p className="mt-2 text-[14px] text-ink/60">Update your name, chapter, and phone number.</p>
+          <div className="mt-6 max-w-md">
+            <ProfileForm name={user.name} chapterSlug={user.chapterSlug} phone={user.phone} />
+          </div>
         </div>
       </section>
 

@@ -26,6 +26,8 @@ async function getProducts(): Promise<Product[]> {
         price: r.price ?? "",
         tag: r.tag ?? "",
         memberOnly: r.member_only === "true",
+        preorder: r.preorder === "true",
+        deliveryEstimate: r.delivery_estimate ?? "",
       }));
   } catch {
     return mockProducts;

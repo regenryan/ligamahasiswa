@@ -61,6 +61,8 @@ export type Product = {
   price: string;
   tag: string;
   memberOnly: boolean;
+  preorder: boolean;
+  deliveryEstimate: string;
 };
 
 export const chapters: Chapter[] = [
@@ -378,6 +380,8 @@ export const products: Product[] = [
     price: "RM39",
     tag: "Preorder",
     memberOnly: false,
+    preorder: true,
+    deliveryEstimate: "2-3 weeks",
   },
   {
     slug: "pin-kad-merah",
@@ -386,6 +390,8 @@ export const products: Product[] = [
     price: "RM12",
     tag: "Ready stock",
     memberOnly: false,
+    preorder: false,
+    deliveryEstimate: "",
   },
   {
     slug: "sticker-kampung",
@@ -394,6 +400,8 @@ export const products: Product[] = [
     price: "RM10",
     tag: "Ready stock",
     memberOnly: false,
+    preorder: false,
+    deliveryEstimate: "",
   },
   {
     slug: "tote-kampus-bebas",
@@ -402,6 +410,8 @@ export const products: Product[] = [
     price: "RM35",
     tag: "Ready stock",
     memberOnly: false,
+    preorder: false,
+    deliveryEstimate: "",
   },
   {
     slug: "hoodie-liga",
@@ -410,6 +420,8 @@ export const products: Product[] = [
     price: "RM89",
     tag: "Member exclusive",
     memberOnly: true,
+    preorder: false,
+    deliveryEstimate: "",
   },
   {
     slug: "lanyard-member",
@@ -418,6 +430,8 @@ export const products: Product[] = [
     price: "RM15",
     tag: "Member exclusive",
     memberOnly: true,
+    preorder: false,
+    deliveryEstimate: "",
   },
 ];
 

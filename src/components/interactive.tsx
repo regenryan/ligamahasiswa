@@ -200,6 +200,33 @@ export function LikeButton({
   );
 }
 
+export function ShareButton({ title, url }: { title: string; url: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleShare = async () => {
+    const text = `${title} — Liga Mahasiswa ${url}`;
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      if (navigator.share) {
+        await navigator.share({ title, url });
+      }
+    }
+  };
+
+  return (
+    <button
+      type="button"
+      onClick={handleShare}
+      className="inline-flex items-center gap-1 text-[12px] text-ink/40 hover:text-brand transition-colors"
+    >
+      <span>{copied ? "Copied!" : "Share"}</span>
+    </button>
+  );
+}
+
 export function FilterPills<T extends string>({
   options,
   value,

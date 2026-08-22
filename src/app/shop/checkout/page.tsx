@@ -77,8 +77,16 @@ function CheckoutInner() {
               {items.map((p) => (
                 <li key={p.slug} className="flex items-center justify-between border border-line bg-cream px-4 py-3">
                   <div>
-                    <p className="text-[14px] font-bold">{p.name}</p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-[14px] font-bold">{p.name}</p>
+                      {p.preorder ? (
+                        <span className="border border-hi/40 bg-hi/10 px-1.5 py-0.5 text-[9px] font-extrabold uppercase tracking-[0.12em] text-hi">Preorder</span>
+                      ) : null}
+                    </div>
                     <p className="mono text-[12px] text-ink/50">{p.tag}</p>
+                    {p.preorder && p.deliveryEstimate ? (
+                      <p className="mono text-[11px] text-hi/70">Est. delivery: {p.deliveryEstimate}</p>
+                    ) : null}
                   </div>
                   <span className="mono text-[14px] font-bold">{p.price}</span>
                 </li>

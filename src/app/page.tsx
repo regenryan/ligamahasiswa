@@ -12,6 +12,7 @@ import {
 } from "@/components/sections";
 import { CartProvider } from "@/components/interactive";
 import { LiveFeed } from "@/components/LiveFeed";
+import { SocialStrip } from "@/components/sections/social-strip";
 import { campaigns } from "@/lib/mock";
 
 const DIR = 27;
@@ -28,6 +29,7 @@ export default function Home() {
         <CartProvider>
           <ShopStrip />
         </CartProvider>
+        <SocialStrip />
         <StoryStrip />
         <JoinBand />
         <NewsletterBand />

@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { readSheet, writeSheet } from "@/lib/sheets-db";
 import { getSession } from "@/lib/session";
 
+function getClientIp(req: NextRequest): string {
+  return req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+}
+
 export async function POST(req: NextRequest) {
   try {
     const { targetType, targetSlug } = (await req.json()) as {
@@ -28,11 +32,26 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: false, error: "Already liked" }, { status: 409 });
     }
 
+    const ip = getClientIp(req);
+    const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+    let recentLikes: Record<string, string>[] = [];
+    try {
+      const allUserLikes = await readSheet("Likes", { user_id: session.userId });
+      recentLikes = allUserLikes.filter((l) => (l.created_at ?? "") > oneHourAgo);
+    } catch {
+      // proceed if rate check fails
+    }
+
+    if (recentLikes.length >= 10) {
+      return NextResponse.json({ ok: false, error: "Rate limit: max 10 likes per hour" }, { status: 429 });
+    }
+
     await writeSheet("Likes", {
       id: `like_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
       user_id: session.userId,
       target_type: targetType,
       target_slug: targetSlug,
+      ip,
       created_at: new Date().toISOString(),
     });
 

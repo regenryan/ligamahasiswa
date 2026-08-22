@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { readSheet, writeSheet, updateSheet } from "@/lib/sheets-db";
 import { getSession } from "@/lib/session";
 
+function getClientIp(req: NextRequest): string {
+  return req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+}
+
 export async function POST(req: NextRequest) {
   try {
     const { eventSlug } = (await req.json()) as { eventSlug: string };
@@ -24,11 +28,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: false, error: "Already RSVPed" }, { status: 409 });
     }
 
+    const ip = getClientIp(req);
+
     await writeSheet("RSVPs", {
       id: `rsvp_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
       user_id: session.userId,
       event_slug: eventSlug,
       status: "going",
+      ip,
       created_at: new Date().toISOString(),
     });
 
@@ -40,7 +47,7 @@ export async function POST(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   try {
-    await req.json(); // consume body
+    await req.json();
 
     const session = await getSession();
     if (!session?.userId) {

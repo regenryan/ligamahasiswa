@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { config } from "@/lib/config";
+import { writeSheet } from "@/lib/sheets-db";
 
 const HITPAY_API = "https://api.hit-pay.com/v1";
 
@@ -29,6 +30,19 @@ export async function POST(req: Request) {
     );
     const ref = `LM-${Date.now()}`;
     const method = paymentMethod || "fpx";
+
+    await writeSheet("Orders", {
+      id: ref,
+      hitpay_id: "",
+      amount: total.toFixed(2),
+      currency: "MYR",
+      payment_method: method,
+      payment_status: "pending",
+      items: items.map((p) => p.name).join(", "),
+      buyer_email: buyerEmail ?? "",
+      buyer_name: buyerName ?? "",
+      created_at: new Date().toISOString(),
+    });
 
     const params = new URLSearchParams({
       amount: String(total.toFixed(2)),

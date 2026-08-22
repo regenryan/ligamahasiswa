@@ -5,6 +5,9 @@ import { chapters as mockChapters, campaigns as mockCampaigns, events as mockEve
 import type { Campaign, EventItem } from "@/lib/mock";
 import Link from "next/link";
 import { MalaysiaMap } from "@/components/MalaysiaMap";
+import { ShareKit } from "@/components/ShareKit";
+
+type CommitteeMember = { name: string; role: string; email: string; id: string };
 
 const DIR = 27;
 
@@ -63,6 +66,25 @@ async function getChapterMemberCount(slug: string): Promise<number> {
   }
 }
 
+async function getChapterLeadership(slug: string): Promise<CommitteeMember[]> {
+  try {
+    const rows = await readSheet("Committee", { chapter: slug });
+    if (rows.length > 0) {
+      return rows.map((r) => ({
+        id: r.id ?? r.name?.toLowerCase().replace(/\s+/g, "") ?? "",
+        name: r.name ?? "",
+        role: r.title ?? "",
+        email: r.email ?? "",
+      }));
+    }
+  } catch {
+    // fall through
+  }
+  return mockMembers
+    .filter((m) => m.chapterSlug === slug && m.role !== "Member")
+    .map((m) => ({ id: m.name.toLowerCase().replace(/\s+/g, ""), name: m.name, role: m.role, email: "" }));
+}
+
 function StatsStrip({
   memberCount,
   campaignCount,
@@ -101,12 +123,32 @@ export default async function ChapterPage({
   const campaigns = await getChapterCampaigns(slug);
   const events = await getChapterEvents(slug);
   const memberCount = await getChapterMemberCount(slug);
+  const leadership = await getChapterLeadership(slug);
   const leadCampaign = campaigns[0];
 
   return (
     <Shell dir={DIR}>
       <PageHead kicker="Chapters" title={ch.name} sub={ch.tagline} />
       <StatsStrip memberCount={memberCount} campaignCount={campaigns.length} />
+      {leadership.length > 0 ? (
+        <section className="border-b border-line">
+          <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+            <SectionHead index={0} title="Leadership" sub="The people leading this chapter." />
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {leadership.map((m) => (
+                <Link key={m.id} href={`/member/${m.id}`} className="group border border-line bg-cream p-5 hover:border-brand transition-colors">
+                  <p className="mono text-[11px] uppercase tracking-[0.14em] text-ink/50">{m.role}</p>
+                  <h3 className="mt-2 display text-xl group-hover:text-brand transition-colors">{m.name}</h3>
+                  {m.email ? <p className="mono mt-1 text-[12px] text-ink/40">{m.email}</p> : null}
+                </Link>
+              ))}
+            </div>
+            <Link href={`/chapters/${slug}/team`} className="press mt-6 inline-flex border border-line px-4 py-2 text-[12px] font-extrabold uppercase tracking-[0.12em] text-ink/60 hover:border-ink hover:text-brand transition-colors">
+              Full team
+            </Link>
+          </div>
+        </section>
+      ) : null}
       <section className="border-b border-line">
         <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
           <SectionHead index={0} title="Our chapters" sub="Find your campus. Every chapter runs its own campaigns and events." />
@@ -148,12 +190,33 @@ export default async function ChapterPage({
             <span>Meet the team</span>
             <span className="normal-case tracking-normal text-ink/50">The people behind the chapter</span>
           </Link>
+          <Link href={`/chapters/${slug}/campaigns`} className="press inline-flex flex-col gap-1 border-2 border-ink bg-brand/10 px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-ink hover:bg-ink hover:text-paper">
+            <span>Campaigns</span>
+            <span className="normal-case tracking-normal text-ink/50">All campaigns</span>
+          </Link>
+          <Link href={`/chapters/${slug}/events`} className="press inline-flex flex-col gap-1 border-2 border-ink bg-brand/10 px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-ink hover:bg-ink hover:text-paper">
+            <span>Events</span>
+            <span className="normal-case tracking-normal text-ink/50">All events</span>
+          </Link>
+          <Link href={`/chapters/${slug}/statements`} className="press inline-flex flex-col gap-1 border-2 border-ink bg-brand/10 px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-ink hover:bg-ink hover:text-paper">
+            <span>Statements</span>
+            <span className="normal-case tracking-normal text-ink/50">Official statements</span>
+          </Link>
+          <Link href={`/chapters/${slug}/gallery`} className="press inline-flex flex-col gap-1 border-2 border-ink bg-brand/10 px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-ink hover:bg-ink hover:text-paper">
+            <span>Gallery</span>
+            <span className="normal-case tracking-normal text-ink/50">Photos and moments</span>
+          </Link>
           {leadCampaign ? (
             <Link href={`/chapters/${leadCampaign.chapterSlug}/campaigns/${leadCampaign.slug}`} className="press inline-flex flex-col gap-1 border-2 border-ink bg-brand/10 px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-ink hover:bg-ink hover:text-paper">
               <span>Featured campaign</span>
               <span className="normal-case tracking-normal text-ink/50">What this chapter is fighting for</span>
             </Link>
           ) : null}
+        </div>
+      </section>
+      <section className="border-b border-line">
+        <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6">
+          <ShareKit title={`${ch.name} - Liga Mahasiswa`} url={`https://ligamahasiswa.vercel.app/chapters/${slug}`} />
         </div>
       </section>
     </Shell>

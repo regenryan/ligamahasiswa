@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { config } from "@/lib/config";
-import { writeSheet } from "@/lib/sheets-db";
+import { readSheet, updateSheet, writeSheet } from "@/lib/sheets-db";
 
 export async function POST(req: NextRequest) {
   try {
@@ -26,18 +26,33 @@ export async function POST(req: NextRequest) {
 
     console.log(`[HitPay] Payment ${payment_id}: ${status} (${reference_no})`);
 
-    await writeSheet("Orders", {
-      id: reference_no ?? `order_${Date.now()}`,
-      hitpay_id: payment_id ?? "",
-      amount: amount ?? "0",
-      currency: currency ?? "MYR",
-      payment_method: payment_method ?? "hitpay",
-      payment_status: status ?? "unknown",
-      items: body.purpose ?? "",
-      buyer_email: buyer_email ?? "",
-      buyer_name: buyer_name ?? "",
-      created_at: new Date().toISOString(),
-    });
+    const existing = await readSheet("Orders", { id: reference_no }).catch(() => []);
+
+    if (existing.length > 0) {
+      await updateSheet("Orders", "id", reference_no, {
+        hitpay_id: payment_id ?? "",
+        payment_status: status ?? "unknown",
+        amount: amount ?? existing[0].amount ?? "0",
+        currency: currency ?? "MYR",
+        payment_method: payment_method ?? "hitpay",
+        buyer_name: buyer_name ?? existing[0].buyer_name ?? "",
+        buyer_email: buyer_email ?? existing[0].buyer_email ?? "",
+        updated_at: new Date().toISOString(),
+      });
+    } else {
+      await writeSheet("Orders", {
+        id: reference_no ?? `order_${Date.now()}`,
+        hitpay_id: payment_id ?? "",
+        amount: amount ?? "0",
+        currency: currency ?? "MYR",
+        payment_method: payment_method ?? "hitpay",
+        payment_status: status ?? "unknown",
+        items: body.purpose ?? "",
+        buyer_email: buyer_email ?? "",
+        buyer_name: buyer_name ?? "",
+        created_at: new Date().toISOString(),
+      });
+    }
 
     return NextResponse.json({ ok: true });
   } catch (err) {

@@ -16,6 +16,7 @@ import {
 } from "@/components/sections";
 import { Reveal, Accordion } from "@/components/interactive";
 import { Placeholder } from "@/components/Placeholder";
+import { ShareKit } from "@/components/ShareKit";
 import { getCampaign, getChapter, campaigns, type Campaign } from "@/lib/mock";
 
 const DIR = 27;
@@ -155,6 +156,11 @@ export default function CampaignPage() {
         </section>
         <NextSteps />
         <CampaignSection items={related} headline="Related campaigns" />
+        <section className="border-b border-line">
+          <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6">
+            <ShareKit title={campaign.title} url={`https://ligamahasiswa.vercel.app/chapters/${slug}/campaigns/${campaignSlug}`} />
+          </div>
+        </section>
         <JoinBand />
         <NewsletterBand />
       </Shell>

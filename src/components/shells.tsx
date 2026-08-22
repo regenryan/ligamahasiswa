@@ -10,8 +10,7 @@ const NAV_LINKS = [
   { href: "/chapters/malaysia", label: "Chapters" },
   { href: "/shop", label: "Shop" },
   { href: "/zine", label: "Zine" },
-  { href: "/media", label: "Coverage" },
-  { href: "/contact", label: "Contact" },
+  { href: "/media", label: "Media" },
 ];
 
 type DirProps = { dir: number };
@@ -107,8 +106,14 @@ function Footer() {
           </div>
           <div>
             <p className="mono mb-3 text-[11px] tracking-[0.18em] text-fog/50">Contact</p>
-            <p className="mt-3 text-sm text-fog/75">contact@ligamahasiswa.my</p>
-            <p className="text-sm text-fog/75">admin@ligamahasiswa.my</p>
+            <ul className="space-y-2.5 text-sm">
+              <li><a href="mailto:contact@ligamahasiswa.my" className="text-fog/75 hover:text-brand transition-colors">contact@ligamahasiswa.my</a></li>
+              <li><a href="mailto:admin@ligamahasiswa.my" className="text-fog/75 hover:text-brand transition-colors">admin@ligamahasiswa.my</a></li>
+            </ul>
+            <p className="mono mt-4 mb-1 text-[11px] tracking-[0.18em] text-fog/50">Legal</p>
+            <ul className="space-y-2.5 text-sm">
+              <li><Link href="/constitution" className="text-fog/75 hover:text-brand transition-colors">Constitution</Link></li>
+            </ul>
           </div>
         </div>
         <div className="mt-8 flex flex-wrap items-center justify-between gap-2 border-t border-fog/20 pt-4">

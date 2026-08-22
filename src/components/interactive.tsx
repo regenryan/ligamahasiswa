@@ -339,12 +339,14 @@ export function Accordion({
 
 export function NewsletterForm() {
   const [email, setEmail] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
   const [done, setDone] = useState(false);
   const id = useId();
 
   const submit = async () => {
+    if (honeypot) { setDone(true); return; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setError("Enter a valid email address.");
       return;
@@ -378,6 +380,9 @@ export function NewsletterForm() {
           <label className="sr-only" htmlFor={id}>
             Email address
           </label>
+          <div className="sr-only" aria-hidden="true">
+            <input tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} name="website" />
+          </div>
           <input
             id={id}
             type="email"

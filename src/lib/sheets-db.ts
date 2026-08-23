@@ -30,9 +30,7 @@ type ReadOptions = {
   offset?: number;
 };
 
-async function rawRequest(
-  params: Record<string, string>,
-): Promise<unknown> {
+function buildUrl(params: Record<string, string>): string {
   if (!config.appsScriptUrl) {
     throw new Error("Apps Script URL not configured");
   }
@@ -43,7 +41,14 @@ async function rawRequest(
   if (config.appsScriptApiKey) {
     url.searchParams.set("key", config.appsScriptApiKey);
   }
-  const res = await fetch(url.toString());
+  return url.toString();
+}
+
+async function doGetRequest(
+  params: Record<string, string>,
+): Promise<unknown> {
+  const url = buildUrl(params);
+  const res = await fetch(url);
   if (!res.ok) {
     throw new Error(`Sheets API error: ${res.status}`);
   }
@@ -61,7 +66,7 @@ async function readSheetImpl(
       params[`filter_${k}`] = v;
     }
   }
-  const data = (await rawRequest(params)) as {
+  const data = (await doGetRequest(params)) as {
     rows?: Record<string, string>[];
   };
   let rows = data.rows ?? [];
@@ -87,7 +92,7 @@ export async function findRow(
     field,
     value,
   };
-  const data = (await rawRequest(params)) as { row?: Record<string, string> };
+  const data = (await doGetRequest(params)) as { row?: Record<string, string> };
   return data.row ?? null;
 }
 
@@ -95,18 +100,21 @@ export async function writeSheet(
   sheet: SheetName,
   row: Record<string, string>,
 ): Promise<{ ok: boolean; _row?: number; error?: string }> {
-  if (!config.appsScriptUrl) {
-    return { ok: false, error: "Apps Script URL not configured" };
-  }
   try {
-    const res = await fetch(config.appsScriptUrl, {
-      method: "POST",
-      mode: "no-cors",
-      body: JSON.stringify({ _sheet: sheet, _row: row }),
-      headers: { "Content-Type": "text/plain" },
-    });
-    void res;
-    return { ok: true };
+    const params: Record<string, string> = {
+      sheet,
+      action: "write",
+      row_data: JSON.stringify(row),
+    };
+    const data = (await doGetRequest(params)) as {
+      ok?: boolean;
+      _row?: number;
+      error?: string;
+    };
+    if (data.error) {
+      return { ok: false, error: data.error };
+    }
+    return { ok: true, _row: data._row };
   } catch (err) {
     return {
       ok: false,
@@ -121,23 +129,21 @@ export async function updateSheet(
   matchValue: string,
   updates: Record<string, string>,
 ): Promise<{ ok: boolean; error?: string }> {
-  if (!config.appsScriptUrl) {
-    return { ok: false, error: "Apps Script URL not configured" };
-  }
   try {
-    const res = await fetch(config.appsScriptUrl, {
-      method: "POST",
-      mode: "no-cors",
-      body: JSON.stringify({
-        _sheet: sheet,
-        _action: "update",
-        _matchField: matchField,
-        _matchValue: matchValue,
-        _updates: updates,
-      }),
-      headers: { "Content-Type": "text/plain" },
-    });
-    void res;
+    const params: Record<string, string> = {
+      sheet,
+      action: "update",
+      matchField,
+      matchValue,
+      updates_data: JSON.stringify(updates),
+    };
+    const data = (await doGetRequest(params)) as {
+      ok?: boolean;
+      error?: string;
+    };
+    if (data.error) {
+      return { ok: false, error: data.error };
+    }
     return { ok: true };
   } catch (err) {
     return {

@@ -171,9 +171,10 @@ function handleWrite(sheet, row) {
     values.push(val !== undefined && val !== null ? String(val) : "");
   }
 
-  var newRow = sheet.appendRow(values);
+  sheet.appendRow(values);
+  var lastRow = sheet.getLastRow();
 
-  return textResponse({ ok: true, _row: newRow.getRowNumber() });
+  return textResponse({ ok: true, _row: lastRow });
 }
 
 function handleUpdate(sheet, matchField, matchValue, updates) {

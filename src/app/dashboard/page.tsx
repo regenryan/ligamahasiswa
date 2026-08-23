@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Shell } from "@/components/shells";
 import { PageHead } from "@/components/sections";
-import { requireAuth } from "@/lib/auth";
+import { requireAuth, hasRole } from "@/lib/auth";
 import { readSheet } from "@/lib/sheets-db";
 import { ProfileForm } from "./profile-form";
 
@@ -27,7 +27,10 @@ export default async function DashboardPage() {
   }
 
   const isAdmin = user.role === "admin";
-  const isCommittee = user.role === "committee" || isAdmin;
+  const isCommittee = hasRole(user.role, "committee");
+  const isMember = hasRole(user.role, "member") && user.status === "active";
+  const isExpired = user.status === "expired";
+  const isSuspended = user.status === "suspended";
 
   const [rsvps, prkNominations] = await Promise.all([
     readSheet("RSVPs", { user_id: user.id }).catch(() => []),
@@ -38,6 +41,7 @@ export default async function DashboardPage() {
   const myNomination = prkNominations.length > 0 ? prkNominations[0] : null;
 
   const links = [
+    { href: "/membership", label: "Membership", desc: isMember ? "Manage your membership" : "Become a verified member" },
     { href: "/dashboard/card", label: "Member card", desc: "Your Liga ID card with QR code" },
     { href: "/dashboard/orders", label: "Order history", desc: "All your shop purchases" },
     { href: "/constitution", label: "Constitution", desc: "Read the Liga constitution (members only)" },
@@ -47,12 +51,15 @@ export default async function DashboardPage() {
   ];
 
   const statusSkin =
-    user.status === "approved" ? "border-term/40 bg-term/10 text-term" :
-    user.status === "rejected" ? "border-brand/40 bg-brand/10 text-brand-text" :
+    isSuspended ? "border-brand/40 bg-brand/10 text-brand-text" :
+    isExpired ? "border-hi/40 bg-hi/10 text-hi" :
+    isMember ? "border-term/40 bg-term/10 text-term" :
     "border-ink/20 bg-ink/5 text-ink/60";
   const statusLabel =
-    user.status === "approved" ? "Verified member" :
-    user.status === "rejected" ? "Application rejected" : "Pending verification";
+    isSuspended ? "Account suspended" :
+    isExpired ? "Membership expired" :
+    isMember ? "Verified member" :
+    "Basic user";
 
   return (
     <Shell dir={DIR}>
@@ -141,16 +148,25 @@ export default async function DashboardPage() {
         </div>
       </section>
 
-      {user.status !== "approved" ? (
+      {!isMember ? (
         <section className="border-b border-line bg-midnight">
           <div className="mx-auto w-full max-w-3xl px-4 py-14 sm:px-6">
-            <h2 className="display text-2xl text-fog">Become a verified member</h2>
+            <h2 className="display text-2xl text-fog">
+              {isExpired ? "Renew your membership" : "Become a verified member"}
+            </h2>
             <p className="mt-3 max-w-lg text-[14px] leading-relaxed text-fog/60">
-              Verified members get a digital card, member pricing, and access to the constitution. Verification takes a few days.
+              {isExpired
+                ? "Your membership has expired. Renew to keep your member perks."
+                : "Verified members get a digital card, member pricing, and access to the constitution."}
             </p>
+            {user.membershipExpiresAt ? (
+              <p className="mono mt-2 text-[11px] text-fog/40">
+                Expires: {new Date(user.membershipExpiresAt).toLocaleDateString("en-MY")}
+              </p>
+            ) : null}
             <div className="mt-6 flex flex-wrap gap-3">
-              <Link href="/register" className="press inline-flex border border-2 border-fog bg-fog/10 px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-fog hover:bg-fog/20 transition-colors">
-                Apply to join
+              <Link href="/membership" className="press inline-flex border border-2 border-fog bg-fog/10 px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-fog hover:bg-fog/20 transition-colors">
+                {isExpired ? "Renew now" : "Sertai Liga"}
               </Link>
             </div>
           </div>

@@ -25,8 +25,8 @@ export default async function AdminPage() {
     );
   }
 
-  const [pendingUsers, pendingZines, allOrders] = await Promise.all([
-    readSheet("Users", { status: "pending" }).catch(() => []),
+  const [allUsers, pendingZines, allOrders] = await Promise.all([
+    readSheet("Users").catch(() => []),
     readSheet("Zines", { status: "pending" }).catch(() => []),
     readSheet("Orders").catch(() => []),
   ]);
@@ -36,7 +36,7 @@ export default async function AdminPage() {
       <PageHead
         kicker="Admin"
         title="Admin panel"
-        sub="Manage users, orders, and content across all chapters."
+        sub="Manage users, orders, content, and settings across all chapters."
       />
       <section className="border-b border-line">
         <div className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6">
@@ -44,7 +44,7 @@ export default async function AdminPage() {
             <Link href="/admin/users" className="group flex items-center justify-between border border-line bg-cream px-5 py-4 hover:border-brand hover:bg-brand/5 transition-colors">
               <div>
                 <p className="text-[15px] font-bold">User management</p>
-                <p className="mono text-[12px] text-ink/50">Approve members, change roles, manage accounts</p>
+                <p className="mono text-[12px] text-ink/50">Change roles, manage status, search accounts</p>
               </div>
               <span className="mono text-[12px] text-ink/30 group-hover:text-brand transition-colors">{"\u2192"}</span>
             </Link>
@@ -69,6 +69,13 @@ export default async function AdminPage() {
               </div>
               <span className="mono text-[12px] text-ink/30 group-hover:text-brand transition-colors">{"\u2192"}</span>
             </Link>
+            <Link href="/admin/settings" className="group flex items-center justify-between border border-line bg-cream px-5 py-4 hover:border-brand hover:bg-brand/5 transition-colors">
+              <div>
+                <p className="text-[15px] font-bold">Settings</p>
+                <p className="mono text-[12px] text-ink/50">Membership fee, duration, site config</p>
+              </div>
+              <span className="mono text-[12px] text-ink/30 group-hover:text-brand transition-colors">{"\u2192"}</span>
+            </Link>
           </div>
         </div>
       </section>
@@ -77,8 +84,8 @@ export default async function AdminPage() {
           <h2 className="display text-2xl">Quick stats</h2>
           <div className="mt-6 grid gap-4 sm:grid-cols-3">
             <div className="border border-line bg-cream p-5">
-              <p className="mono text-[11px] uppercase tracking-[0.14em] text-ink/50">Pending users</p>
-              <p className="display mt-2 text-3xl">{pendingUsers.length}</p>
+              <p className="mono text-[11px] uppercase tracking-[0.14em] text-ink/50">Total users</p>
+              <p className="display mt-2 text-3xl">{allUsers.length}</p>
             </div>
             <div className="border border-line bg-cream p-5">
               <p className="mono text-[11px] uppercase tracking-[0.14em] text-ink/50">Pending zines</p>

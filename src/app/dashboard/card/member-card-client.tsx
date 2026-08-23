@@ -42,13 +42,17 @@ export function MemberCardClient({ member }: { member: MemberData }) {
     .slice(0, 2)
     .map((p) => p[0])
     .join("");
-  const isApproved = member.status === "approved";
+  const isActive = member.status === "active";
   const roleLabel =
     member.role === "admin"
       ? "Admin"
-      : member.role === "committee"
-        ? "Committee"
-        : "Member";
+      : member.role === "national"
+        ? "National"
+        : member.role === "committee"
+          ? "Committee"
+          : member.role === "member"
+            ? "Member"
+            : "User";
   const chapterLabel =
     member.chapterSlug === "malaysia"
       ? "National"
@@ -94,7 +98,7 @@ export function MemberCardClient({ member }: { member: MemberData }) {
               </div>
             </div>
             <div className="grid grid-cols-3 gap-1.5">
-              {[roleLabel, `Since ${since}`, isApproved ? "Active" : "Pending"].map(
+              {[roleLabel, `Since ${since}`, isActive ? "Active" : member.status === "expired" ? "Expired" : "Suspended"].map(
                 (x) => (
                   <div
                     key={x}
@@ -107,8 +111,8 @@ export function MemberCardClient({ member }: { member: MemberData }) {
             </div>
             <div className="mono flex items-center justify-between gap-3 text-[10px] uppercase tracking-[0.14em] text-fog/40">
               <span>{member.memberId}</span>
-              <span className={isApproved ? "accent" : ""}>
-                {isApproved ? "Verified" : "Pending"}
+              <span className={isActive ? "accent" : ""}>
+                {isActive ? "Verified" : member.status === "expired" ? "Expired" : "Suspended"}
               </span>
             </div>
           </div>

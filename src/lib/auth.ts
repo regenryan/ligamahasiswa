@@ -1,7 +1,19 @@
 import "server-only";
-import { getSession, type SessionPayload } from "@/lib/session";
+import { getSession, type SessionPayload, type UserRole } from "@/lib/session";
 import { findRow } from "@/lib/sheets-db";
 import { cache } from "react";
+
+const ROLE_LEVELS: Record<UserRole, number> = {
+  user: 0,
+  member: 1,
+  committee: 2,
+  national: 3,
+  admin: 4,
+};
+
+export function hasRole(role: UserRole, min: UserRole): boolean {
+  return ROLE_LEVELS[role] >= ROLE_LEVELS[min];
+}
 
 export interface User {
   id: string;
@@ -14,6 +26,8 @@ export interface User {
   memberId: string;
   avatarUrl: string;
   createdAt: string;
+  membershipPaidAt: string;
+  membershipExpiresAt: string;
 }
 
 export const getCurrentUser = cache(async (): Promise<User | null> => {
@@ -23,6 +37,14 @@ export const getCurrentUser = cache(async (): Promise<User | null> => {
   const row = await findRow("Users", "id", session.userId);
   if (!row) return null;
 
+  const expiresAt = row.membership_expires_at ?? "";
+  const now = new Date().toISOString();
+  let status = (row.status as SessionPayload["status"]) ?? "active";
+
+  if (status === "active" && row.role === "member" && expiresAt && expiresAt < now) {
+    status = "expired";
+  }
+
   return {
     id: row.id ?? "",
     name: row.name ?? "",
@@ -30,10 +52,12 @@ export const getCurrentUser = cache(async (): Promise<User | null> => {
     phone: row.phone ?? "",
     chapterSlug: row.chapter_slug ?? "",
     role: (row.role as SessionPayload["role"]) ?? "user",
-    status: (row.status as SessionPayload["status"]) ?? "pending",
+    status,
     memberId: row.member_id ?? "",
     avatarUrl: row.avatar_url ?? "",
     createdAt: row.created_at ?? "",
+    membershipPaidAt: row.membership_paid_at ?? "",
+    membershipExpiresAt: expiresAt,
   };
 });
 
@@ -47,8 +71,8 @@ export async function requireAuth(): Promise<User> {
 
 export async function requireMember(): Promise<User> {
   const user = await requireAuth();
-  if (user.status !== "approved") {
-    throw new Error("Member approval required");
+  if (!hasRole(user.role, "member") || user.status !== "active") {
+    throw new Error("Member access required");
   }
   return user;
 }

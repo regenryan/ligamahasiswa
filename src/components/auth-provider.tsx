@@ -15,9 +15,10 @@ export interface AuthUser {
   name: string;
   email: string;
   chapterSlug: string;
-  role: "user" | "committee" | "admin";
-  status: "pending" | "approved" | "rejected";
+  role: "user" | "member" | "committee" | "national" | "admin";
+  status: "active" | "expired" | "suspended";
   memberId: string;
+  membershipExpiresAt: string;
 }
 
 type AuthCtx = {

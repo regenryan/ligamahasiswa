@@ -31,7 +31,7 @@ function ShopGrid({ products }: { products: Product[] }) {
   const [filter, setFilter] = useState<ShopFilter>("All");
   const { add } = useCart();
   const { user } = useAuth();
-  const isMember = user?.status === "approved";
+  const isMember = ["member", "committee", "national", "admin"].includes(user?.role ?? "");
   const items = filter === "All" ? products : products.filter((p) => p.memberOnly);
   return (
     <section className="border-b border-line">

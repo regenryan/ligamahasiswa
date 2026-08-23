@@ -1,7 +1,7 @@
 import { Shell } from "@/components/shells";
 import { PageHead } from "@/components/sections/head";
 import { readSheet } from "@/lib/sheets-db";
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUser, hasRole } from "@/lib/auth";
 import Link from "next/link";
 
 async function getConstitution() {
@@ -21,7 +21,7 @@ async function getConstitution() {
 
 export default async function ConstitutionPage() {
   const user = await getCurrentUser();
-  const isMember = user?.status === "approved";
+  const isMember = user !== null && hasRole(user.role, "member") && user.status === "active";
   const sections = await getConstitution();
 
   if (!isMember) {

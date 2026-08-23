@@ -122,7 +122,7 @@ export function CampaignSection({
 export function ShopStrip({ items = allProducts }: { items?: Product[] }) {
   const { add } = useCart();
   const { user } = useAuth();
-  const isMember = user?.status === "approved";
+  const isMember = ["member", "committee", "national", "admin"].includes(user?.role ?? "");
   const onAdd = (p: Product) => add(p);
   return (
     <section className="border-b border-line bg-midnight">

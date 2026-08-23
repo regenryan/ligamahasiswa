@@ -3,14 +3,16 @@ import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { config } from "@/lib/config";
 
-export type UserRole = "user" | "committee" | "admin";
-export type UserStatus = "pending" | "approved" | "rejected";
+export type UserRole = "user" | "member" | "committee" | "national" | "admin";
+export type UserStatus = "active" | "expired" | "suspended";
 
 export interface SessionPayload {
   userId: string;
   role: UserRole;
   status: UserStatus;
   chapterSlug: string;
+  membershipPaidAt?: string;
+  membershipExpiresAt?: string;
 }
 
 const SESSION_COOKIE = "liga-session";

@@ -15,6 +15,7 @@ export async function GET() {
       role: user.role,
       status: user.status,
       memberId: user.memberId,
+      membershipExpiresAt: user.membershipExpiresAt,
     },
   });
 }

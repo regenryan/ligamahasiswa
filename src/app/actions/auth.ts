@@ -60,8 +60,10 @@ export async function registerAction(
     phone,
     chapter_slug: chapter,
     role: "user",
-    status: "pending",
+    status: "active",
     member_id: memberId,
+    membership_paid_at: "",
+    membership_expires_at: "",
     avatar_url: "",
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
@@ -74,7 +76,7 @@ export async function registerAction(
   await createSession({
     userId,
     role: "user",
-    status: "pending",
+    status: "active",
     chapterSlug: chapter,
   });
 
@@ -104,9 +106,11 @@ export async function loginAction(
 
   await createSession({
     userId: user.id ?? "",
-    role: (user.role as "user" | "committee" | "admin") ?? "user",
-    status: (user.status as "pending" | "approved" | "rejected") ?? "pending",
+    role: (user.role as "user" | "member" | "committee" | "national" | "admin") ?? "user",
+    status: (user.status as "active" | "expired" | "suspended") ?? "active",
     chapterSlug: user.chapter_slug ?? "",
+    membershipPaidAt: user.membership_paid_at ?? "",
+    membershipExpiresAt: user.membership_expires_at ?? "",
   });
 
   redirect("/dashboard");

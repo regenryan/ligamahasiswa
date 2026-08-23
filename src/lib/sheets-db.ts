@@ -19,7 +19,10 @@ type SheetName =
   | "News"
   | "Constitution"
   | "Committee"
-  | "Social";
+  | "Social"
+  | "Config"
+  | "CommitteePositions"
+  | "CommitteeApprovals";
 
 type ReadOptions = {
   filters?: Record<string, string>;

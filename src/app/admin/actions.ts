@@ -3,22 +3,16 @@
 import { readSheet, updateSheet } from "@/lib/sheets-db";
 import { getCurrentUser } from "@/lib/auth";
 
-export async function approveUser(userId: string) {
-  const user = await getCurrentUser();
-  if (!user || user.role !== "admin") return { ok: false, error: "Unauthorized" };
-  return updateSheet("Users", "id", userId, { status: "approved" });
-}
-
-export async function rejectUser(userId: string) {
-  const user = await getCurrentUser();
-  if (!user || user.role !== "admin") return { ok: false, error: "Unauthorized" };
-  return updateSheet("Users", "id", userId, { status: "rejected" });
-}
-
 export async function setUserRole(userId: string, role: string) {
   const user = await getCurrentUser();
   if (!user || user.role !== "admin") return { ok: false, error: "Unauthorized" };
   return updateSheet("Users", "id", userId, { role });
+}
+
+export async function setUserStatus(userId: string, status: string) {
+  const user = await getCurrentUser();
+  if (!user || user.role !== "admin") return { ok: false, error: "Unauthorized" };
+  return updateSheet("Users", "id", userId, { status });
 }
 
 export async function approveZine(slug: string) {
@@ -49,4 +43,10 @@ export async function updateOrderStatus(orderId: string, status: string) {
   const user = await getCurrentUser();
   if (!user || user.role !== "admin") return { ok: false, error: "Unauthorized" };
   return updateSheet("Orders", "id", orderId, { payment_status: status });
+}
+
+export async function updateConfig(key: string, value: string) {
+  const user = await getCurrentUser();
+  if (!user || user.role !== "admin") return { ok: false, error: "Unauthorized" };
+  return updateSheet("Config", "key", key, { value });
 }

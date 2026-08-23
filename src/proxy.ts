@@ -4,6 +4,10 @@ import type { NextRequest } from "next/server";
 const PROTECTED_ROUTES = ["/dashboard", "/member/edit"];
 const MEMBER_ROUTES = ["/constitution"];
 
+const ROLE_LEVELS: Record<string, number> = {
+  user: 0, member: 1, committee: 2, national: 3, admin: 4,
+};
+
 function decodeToken(token: string): Record<string, unknown> | null {
   try {
     const parts = token.split(".");
@@ -14,6 +18,10 @@ function decodeToken(token: string): Record<string, unknown> | null {
   } catch {
     return null;
   }
+}
+
+function hasRoleMin(role: string, min: string): boolean {
+  return (ROLE_LEVELS[role] ?? 0) >= (ROLE_LEVELS[min] ?? 0);
 }
 
 export function proxy(request: NextRequest) {
@@ -46,7 +54,7 @@ export function proxy(request: NextRequest) {
     }
 
     const payload = decodeToken(token);
-    if (!payload || payload.status !== "approved") {
+    if (!payload || !hasRoleMin(String(payload.role ?? ""), "member")) {
       return NextResponse.redirect(new URL("/", request.url));
     }
   }

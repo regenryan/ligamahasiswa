@@ -24,14 +24,14 @@ function doGet(e) {
     if (action === "write") {
       var row = JSON.parse(params.row_data || "{}");
       var sheet = getOrCreateSheet(ss, sheetName);
-      return handleWrite(sheet, row);
+      return doAppendRow(sheet, row);
     }
 
     if (action === "update") {
       var sheet = ss.getSheetByName(sheetName);
       if (!sheet) return textResponse({ error: "Sheet not found: " + sheetName });
       var updates = JSON.parse(params.updates_data || "{}");
-      return handleUpdate(sheet, params.matchField, params.matchValue, updates);
+      return doUpdateRow(sheet, params.matchField, params.matchValue, updates);
     }
 
     var sheet = ss.getSheetByName(sheetName);
@@ -40,10 +40,10 @@ function doGet(e) {
     }
 
     if (action === "find") {
-      return handleFind(sheet, params);
+      return doFindRow(sheet, params);
     }
 
-    return handleRead(sheet, params);
+    return doReadRows(sheet, params);
 
   } catch (err) {
     return textResponse({ error: err.message });
@@ -61,12 +61,12 @@ function doPost(e) {
     if (body._action === "update") {
       var sheet = ss.getSheetByName(sheetName);
       if (!sheet) return textResponse({ error: "Sheet not found: " + sheetName });
-      return handleUpdate(sheet, body._matchField, body._matchValue, body._updates);
+      return doUpdateRow(sheet, body._matchField, body._matchValue, body._updates);
     }
 
     var row = body._row || {};
     var sheet = getOrCreateSheet(ss, sheetName);
-    return handleWrite(sheet, row);
+    return doAppendRow(sheet, row);
 
   } catch (err) {
     return textResponse({ error: err.message });
@@ -81,9 +81,14 @@ function getOrCreateSheet(ss, sheetName) {
   return sheet;
 }
 
-function handleRead(sheet, params) {
-  var data = sheet.getDataRange().getValues();
-  if (data.length < 2) return textResponse({ rows: [] });
+function doReadRows(sheet, params) {
+  var lastRow = sheet.getLastRow();
+  if (lastRow < 2) return textResponse({ rows: [] });
+
+  var lastCol = sheet.getLastColumn();
+  if (lastCol < 1) return textResponse({ rows: [] });
+
+  var data = sheet.getRange(1, 1, lastRow, lastCol).getValues();
 
   var headers = [];
   for (var h = 0; h < data[0].length; h++) {
@@ -115,13 +120,18 @@ function handleRead(sheet, params) {
   return textResponse({ rows: rows });
 }
 
-function handleFind(sheet, params) {
+function doFindRow(sheet, params) {
   var field = params.field;
   var value = params.value;
   if (!field || !value) return textResponse({ row: null });
 
-  var data = sheet.getDataRange().getValues();
-  if (data.length < 2) return textResponse({ row: null });
+  var lastRow = sheet.getLastRow();
+  if (lastRow < 2) return textResponse({ row: null });
+
+  var lastCol = sheet.getLastColumn();
+  if (lastCol < 1) return textResponse({ row: null });
+
+  var data = sheet.getRange(1, 1, lastRow, lastCol).getValues();
 
   var headers = [];
   for (var h = 0; h < data[0].length; h++) {
@@ -147,22 +157,47 @@ function handleFind(sheet, params) {
   return textResponse({ row: null });
 }
 
-function handleWrite(sheet, row) {
+function doAppendRow(sheet, row) {
   if (!row || typeof row !== "object") {
     return textResponse({ error: "Missing row data" });
   }
 
-  var data = sheet.getDataRange().getValues();
-  var headers;
+  var lastRow = sheet.getLastRow();
+  var lastCol = sheet.getLastColumn();
+  var headers = [];
 
-  if (data.length > 0) {
-    headers = [];
-    for (var h = 0; h < data[0].length; h++) {
-      headers.push(String(data[0][h]).trim());
+  if (lastCol > 0 && lastRow > 0) {
+    var headerRange = sheet.getRange(1, 1, 1, lastCol);
+    var headerValues = headerRange.getValues()[0];
+    for (var h = 0; h < headerValues.length; h++) {
+      headers.push(String(headerValues[h]).trim());
     }
-  } else {
+  }
+
+  if (headers.length === 0) {
     headers = Object.keys(row);
-    sheet.appendRow(headers);
+    var headerRow = sheet.getRange(1, 1, 1, headers.length);
+    headerRow.setValues([headers]);
+    SpreadsheetApp.flush();
+  } else {
+    var rowKeys = Object.keys(row);
+    var newHeaders = [];
+    for (var n = 0; n < rowKeys.length; n++) {
+      var found = false;
+      for (var m = 0; m < headers.length; m++) {
+        if (headers[m] === rowKeys[n]) { found = true; break; }
+      }
+      if (!found) {
+        newHeaders.push(rowKeys[n]);
+        headers.push(rowKeys[n]);
+      }
+    }
+    if (newHeaders.length > 0) {
+      var startCol = headers.length - newHeaders.length + 1;
+      var hRange = sheet.getRange(1, headers.length - newHeaders.length + 1, 1, newHeaders.length);
+      hRange.setValues([newHeaders]);
+      SpreadsheetApp.flush();
+    }
   }
 
   var values = [];
@@ -171,19 +206,26 @@ function handleWrite(sheet, row) {
     values.push(val !== undefined && val !== null ? String(val) : "");
   }
 
-  sheet.appendRow(values);
-  var lastRow = sheet.getLastRow();
+  var newRowNum = sheet.getLastRow() + 1;
+  var writeRange = sheet.getRange(newRowNum, 1, 1, values.length);
+  writeRange.setValues([values]);
+  SpreadsheetApp.flush();
 
-  return textResponse({ ok: true, _row: lastRow });
+  return textResponse({ ok: true, _row: newRowNum });
 }
 
-function handleUpdate(sheet, matchField, matchValue, updates) {
+function doUpdateRow(sheet, matchField, matchValue, updates) {
   if (!matchField || !matchValue || !updates) {
     return textResponse({ error: "Missing matchField, matchValue, or updates" });
   }
 
-  var data = sheet.getDataRange().getValues();
-  if (data.length < 2) return textResponse({ error: "No data in sheet" });
+  var lastRow = sheet.getLastRow();
+  if (lastRow < 2) return textResponse({ error: "No data in sheet" });
+
+  var lastCol = sheet.getLastColumn();
+  if (lastCol < 1) return textResponse({ error: "No columns in sheet" });
+
+  var data = sheet.getRange(1, 1, lastRow, lastCol).getValues();
 
   var headers = [];
   for (var h = 0; h < data[0].length; h++) {
@@ -208,12 +250,14 @@ function handleUpdate(sheet, matchField, matchValue, updates) {
           if (headers[c] === key) { colIndex = c; break; }
         }
         if (colIndex === -1) {
+          var newCol = headers.length + 1;
+          sheet.getRange(1, newCol).setValue(key);
           headers.push(key);
-          sheet.getRange(1, headers.length).setValue(key);
-          colIndex = headers.length - 1;
+          colIndex = newCol - 1;
         }
         sheet.getRange(rowNum, colIndex + 1).setValue(String(updates[key]));
       }
+      SpreadsheetApp.flush();
       return textResponse({ ok: true });
     }
   }

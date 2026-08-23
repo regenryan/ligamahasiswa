@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { hashPassword } from "@/lib/hash";
-import { writeSheet } from "@/lib/sheets-db";
+import { writeSheet, findRow, updateSheet } from "@/lib/sheets-db";
 
 const SEED_SECRET = process.env.SEED_SECRET;
 
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const results: { email: string; ok: boolean; error?: string }[] = [];
+  const results: { email: string; ok: boolean; error?: string; action: string }[] = [];
   const password = "password123";
 
   for (const acct of ACCOUNTS) {
@@ -32,7 +32,7 @@ export async function POST(request: Request) {
     const userId = `seed_${acct.role}_${acct.email.split("@")[0]}`;
     const memberId = `LMM-2026-${Math.floor(Math.random() * 9000 + 1000)}`;
 
-    const result = await writeSheet("Users", {
+    const updates = {
       id: userId,
       name: acct.name,
       email: acct.email,
@@ -49,9 +49,18 @@ export async function POST(request: Request) {
       avatar_url: "",
       created_at: now,
       updated_at: now,
-    });
+    };
 
-    results.push({ email: acct.email, ok: result.ok, error: result.error });
+    const existing = await findRow("Users", "email", acct.email);
+    let result;
+
+    if (existing) {
+      result = await updateSheet("Users", "email", acct.email, updates);
+      results.push({ email: acct.email, ok: result.ok, error: result.error, action: "updated" });
+    } else {
+      result = await writeSheet("Users", updates);
+      results.push({ email: acct.email, ok: result.ok, error: result.error, action: "created" });
+    }
   }
 
   return NextResponse.json({ seeded: results.length, results });

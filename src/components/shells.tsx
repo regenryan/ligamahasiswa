@@ -9,8 +9,6 @@ const NAV_LINKS = [
   { href: "/#campaigns", label: "Campaigns" },
   { href: "/chapters/malaysia", label: "Chapters" },
   { href: "/shop", label: "Shop" },
-  { href: "/zine", label: "Zine" },
-  { href: "/social", label: "Social" },
   { href: "/media", label: "Media" },
 ];
 

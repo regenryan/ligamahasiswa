@@ -5,14 +5,14 @@ import { writeSheet, findRow, updateSheet } from "@/lib/sheets-db";
 const SEED_SECRET = process.env.SEED_SECRET;
 
 const ACCOUNTS = [
-  { name: "Admin User", email: "admin@liga.my", role: "admin", status: "active", chapter: "malaysia" },
-  { name: "National User", email: "national@liga.my", role: "national", status: "active", chapter: "malaysia" },
-  { name: "President User", email: "president@liga.my", role: "committee", status: "active", chapter: "um" },
-  { name: "Secretary User", email: "secretary@liga.my", role: "committee", status: "active", chapter: "um" },
-  { name: "Member User", email: "member@liga.my", role: "member", status: "active", chapter: "um" },
-  { name: "Expired User", email: "expired@liga.my", role: "member", status: "expired", chapter: "utm" },
-  { name: "Suspended User", email: "suspended@liga.my", role: "member", status: "suspended", chapter: "usm" },
-  { name: "Basic User", email: "user@liga.my", role: "user", status: "active", chapter: "unisza" },
+  { name: "Admin User", email: "admin@liga.my", role: "admin", status: "active", chapter: "ligamy" },
+  { name: "National User", email: "national@liga.my", role: "national", status: "active", chapter: "ligamy" },
+  { name: "President User", email: "president@liga.my", role: "committee", status: "active", chapter: "ligaum" },
+  { name: "Secretary User", email: "secretary@liga.my", role: "committee", status: "active", chapter: "ligaum" },
+  { name: "Member User", email: "member@liga.my", role: "member", status: "active", chapter: "ligaum" },
+  { name: "Expired User", email: "expired@liga.my", role: "member", status: "expired", chapter: "ligautm" },
+  { name: "Suspended User", email: "suspended@liga.my", role: "member", status: "suspended", chapter: "ligausm" },
+  { name: "Basic User", email: "user@liga.my", role: "user", status: "active", chapter: "ligaunisza" },
 ];
 
 export async function POST(request: Request) {

@@ -35,7 +35,7 @@ export async function initiateMembershipPayment(): Promise<MembershipState> {
   const amountCents = Math.round(fee * 100);
   const referenceId = `membership_${session.userId}_${Date.now()}`;
   const callbackUrl = `${config.siteUrl}/api/membership/callback`;
-  const redirectUrl = `${config.siteUrl}/membership?status=success`;
+  const redirectUrl = `${config.siteUrl}/#member`;
 
   const data = new URLSearchParams();
   data.append("api_key", config.hitpayApiKey);

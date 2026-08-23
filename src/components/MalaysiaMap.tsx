@@ -4,12 +4,12 @@ import Link from "next/link";
 import { useState } from "react";
 
 const CHAPTERS = [
-  { slug: "malaysia", name: "Malaysia (National)", cx: 240, cy: 200, color: "#e85d26" },
-  { slug: "um", name: "UM", cx: 255, cy: 210, color: "#ff6b35" },
-  { slug: "utm", name: "UTM", cx: 220, cy: 230, color: "#ff6b35" },
-  { slug: "usm", name: "USM", cx: 260, cy: 245, color: "#ff6b35" },
-  { slug: "unisza", name: "UniSZA", cx: 275, cy: 225, color: "#ff6b35" },
-  { slug: "utem", name: "SPARC UTeM", cx: 248, cy: 235, color: "#ff6b35" },
+  { slug: "ligamy", name: "Malaysia (National)", cx: 240, cy: 200, color: "#e85d26" },
+  { slug: "ligaum", name: "UM", cx: 255, cy: 210, color: "#ff6b35" },
+  { slug: "ligautm", name: "UTM", cx: 220, cy: 230, color: "#ff6b35" },
+  { slug: "ligausm", name: "USM", cx: 260, cy: 245, color: "#ff6b35" },
+  { slug: "ligaunisza", name: "UniSZA", cx: 275, cy: 225, color: "#ff6b35" },
+  { slug: "sparcutem", name: "SPARC UTeM", cx: 248, cy: 235, color: "#ff6b35" },
 ];
 
 export function MalaysiaMap() {

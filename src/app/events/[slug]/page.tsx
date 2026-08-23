@@ -1,6 +1,7 @@
 import { Shell } from "@/components/shells";
 import { PageHead } from "@/components/sections/head";
 import { readSheet } from "@/lib/sheets-db";
+import { chapterLabel } from "@/lib/chapters";
 import { events as mockEvents } from "@/lib/mock";
 import type { EventItem } from "@/lib/mock";
 import Link from "next/link";
@@ -56,7 +57,7 @@ export default async function EventDetailPage({
   return (
     <Shell dir={27}>
       <PageHead
-        kicker={`Events / ${event.chapterSlug === "malaysia" ? "National" : event.chapterSlug.toUpperCase()}`}
+        kicker={`Events / ${chapterLabel(event.chapterSlug)}`}
         title={event.title}
         sub={event.blurb}
       />

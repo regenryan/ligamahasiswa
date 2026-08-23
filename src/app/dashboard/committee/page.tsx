@@ -3,6 +3,7 @@ import { Shell } from "@/components/shells";
 import { PageHead, SectionHead } from "@/components/sections";
 import { requireAuth, hasRole } from "@/lib/auth";
 import { readSheet } from "@/lib/sheets-db";
+import { CHAPTERS } from "@/lib/chapters";
 import { CommitteeForm } from "./committee-form";
 import { CommitteeActions } from "./committee-actions";
 
@@ -30,14 +31,7 @@ export default async function CommitteePage() {
   const isAdmin = user.role === "admin";
   const isCommitteeMember = hasRole(user.role, "committee");
 
-  const chapters: { slug: string; label: string }[] = [
-    { slug: "malaysia", label: "Malaysia (national)" },
-    { slug: "um", label: "UM" },
-    { slug: "utm", label: "UTM" },
-    { slug: "usm", label: "USM" },
-    { slug: "unisza", label: "UniSZA" },
-    { slug: "utem", label: "SPARC UTeM" },
-  ];
+  const chapters = [...CHAPTERS];
 
   const committees: Record<string, { title: string; name: string; email: string; id: string; user_id: string; status: string }[]> = {};
   const chapterStats: Record<string, { campaigns: number; events: number; statements: number }> = {};

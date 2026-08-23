@@ -4,6 +4,7 @@ import { PageHead } from "@/components/sections";
 import { requireAuth, hasRole } from "@/lib/auth";
 import { readSheet } from "@/lib/sheets-db";
 import { ProfileForm } from "./profile-form";
+import { ZineSubmitButton } from "./zine-submit-button";
 
 const DIR = 27;
 
@@ -41,11 +42,10 @@ export default async function DashboardPage() {
   const myNomination = prkNominations.length > 0 ? prkNominations[0] : null;
 
   const links = [
-    { href: "/membership", label: "Membership", desc: isMember ? "Manage your membership" : "Become a verified member" },
+    { href: "/#member", label: "Membership", desc: isMember ? "Manage your membership" : "Become a verified member" },
     { href: "/dashboard/card", label: "Member card", desc: "Your Liga ID card with QR code" },
     { href: "/dashboard/orders", label: "Order history", desc: "All your shop purchases" },
     { href: "/constitution", label: "Constitution", desc: "Read the Liga constitution (members only)" },
-    { href: "/zine/submit", label: "Submit to zine", desc: "Contribute an article or artwork" },
     ...(isCommittee ? [{ href: "/dashboard/committee", label: "Committee", desc: "Manage your chapter committee" }] : []),
     ...(isAdmin ? [{ href: "/admin", label: "Admin panel", desc: "Manage users, orders, and content" }] : []),
   ];
@@ -92,6 +92,7 @@ export default async function DashboardPage() {
                 <span className="mono text-[12px] text-ink/30 group-hover:text-brand transition-colors">{"\u2192"}</span>
               </Link>
             ))}
+            {isMember ? <ZineSubmitButton /> : null}
           </div>
         </div>
       </section>
@@ -114,7 +115,7 @@ export default async function DashboardPage() {
 
       <section className="border-b border-line">
         <div className="mx-auto w-full max-w-3xl px-4 py-14 sm:px-6">
-          <h2 className="display text-2xl">PRK status</h2>
+          <h2 className="display text-2xl">Election status</h2>
           {myNomination ? (
             <div className="mt-4 border border-line bg-cream px-5 py-4">
               <div className="flex items-center gap-2">
@@ -130,7 +131,7 @@ export default async function DashboardPage() {
           ) : (
             <div className="mt-4 border border-dashed border-line p-6 text-center">
               <p className="text-[14px] text-ink/60">You have not been nominated yet.</p>
-              <Link href="/prk" className="press mt-4 inline-flex border border-line px-4 py-2 text-[12px] font-extrabold uppercase tracking-[0.12em] text-ink hover:border-ink hover:text-brand transition-colors">
+              <Link href="/election" className="press mt-4 inline-flex border border-line px-4 py-2 text-[12px] font-extrabold uppercase tracking-[0.12em] text-ink hover:border-ink hover:text-brand transition-colors">
                 Nominate yourself
               </Link>
             </div>
@@ -165,7 +166,7 @@ export default async function DashboardPage() {
               </p>
             ) : null}
             <div className="mt-6 flex flex-wrap gap-3">
-              <Link href="/membership" className="press inline-flex border border-2 border-fog bg-fog/10 px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-fog hover:bg-fog/20 transition-colors">
+              <Link href="/#member" className="press inline-flex border border-2 border-fog bg-fog/10 px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-fog hover:bg-fog/20 transition-colors">
                 {isExpired ? "Renew now" : "Sertai Liga"}
               </Link>
             </div>

@@ -2,6 +2,7 @@
 
 import { Btn } from "@/components/sections/head";
 import { Reveal } from "@/components/interactive";
+import { chapterLabel } from "@/lib/chapters";
 
 const QR_PATTERN: boolean[] = Array.from({ length: 81 }, (_, i) => {
   const r = Math.floor(i / 9);
@@ -53,10 +54,7 @@ export function MemberCardClient({ member }: { member: MemberData }) {
           : member.role === "member"
             ? "Member"
             : "User";
-  const chapterLabel =
-    member.chapterSlug === "malaysia"
-      ? "National"
-      : member.chapterSlug.toUpperCase();
+  const chapter = chapterLabel(member.chapterSlug);
   const since = member.createdAt
     ? new Date(member.createdAt).getFullYear().toString()
     : "2026";
@@ -93,7 +91,7 @@ export function MemberCardClient({ member }: { member: MemberData }) {
                   {member.name}
                 </p>
                 <p className="mt-0.5 text-[11px] text-fog/60">
-                  {roleLabel} / {chapterLabel}
+                  {roleLabel} / {chapter}
                 </p>
               </div>
             </div>

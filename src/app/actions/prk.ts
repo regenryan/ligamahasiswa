@@ -45,5 +45,5 @@ export async function submitNomination(
     return { error: result.error ?? "Nomination failed. Try again." };
   }
 
-  redirect("/prk?submitted=1");
+  redirect("/election?submitted=1");
 }

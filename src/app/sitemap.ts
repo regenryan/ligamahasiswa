@@ -4,49 +4,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://liga.vercel.app";
   const now = new Date().toISOString();
 
-  const chapters = ["malaysia", "um", "utm", "usm", "unisza", "utem"];
-  const campaigns = [
-    { ch: "malaysia", slug: "mansuh-auku" },
-    { ch: "malaysia", slug: "dialog-terbuka-kpt" },
-    { ch: "malaysia", slug: "keadilan-zara-qairina" },
-    { ch: "um", slug: "um-rumah-mandiri" },
-    { ch: "malaysia", slug: "gabungan-palestin" },
-    { ch: "malaysia", slug: "sekolah-migran" },
-  ];
+  const chapters = ["ligamy", "ligaum", "ligautm", "ligausm", "ligaunisza", "sparcutem"];
 
   return [
     { url: base, lastModified: now, changeFrequency: "weekly", priority: 1 },
+    { url: `${base}/chapters`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/campaigns`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/events`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/fundraise`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${base}/election`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${base}/shop`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${base}/zine`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: `${base}/media`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
-    { url: `${base}/campaigns`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
-    { url: `${base}/events`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
-    { url: `${base}/statements`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${base}/gallery`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${base}/prk`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${base}/fundraise`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${base}/constitution`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${base}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${base}/login`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
-    { url: `${base}/register`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
-    { url: `${base}/dashboard/card`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${base}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },
     ...chapters.map((ch) => ({
       url: `${base}/chapters/${ch}`,
       lastModified: now,
       changeFrequency: "weekly" as const,
       priority: 0.8,
-    })),
-    ...chapters.map((ch) => ({
-      url: `${base}/chapters/${ch}/team`,
-      lastModified: now,
-      changeFrequency: "monthly" as const,
-      priority: 0.6,
-    })),
-    ...campaigns.map(({ ch, slug }) => ({
-      url: `${base}/chapters/${ch}/campaigns/${slug}`,
-      lastModified: now,
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
     })),
   ];
 }

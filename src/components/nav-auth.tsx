@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { useAuth } from "@/components/auth-provider";
+import { useAuthModal } from "@/components/auth-modal";
 
 export function NavAuth() {
   const { user, loading, logout } = useAuth();
+  const { openModal } = useAuthModal();
 
   if (loading) {
     return (
@@ -34,18 +36,20 @@ export function NavAuth() {
 
   return (
     <div className="flex items-center gap-2">
-      <Link
-        href="/login"
+      <button
+        type="button"
+        onClick={() => openModal("login")}
         className="press inline-flex items-center gap-2 border border-line px-4 py-2.5 text-[13px] font-extrabold uppercase tracking-[0.12em] text-ink hover:border-ink hover:text-brand transition-colors"
       >
         Log in
-      </Link>
-      <Link
-        href="/membership"
+      </button>
+      <button
+        type="button"
+        onClick={() => openModal("register")}
         className="press inline-flex items-center gap-2 bg-brand px-4 py-2.5 text-[13px] font-extrabold uppercase tracking-[0.12em] text-white hover:opacity-90 transition-opacity duration-150"
       >
         Sertai
-      </Link>
+      </button>
     </div>
   );
 }

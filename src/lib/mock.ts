@@ -67,47 +67,47 @@ export type Product = {
 
 export const chapters: Chapter[] = [
   {
-    slug: "malaysia",
+    slug: "ligamy",
     name: "Liga Mahasiswa Malaysia",
-    short: "Malaysia",
+    short: "LigaMY",
     ig: "@ligamahasiswa.my",
     color: "#e11d2e",
     tagline: "The national student movement.",
   },
   {
-    slug: "um",
+    slug: "ligaum",
     name: "Liga Mahasiswa UM",
-    short: "UM",
+    short: "LigaUM",
     ig: "@ligamahasiswa.um",
     color: "#e11d2e",
     tagline: "The first campus that dared.",
   },
   {
-    slug: "utm",
+    slug: "ligautm",
     name: "Liga Mahasiswa UTM",
-    short: "UTM",
+    short: "LigaUTM",
     ig: "@ligamahasiswautm",
     color: "#e11d2e",
     tagline: "Engineers who refuse to stay quiet.",
   },
   {
-    slug: "usm",
+    slug: "ligausm",
     name: "Liga Mahasiswa USM",
-    short: "USM",
+    short: "LigaUSM",
     ig: "@ligamahasiswa.usm",
     color: "#e11d2e",
     tagline: "Island, beach, resistance.",
   },
   {
-    slug: "unisza",
+    slug: "ligaunisza",
     name: "Liga Mahasiswa UniSZA",
-    short: "UniSZA",
+    short: "LigaUniSZA",
     ig: "@ligamahasiswa.unisza",
     color: "#e11d2e",
     tagline: "Terengganu has its own voice.",
   },
   {
-    slug: "utem",
+    slug: "sparcutem",
     name: "SPARC UTeM",
     short: "SPARC UTeM",
     ig: "@sparc.utem",
@@ -119,46 +119,46 @@ export const chapters: Chapter[] = [
 export const members: Member[] = [
   {
     name: "Alyaah Hani Anuar",
-    chapterSlug: "malaysia",
+    chapterSlug: "ligamy",
     role: "President",
     blurb:
       "The movement's leading voice. Former UM student, now steering the national direction.",
   },
   {
     name: "Adam Raiyan Abd. Rahim",
-    chapterSlug: "malaysia",
+    chapterSlug: "ligamy",
     role: "Spokesperson",
     blurb:
       "Spokesperson for Liga Mahasiswa Malaysia and UTM. Usually in front of a microphone.",
   },
   {
     name: "Ammar Daniel Noor Irwan",
-    chapterSlug: "um",
+    chapterSlug: "ligaum",
     role: "President",
     blurb:
       "Leads Liga Mahasiswa UM. Unshaken when the campus sued its own students.",
   },
   {
     name: "Ahsanul Akmal Muhammad Sulam",
-    chapterSlug: "um",
+    chapterSlug: "ligaum",
     role: "Vice President",
     blurb: "The UM president's right hand. Runs the day-to-day campus work.",
   },
   {
     name: "Adief Al Syarif",
-    chapterSlug: "utm",
+    chapterSlug: "ligautm",
     role: "President",
     blurb: "Heads the UTM student coalition against outdated campus rules.",
   },
   {
     name: "Muhammad Ajwad",
-    chapterSlug: "usm",
+    chapterSlug: "ligausm",
     role: "President",
     blurb: "Built the league in Penang from zero. Now a reference for other campuses.",
   },
   {
     name: "Irfan Wafiy",
-    chapterSlug: "unisza",
+    chapterSlug: "ligaunisza",
     role: "President",
     blurb: "Carries rural student issues to the national level.",
   },
@@ -167,7 +167,7 @@ export const members: Member[] = [
 export const campaigns: Campaign[] = [
   {
     slug: "mansuh-auku",
-    chapterSlug: "malaysia",
+    chapterSlug: "ligamy",
     title: "Mansuh AUKU",
     status: "Active",
     summary:
@@ -187,7 +187,7 @@ export const campaigns: Campaign[] = [
   },
   {
     slug: "dialog-terbuka-kpt",
-    chapterSlug: "malaysia",
+    chapterSlug: "ligamy",
     title: "Dialog Terbuka dengan KPT",
     status: "Won",
     summary:
@@ -201,7 +201,7 @@ export const campaigns: Campaign[] = [
   },
   {
     slug: "keadilan-zara-qairina",
-    chapterSlug: "malaysia",
+    chapterSlug: "ligamy",
     title: "Keadilan Zara Qairina",
     status: "Active",
     summary:
@@ -212,7 +212,7 @@ export const campaigns: Campaign[] = [
   },
   {
     slug: "um-rumah-mandiri",
-    chapterSlug: "um",
+    chapterSlug: "ligaum",
     title: "Rumah Mandiri UM",
     status: "Active",
     summary: "The campus threatened to sue students for speaking up. We say no.",
@@ -222,7 +222,7 @@ export const campaigns: Campaign[] = [
   },
   {
     slug: "gabungan-palestin",
-    chapterSlug: "malaysia",
+    chapterSlug: "ligamy",
     title: "GMMP: Solidariti Palestin",
     status: "Ongoing",
     summary:
@@ -233,7 +233,7 @@ export const campaigns: Campaign[] = [
   },
   {
     slug: "sekolah-migran",
-    chapterSlug: "malaysia",
+    chapterSlug: "ligamy",
     title: "Pendidikan Inklusif",
     status: "Ongoing",
     summary:
@@ -249,7 +249,7 @@ export const campaigns: Campaign[] = [
 export const events: EventItem[] = [
   {
     slug: "kuliah-hak-mahasiswa-101",
-    chapterSlug: "malaysia",
+    chapterSlug: "ligamy",
     title: "Open Lecture: Student Rights 101",
     date: "2026-10-17",
     time: "8:00 PM",
@@ -260,7 +260,7 @@ export const events: EventItem[] = [
   },
   {
     slug: "gerak-jalan-mansuh-auku",
-    chapterSlug: "malaysia",
+    chapterSlug: "ligamy",
     title: "Gerak Jalan Mansuh AUKU",
     date: "2026-11-14",
     time: "9:00 AM",
@@ -270,7 +270,7 @@ export const events: EventItem[] = [
   },
   {
     slug: "dialog-suara-pelajar-utm",
-    chapterSlug: "utm",
+    chapterSlug: "ligautm",
     title: "Open Dialogue: The UTM Student Voice",
     date: "2026-09-26",
     time: "7:30 PM",
@@ -337,7 +337,7 @@ export const zinePosts: ZinePost[] = [
   {
     slug: "surat-bakal-presiden",
     author: "Alyaah Hani",
-    chapterSlug: "malaysia",
+    chapterSlug: "ligamy",
     title: "Open letter to the next president",
     excerpt:
       "To whoever takes office next. Remember: you are not a boss, you are a public servant.",
@@ -346,7 +346,7 @@ export const zinePosts: ZinePost[] = [
   {
     slug: "auku-dan-sewa-bilik",
     author: "Irfan Wafiy",
-    chapterSlug: "unisza",
+    chapterSlug: "ligaunisza",
     title: "AUKU and the rent bill",
     excerpt:
       "Sometimes I wonder which costs more: my tuition or my room rent. The answer is depressing.",
@@ -355,7 +355,7 @@ export const zinePosts: ZinePost[] = [
   {
     slug: "nota-dari-perhimpunan",
     author: "Adam Raiyan",
-    chapterSlug: "utm",
+    chapterSlug: "ligautm",
     title: "Notes from the assembly",
     excerpt:
       "It rained, and no one left. That was the first time I understood what a small victory feels like.",
@@ -364,7 +364,7 @@ export const zinePosts: ZinePost[] = [
   {
     slug: "zine-apa-makna-merdeka",
     author: "Ammar Daniel",
-    chapterSlug: "um",
+    chapterSlug: "ligaum",
     title: "What independence means for a student",
     excerpt:
       "Independence is not just a flag. It is being able to speak without fearing a lawsuit.",
@@ -375,7 +375,7 @@ export const zinePosts: ZinePost[] = [
 export const products: Product[] = [
   {
     slug: "tee-mansuh-auku",
-    chapterSlug: "malaysia",
+    chapterSlug: "ligamy",
     name: "Mansuh AUKU Tee",
     price: "RM39",
     tag: "Preorder",
@@ -385,7 +385,7 @@ export const products: Product[] = [
   },
   {
     slug: "pin-kad-merah",
-    chapterSlug: "malaysia",
+    chapterSlug: "ligamy",
     name: "Red Card Pin",
     price: "RM12",
     tag: "Ready stock",
@@ -395,7 +395,7 @@ export const products: Product[] = [
   },
   {
     slug: "sticker-kampung",
-    chapterSlug: "malaysia",
+    chapterSlug: "ligamy",
     name: "Kampung Liga Sticker Pack",
     price: "RM10",
     tag: "Ready stock",
@@ -405,7 +405,7 @@ export const products: Product[] = [
   },
   {
     slug: "tote-kampus-bebas",
-    chapterSlug: "malaysia",
+    chapterSlug: "ligamy",
     name: "Free Campus Tote",
     price: "RM35",
     tag: "Ready stock",
@@ -415,7 +415,7 @@ export const products: Product[] = [
   },
   {
     slug: "hoodie-liga",
-    chapterSlug: "malaysia",
+    chapterSlug: "ligamy",
     name: "Liga Members-Only Hoodie",
     price: "RM89",
     tag: "Member exclusive",
@@ -425,7 +425,7 @@ export const products: Product[] = [
   },
   {
     slug: "lanyard-member",
-    chapterSlug: "malaysia",
+    chapterSlug: "ligamy",
     name: "Member ID Lanyard",
     price: "RM15",
     tag: "Member exclusive",

@@ -1,136 +1,188 @@
 import { Shell } from "@/components/shells";
 import { PageHead, SectionHead, JoinBand, NewsletterBand } from "@/components/sections";
+import { chapterLabel, CHAPTERS } from "@/lib/chapters";
 import { readSheet } from "@/lib/sheets-db";
 import Link from "next/link";
 
 const DIR = 27;
+const PREVIEW = 6;
 
-type MediaEntry = {
-  id: string;
-  type: "Article" | "Statement" | "Zine" | "Event" | "Social";
-  title: string;
-  excerpt: string;
-  chapter: string;
-  date: string;
-  url: string;
-};
+type Post = { id: string; platform: string; caption: string; url: string; chapter: string };
+type Zine = { slug: string; title: string; excerpt: string; author: string; chapter: string };
+type Statement = { slug: string; title: string; preview: string; chapter: string };
+type Podcast = { slug: string; title: string; date: string; chapter: string };
+type Article = { title: string; outlet: string; url: string; chapter: string };
 
-async function getMediaEntries(): Promise<MediaEntry[]> {
-  const entries: MediaEntry[] = [];
-
+async function getPosts(): Promise<Post[]> {
   try {
-    const news = await readSheet("News");
-    for (const r of news) {
-      entries.push({
-        id: `news-${r.url ?? r.title}`,
-        type: "Article",
-        title: r.title ?? "",
-        excerpt: r.outlet ?? "",
-        chapter: "malaysia",
-        date: r.fetched_at ?? "",
-        url: r.url ?? "#",
-      });
-    }
-  } catch { /* */ }
-
-  try {
-    const statements = await readSheet("Statements");
-    for (const r of statements) {
-      entries.push({
-        id: `stmt-${r.slug}`,
-        type: "Statement",
-        title: r.title ?? "",
-        excerpt: (r.content ?? "").slice(0, 160),
-        chapter: r.chapter_slug ?? "malaysia",
-        date: r.date ?? "",
-        url: r.chapter_slug === "malaysia"
-          ? `/statements/${r.slug}`
-          : `/chapters/${r.chapter_slug}/statements/${r.slug}`,
-      });
-    }
-  } catch { /* */ }
-
-  try {
-    const zines = await readSheet("Zines", { status: "approved" });
-    for (const r of zines) {
-      entries.push({
-        id: `zine-${r.slug}`,
-        type: "Zine",
-        title: r.title ?? "",
-        excerpt: r.excerpt ?? (r.content ?? "").slice(0, 160),
-        chapter: r.chapter_slug ?? "malaysia",
-        date: r.created_at ?? "",
-        url: "/zine",
-      });
-    }
-  } catch { /* */ }
-
-  try {
-    const events = await readSheet("Events");
-    for (const r of events) {
-      entries.push({
-        id: `event-${r.slug}`,
-        type: "Event",
-        title: r.title ?? "",
-        excerpt: r.blurb ?? r.description ?? "",
-        chapter: r.chapter_slug ?? "malaysia",
-        date: r.date ?? "",
-        url: r.chapter_slug === "malaysia"
-          ? `/events/${r.slug}`
-          : `/chapters/${r.chapter_slug}/events/${r.slug}`,
-      });
-    }
-  } catch { /* */ }
-
-  try {
-    const social = await readSheet("Social");
-    for (const r of social) {
-      entries.push({
-        id: r.id ?? `social-${r.url}`,
-        type: "Social",
-        title: r.caption ?? r.platform ?? "Social post",
-        excerpt: `${(r.platform ?? "social").charAt(0).toUpperCase() + (r.platform ?? "social").slice(1)}`,
-        chapter: "malaysia",
-        date: r.date ?? r.created_at ?? "",
-        url: r.url ?? "#",
-      });
-    }
-  } catch { /* */ }
-
-  return entries.sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
+    const rows = await readSheet("Social");
+    return rows.map((r) => ({
+      id: r.id ?? `social-${r.url}`,
+      platform: (r.platform ?? "instagram").toLowerCase(),
+      caption: r.caption ?? "",
+      url: r.url ?? "#",
+      chapter: r.chapter_slug ?? "ligamy",
+    }));
+  } catch {
+    return [];
+  }
 }
 
-const TYPE_SKIN: Record<MediaEntry["type"], string> = {
-  Article: "border-brand/40 bg-brand/10 text-brand-text",
-  Statement: "border-term/40 bg-term/10 text-term",
-  Zine: "border-pink/40 bg-pink/10 text-pink",
-  Event: "border-hi/40 bg-hi/10 text-hi",
-  Social: "border-ink/30 bg-ink/10 text-ink",
+async function getZines(): Promise<Zine[]> {
+  try {
+    const rows = await readSheet("Zines", { status: "approved" });
+    return rows.map((r) => ({
+      slug: r.slug ?? "",
+      title: r.title ?? "",
+      excerpt: r.excerpt ?? (r.content ?? "").slice(0, 160),
+      author: r.author ?? "",
+      chapter: r.chapter_slug ?? "ligamy",
+    }));
+  } catch {
+    return [];
+  }
+}
+
+async function getStatements(): Promise<Statement[]> {
+  try {
+    const rows = await readSheet("Statements");
+    return rows.map((r) => ({
+      slug: r.slug ?? "",
+      title: r.title ?? "",
+      preview: (r.content ?? "").slice(0, 160),
+      chapter: r.chapter_slug ?? "ligamy",
+    }));
+  } catch {
+    return [];
+  }
+}
+
+async function getPodcasts(): Promise<Podcast[]> {
+  try {
+    const rows = await readSheet("Podcasts" as Parameters<typeof readSheet>[0]);
+    return rows.map((r) => ({
+      slug: r.slug ?? "",
+      title: r.title ?? "",
+      date: r.date ?? "",
+      chapter: r.chapter_slug ?? "ligamy",
+    }));
+  } catch {
+    return [];
+  }
+}
+
+async function getArticles(): Promise<Article[]> {
+  try {
+    const rows = await readSheet("News");
+    return rows.map((r) => ({
+      title: r.title ?? "",
+      outlet: r.outlet ?? "",
+      url: r.url ?? "#",
+      chapter: r.chapter_slug ?? "ligamy",
+    }));
+  } catch {
+    return [];
+  }
+}
+
+const PLATFORM_SKIN: Record<string, string> = {
+  instagram: "border-pink/40 bg-pink/10 text-pink",
+  youtube: "border-brand/40 bg-brand/10 text-brand-text",
+  twitter: "border-ink/40 bg-ink/10 text-ink",
+  x: "border-ink/40 bg-ink/10 text-ink",
 };
 
-function chapterLabel(ch: string) {
-  return ch === "malaysia" ? "National" : ch.toUpperCase();
+const CARD = "border border-line bg-cream p-5 hover:border-brand transition-colors";
+const BADGE = "inline-block border px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-[0.12em]";
+const TAG = `${BADGE} border-line text-ink/60`;
+const FILTER_BTN =
+  "press border px-3 py-1.5 text-[12px] font-bold uppercase tracking-[0.1em] transition-colors";
+const VIEW_ALL =
+  "press inline-block border border-line px-4 py-2 text-[12px] font-bold uppercase tracking-[0.1em] text-ink/60 hover:border-ink hover:text-ink transition-colors";
+
+function FilterBar({ section, active }: { section: string; active?: string }) {
+  return (
+    <div className="mt-6 flex flex-wrap gap-2">
+      <Link
+        href="/media"
+        className={`${FILTER_BTN} ${!active ? "border-brand bg-brand/10 text-brand" : "border-line text-ink/60 hover:border-ink hover:text-ink"}`}
+      >
+        All
+      </Link>
+      {CHAPTERS.map((c) => (
+        <Link
+          key={c.slug}
+          href={`/media?${section}=${c.slug}`}
+          className={`${FILTER_BTN} ${active === c.slug ? "border-brand bg-brand/10 text-brand" : "border-line text-ink/60 hover:border-ink hover:text-ink"}`}
+        >
+          {c.short}
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+function EmptyState({ message }: { message: string }) {
+  return (
+    <div className="mt-8 border border-dashed border-line p-8 text-center">
+      <p className="text-[14px] text-ink/50">{message}</p>
+    </div>
+  );
+}
+
+function viewAllHref(section: string, chapter?: string): string {
+  const qs = new URLSearchParams();
+  if (chapter) qs.set(section, chapter);
+  qs.set("view", section);
+  return `/media?${qs.toString()}`;
 }
 
 export default async function MediaPage({
   searchParams,
 }: {
-  searchParams: Promise<{ page?: string; type?: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const params = await searchParams;
-  const allEntries = await getMediaEntries();
-  const typeFilter = params.type;
-  const page = Math.max(1, Number(params.page ?? "1"));
-  const PAGE_SIZE = 12;
+  const raw = await searchParams;
+  const first = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);
+  const validSlugs = new Set<string>(CHAPTERS.map((c) => c.slug as string));
+  const pick = (key: string) => {
+    const v = first(raw[key]);
+    return v && validSlugs.has(v) ? v : undefined;
+  };
 
-  const filtered = typeFilter
-    ? allEntries.filter((e) => e.type === typeFilter)
-    : allEntries;
+  const [posts, zines, statements, podcasts, articles] = await Promise.all([
+    getPosts(),
+    getZines(),
+    getStatements(),
+    getPodcasts(),
+    getArticles(),
+  ]);
 
-  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
-  const entries = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const views = new Set((first(raw.view) ?? "").split(",").filter(Boolean));
 
-  const types = ["Article", "Statement", "Zine", "Event", "Social"] as const;
+  const postsFilter = pick("posts");
+  const zinesFilter = pick("zines");
+  const statementsFilter = pick("statements");
+  const podcastsFilter = pick("podcasts");
+  const articlesFilter = pick("articles");
+
+  const shownPosts = postsFilter ? posts.filter((p) => p.chapter === postsFilter) : posts;
+  const shownZines = zinesFilter ? zines.filter((z) => z.chapter === zinesFilter) : zines;
+  const shownStatements = statementsFilter
+    ? statements.filter((s) => s.chapter === statementsFilter)
+    : statements;
+  const shownPodcasts = podcastsFilter
+    ? podcasts.filter((p) => p.chapter === podcastsFilter)
+    : podcasts;
+  const shownArticles = articlesFilter
+    ? articles.filter((a) => a.chapter === articlesFilter)
+    : articles;
+
+  const postCards = views.has("posts") ? shownPosts : shownPosts.slice(0, PREVIEW);
+  const zineCards = views.has("zines") ? shownZines : shownZines.slice(0, PREVIEW);
+  const statementCards = views.has("statements") ? shownStatements : shownStatements.slice(0, PREVIEW);
+  const podcastCards = views.has("podcasts") ? shownPodcasts : shownPodcasts.slice(0, PREVIEW);
+  const articleCards = views.has("articles") ? shownArticles : shownArticles.slice(0, PREVIEW);
 
   return (
     <Shell dir={DIR}>
@@ -139,106 +191,152 @@ export default async function MediaPage({
         title="Media"
         sub="Stories, coverage, and voices from the movement."
       />
-      <section className="border-b border-line">
+
+      <section id="posts" className="border-b border-line">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
-          <SectionHead
-            index={1}
-            title="All content"
-            sub="Articles, statements, zine posts, and event coverage."
-          />
+          <SectionHead index={1} title="Social posts" sub="Fresh from our social channels." />
+          <FilterBar section="posts" active={postsFilter} />
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {postCards.map((p) => (
+              <a key={p.id} href={p.url} target="_blank" rel="noreferrer" className={CARD}>
+                <span className={`${BADGE} ${PLATFORM_SKIN[p.platform] ?? "border-line text-ink/60"}`}>
+                  {p.platform}
+                </span>
+                <p className="mt-3 text-[13px] leading-relaxed text-ink/70 line-clamp-3">
+                  {p.caption || "View post"}
+                </p>
+              </a>
+            ))}
+          </div>
+          {!views.has("posts") && shownPosts.length > PREVIEW && (
+            <div className="mt-8">
+              <Link href={viewAllHref("posts", postsFilter)} className={VIEW_ALL}>
+                View all {shownPosts.length}
+              </Link>
+            </div>
+          )}
+          {shownPosts.length === 0 && <EmptyState message="No posts yet." />}
+        </div>
+      </section>
 
-          <div className="mt-6 flex flex-wrap gap-2">
-            <Link
-              href="/media"
-              className={`press border px-3 py-1.5 text-[12px] font-bold uppercase tracking-[0.1em] transition-colors ${
-                !typeFilter
-                  ? "border-brand bg-brand/10 text-brand"
-                  : "border-line text-ink/60 hover:border-ink hover:text-ink"
-              }`}
-            >
-              All
-            </Link>
-            {types.map((t) => (
-              <Link
-                key={t}
-                href={`/media?type=${t}`}
-                className={`press border px-3 py-1.5 text-[12px] font-bold uppercase tracking-[0.1em] transition-colors ${
-                  typeFilter === t
-                    ? "border-brand bg-brand/10 text-brand"
-                    : "border-line text-ink/60 hover:border-ink hover:text-ink"
-                }`}
-              >
-                {t}
+      <section id="zines" className="border-b border-line">
+        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+          <SectionHead index={2} title="Zines" sub="Art and writing from the movement." />
+          <FilterBar section="zines" active={zinesFilter} />
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {zineCards.map((z) => (
+              <Link key={z.slug} href="/media" className={CARD}>
+                <span className={TAG}>{chapterLabel(z.chapter)}</span>
+                <h3 className="mt-3 display text-xl">{z.title}</h3>
+                <p className="mt-2 text-[13px] text-ink/60 line-clamp-2">{z.excerpt}</p>
+                {z.author ? (
+                  <p className="mono mt-3 truncate text-[11px] uppercase tracking-[0.14em] text-ink/40">
+                    {z.author}
+                  </p>
+                ) : null}
               </Link>
             ))}
           </div>
+          {!views.has("zines") && shownZines.length > PREVIEW && (
+            <div className="mt-8">
+              <Link href={viewAllHref("zines", zinesFilter)} className={VIEW_ALL}>
+                View all {shownZines.length}
+              </Link>
+            </div>
+          )}
+          {shownZines.length === 0 && <EmptyState message="No zines yet." />}
+        </div>
+      </section>
 
-          <div className="mt-8 grid gap-5 md:grid-cols-2">
-            {entries.map((entry) => (
+      <section id="statements" className="border-b border-line">
+        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+          <SectionHead index={3} title="Statements" sub="Official positions, on the record." />
+          <FilterBar section="statements" active={statementsFilter} />
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {statementCards.map((s) => (
               <Link
-                key={entry.id}
-                href={entry.url}
-                className="border border-line bg-cream p-6 hover:border-brand transition-colors"
+                key={s.slug}
+                href={`/chapters/${s.chapter}/statements/${s.slug}`}
+                className={CARD}
               >
-                <div className="flex items-center gap-2">
-                  <span className={`border px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-[0.12em] ${TYPE_SKIN[entry.type]}`}>
-                    {entry.type}
-                  </span>
-                  <span className="mono text-[11px] uppercase tracking-[0.14em] text-ink/50">
-                    {chapterLabel(entry.chapter)}
-                  </span>
+                <span className={TAG}>{chapterLabel(s.chapter)}</span>
+                <h3 className="mt-3 display text-xl">{s.title}</h3>
+                <p className="mt-2 text-[13px] text-ink/60 line-clamp-3">{s.preview}</p>
+              </Link>
+            ))}
+          </div>
+          {!views.has("statements") && shownStatements.length > PREVIEW && (
+            <div className="mt-8">
+              <Link href={viewAllHref("statements", statementsFilter)} className={VIEW_ALL}>
+                View all {shownStatements.length}
+              </Link>
+            </div>
+          )}
+          {shownStatements.length === 0 && <EmptyState message="No statements yet." />}
+        </div>
+      </section>
+
+      <section id="podcasts" className="border-b border-line">
+        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+          <SectionHead index={4} title="Podcasts" sub="Conversations with the movement." />
+          <FilterBar section="podcasts" active={podcastsFilter} />
+          {podcastCards.length > 0 ? (
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {podcastCards.map((p) => (
+                <div key={p.slug} className={CARD}>
+                  <div className="flex items-center justify-between gap-3">
+                    <span className={TAG}>{chapterLabel(p.chapter)}</span>
+                    {p.date ? (
+                      <span className="mono truncate text-[11px] tracking-[0.08em] text-ink/40">
+                        {p.date}
+                      </span>
+                    ) : null}
+                  </div>
+                  <h3 className="mt-3 display text-xl">{p.title}</h3>
                 </div>
-                <h3 className="mt-3 display text-xl">{entry.title}</h3>
-                <p className="mt-2 text-[13px] text-ink/60 line-clamp-2">{entry.excerpt}</p>
+              ))}
+            </div>
+          ) : (
+            <EmptyState message="Coming soon." />
+          )}
+          {!views.has("podcasts") && shownPodcasts.length > PREVIEW && (
+            <div className="mt-8">
+              <Link href={viewAllHref("podcasts", podcastsFilter)} className={VIEW_ALL}>
+                View all {shownPodcasts.length}
               </Link>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section id="articles" className="border-b border-line">
+        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+          <SectionHead index={5} title="News articles" sub="Coverage in the press." />
+          <FilterBar section="articles" active={articlesFilter} />
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {articleCards.map((a) => (
+              <a key={`${a.url}-${a.title}`} href={a.url} target="_blank" rel="noreferrer" className={CARD}>
+                <div className="flex items-center justify-between gap-3">
+                  <span className="mono truncate text-[11px] uppercase tracking-[0.14em] text-ink/50">
+                    {a.outlet}
+                  </span>
+                  <span className={TAG}>{chapterLabel(a.chapter)}</span>
+                </div>
+                <h3 className="mt-3 display text-xl">{a.title}</h3>
+              </a>
             ))}
           </div>
-
-          {entries.length === 0 && (
-            <div className="border border-dashed border-line p-8 text-center">
-              <p className="text-[14px] text-ink/50">No content available yet.</p>
+          {!views.has("articles") && shownArticles.length > PREVIEW && (
+            <div className="mt-8">
+              <Link href={viewAllHref("articles", articlesFilter)} className={VIEW_ALL}>
+                View all {shownArticles.length}
+              </Link>
             </div>
           )}
+          {shownArticles.length === 0 && <EmptyState message="No coverage yet." />}
+        </div>
+      </section>
 
-          {totalPages > 1 && (
-            <div className="mt-8 flex items-center justify-center gap-3">
-              {page > 1 && (
-                <Link
-                  href={`/media?page=${page - 1}${typeFilter ? `&type=${typeFilter}` : ""}`}
-                  className="press border border-line px-4 py-2 text-[12px] font-bold uppercase tracking-[0.1em] text-ink/60 hover:border-ink hover:text-ink transition-colors"
-                >
-                  Previous
-                </Link>
-              )}
-              <span className="mono text-[12px] text-ink/50">
-                Page {page} of {totalPages}
-              </span>
-              {page < totalPages && (
-                <Link
-                  href={`/media?page=${page + 1}${typeFilter ? `&type=${typeFilter}` : ""}`}
-                  className="press border border-line px-4 py-2 text-[12px] font-bold uppercase tracking-[0.1em] text-ink/60 hover:border-ink hover:text-ink transition-colors"
-                >
-                  View more
-                </Link>
-              )}
-            </div>
-          )}
-        </div>
-      </section>
-      <section className="border-b border-line bg-midnight">
-        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-6 px-4 py-12 sm:px-6">
-          <div>
-            <p className="display text-2xl sm:text-3xl">Media inquiries</p>
-            <p className="mono mt-2 text-[14px] text-ink/70">media@ligamahasiswa.my</p>
-            <p className="mt-1 max-w-xl text-[13px] text-ink/60">
-              Statement requests and interview slots, answered within 48 hours.
-            </p>
-          </div>
-          <a href="mailto:media@ligamahasiswa.my" className="press inline-flex border border-2 border-ink bg-brand px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-white hover:opacity-90 transition-opacity">
-            Request a statement
-          </a>
-        </div>
-      </section>
       <JoinBand />
       <NewsletterBand />
     </Shell>

@@ -1,6 +1,7 @@
 import { Shell } from "@/components/shells";
 import { PageHead } from "@/components/sections/head";
 import { findRow } from "@/lib/sheets-db";
+import { chapterLabel } from "@/lib/chapters";
 import Link from "next/link";
 
 async function getMember(username: string) {
@@ -79,9 +80,7 @@ export default async function MemberProfilePage({
               <div>
                 <h2 className="display text-2xl">{member.name}</h2>
                 <p className="mt-1 text-[14px] text-ink/60">
-                  {member.chapterSlug === "malaysia"
-                    ? "National Chapter"
-                    : member.chapterSlug.toUpperCase()}{" "}
+                  {chapterLabel(member.chapterSlug)}{" "}
                   chapter
                 </p>
                 {isLeader ? (

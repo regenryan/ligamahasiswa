@@ -44,5 +44,5 @@ export async function submitZine(
     return { error: result.error ?? "Submission failed. Try again." };
   }
 
-  redirect("/zine");
+  redirect("/media");
 }

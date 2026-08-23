@@ -1,169 +1,434 @@
-"use client";
-
-import { Suspense } from "react";
-import { useParams } from "next/navigation";
 import { Shell } from "@/components/shells";
-import {
-  PageHead,
-  Btn,
-  SectionHead,
-  Countdown,
-  AukuYears,
-  StatusChip,
-  CampaignSection,
-  JoinBand,
-  NewsletterBand,
-} from "@/components/sections";
-import { Reveal, Accordion } from "@/components/interactive";
-import { Placeholder } from "@/components/Placeholder";
+import { PageHead, SectionHead, JoinBand, NewsletterBand } from "@/components/sections";
+import { readSheet } from "@/lib/sheets-db";
+import { chapterLabel } from "@/lib/chapters";
+import { campaigns as mockCampaigns } from "@/lib/mock";
+import Link from "next/link";
 import { ShareKit } from "@/components/ShareKit";
-import { getCampaign, getChapter, campaigns, type Campaign } from "@/lib/mock";
 
 const DIR = 27;
 
-function Demands({ items }: { items: string[] }) {
+type CampaignData = {
+  slug: string;
+  title: string;
+  summary: string;
+  demands: string[];
+  memorandum: string;
+  status: string;
+  chapterSlug: string;
+};
+
+async function getCampaign(slug: string, campaignSlug: string): Promise<CampaignData | null> {
+  try {
+    const rows = await readSheet("Campaigns", { chapter_slug: slug, slug: campaignSlug });
+    if (rows.length > 0) {
+      const r = rows[0];
+      return {
+        slug: r.slug ?? campaignSlug,
+        title: r.title ?? "",
+        summary: r.summary ?? r.description ?? "",
+        demands: r.demands ? JSON.parse(r.demands) : [],
+        memorandum: r.memorandum ?? "",
+        status: r.status ?? "Active",
+        chapterSlug: r.chapter_slug ?? slug,
+      };
+    }
+  } catch {}
+  const mock = mockCampaigns.find((c) => c.slug === campaignSlug && c.chapterSlug === slug);
+  if (mock) {
+    return {
+      slug: mock.slug,
+      title: mock.title,
+      summary: mock.summary,
+      demands: mock.demands,
+      memorandum: "",
+      status: mock.status,
+      chapterSlug: mock.chapterSlug,
+    };
+  }
+  return null;
+}
+
+type Post = { id: string; platform: string; caption: string; url: string };
+type Zine = { slug: string; title: string; excerpt: string };
+type Statement = { slug: string; title: string; preview: string };
+type Podcast = { slug: string; title: string; date: string };
+type Article = { title: string; outlet: string; url: string };
+
+async function getPosts(chapterSlug: string): Promise<Post[]> {
+  try {
+    const rows = await readSheet("Social", { chapter_slug: chapterSlug });
+    return rows.map((r) => ({
+      id: r.id ?? `social-${r.url}`,
+      platform: (r.platform ?? "instagram").toLowerCase(),
+      caption: r.caption ?? "",
+      url: r.url ?? "#",
+    }));
+  } catch {
+    return [];
+  }
+}
+
+async function getZines(chapterSlug: string): Promise<Zine[]> {
+  try {
+    const rows = await readSheet("Zines", { chapter_slug: chapterSlug, status: "approved" });
+    return rows.map((r) => ({
+      slug: r.slug ?? "",
+      title: r.title ?? "",
+      excerpt: r.excerpt ?? (r.content ?? "").slice(0, 160),
+    }));
+  } catch {
+    return [];
+  }
+}
+
+async function getStatements(chapterSlug: string): Promise<Statement[]> {
+  try {
+    const rows = await readSheet("Statements", { chapter_slug: chapterSlug });
+    return rows.map((r) => ({
+      slug: r.slug ?? "",
+      title: r.title ?? "",
+      preview: (r.content ?? "").slice(0, 160),
+    }));
+  } catch {
+    return [];
+  }
+}
+
+async function getPodcasts(chapterSlug: string): Promise<Podcast[]> {
+  try {
+    const rows = await readSheet(
+      "Podcasts" as Parameters<typeof readSheet>[0],
+      { chapter_slug: chapterSlug },
+    );
+    return rows.map((r) => ({
+      slug: r.slug ?? "",
+      title: r.title ?? "",
+      date: r.date ?? "",
+    }));
+  } catch {
+    return [];
+  }
+}
+
+async function getArticles(chapterSlug: string): Promise<Article[]> {
+  try {
+    const rows = await readSheet("News", { chapter_slug: chapterSlug });
+    return rows.map((r) => ({
+      title: r.title ?? "",
+      outlet: r.outlet ?? "",
+      url: r.url ?? "#",
+    }));
+  } catch {
+    return [];
+  }
+}
+
+const CARD = "border border-line bg-cream p-5 hover:border-brand transition-colors";
+const BADGE =
+  "inline-block border px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-[0.12em]";
+const TAG = `${BADGE} border-line text-ink/60`;
+const PLATFORM_SKIN: Record<string, string> = {
+  instagram: "border-pink/40 bg-pink/10 text-pink",
+  youtube: "border-brand/40 bg-brand/10 text-brand-text",
+  twitter: "border-ink/40 bg-ink/10 text-ink",
+  x: "border-ink/40 bg-ink/10 text-ink",
+};
+
+function MediaGrid({ children }: { children: React.ReactNode }) {
   return (
-    <ol className="space-y-3">
-      {items.map((d) => (
-        <li key={d} className="flex items-start gap-4 border border-line bg-cream p-5">
-          <span className="accent mt-2 shrink-0 text-[14px]" aria-hidden="true">
-            {"\u2022"}
-          </span>
-          <span className="text-[15px] leading-relaxed text-ink/80">{d}</span>
-        </li>
-      ))}
-    </ol>
+    <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{children}</div>
   );
 }
 
-function ActRow() {
+function EmptyState({ message }: { message: string }) {
   return (
-    <section className="border-b border-line bg-midnight">
-      <div className="mx-auto w-full max-w-6xl px-4 py-5 sm:px-6">
-        <div className="flex flex-col gap-4 border border-line bg-cream p-4 lg:flex-row lg:items-center lg:justify-between">
-          <p className="mono text-[11px] font-bold uppercase tracking-[0.2em] text-ink/50">
-            One tap away
-          </p>
-          <div className="flex flex-wrap gap-3">
-            <Btn kind="act" href="/shop">
-              Donate to this campaign
-            </Btn>
-            <Btn kind="act" href="#join">
-              Volunteer
-            </Btn>
-            <Btn kind="join" href="/dashboard/card">
-              Join the movement
-            </Btn>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div className="mt-8 border border-dashed border-line p-8 text-center">
+      <p className="text-[14px] text-ink/50">{message}</p>
+    </div>
   );
 }
 
-function HeroBlock({ campaign }: { campaign: Campaign }) {
-  const isAuku = campaign.slug === "mansuh-auku";
-  return (
-    <section className="border-b border-line">
-      <div className="relative mx-auto grid w-full max-w-6xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
-        <div>
-          <StatusChip status={campaign.status} />
-          <p className="mt-5 max-w-2xl text-[17px] leading-relaxed text-ink/80">
-            {campaign.summary}
-          </p>
-          <div className="mt-8 max-w-md">
-            <Countdown label="Next assembly" />
-          </div>
-          {isAuku ? (
-            <div className="mt-6">
-              <AukuYears />
-            </div>
-          ) : null}
-        </div>
-        <Placeholder
-          ratio="16/9"
-          caption={
-            isAuku
-              ? "Archive photo: students at the Mansuh AUKU rally"
-              : `Archive photo: the ${campaign.title} campaign`
-          }
-          label="archive / photo"
-          className="w-full"
-        />
-      </div>
-    </section>
-  );
-}
+export default async function CampaignPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ slug: string; campaign: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const { slug, campaign: campaignSlug } = await params;
+  const raw = await searchParams;
+  const typeRaw = Array.isArray(raw.type) ? raw.type[0] : raw.type;
+  const VALID_TYPES = ["posts", "zines", "statements", "podcasts", "articles"] as const;
+  const typeFilter = VALID_TYPES.find((t) => t === typeRaw);
+  const show = (t: (typeof VALID_TYPES)[number]) => !typeFilter || typeFilter === t;
 
-function NextSteps() {
-  return (
-    <section className="border-b border-line">
-      <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
-        <Reveal>
-          <SectionHead index={4} title="What happens next" />
-          <div className="space-y-4">
-            <p className="max-w-2xl text-[15px] leading-relaxed text-ink/75">
-              The next rally is scheduled for Dataran Merdeka on November 14. Red shirts,
-              banners, and one demand: a written timeline for abolition, in black and
-              white.
-            </p>
-            <p className="max-w-2xl text-[15px] leading-relaxed text-ink/75">
-              While the streets speak, we push through the doors. We are asking for a
-              meeting with the ministry so students sit at the table when the new campus
-              law is drafted.
-            </p>
-            <p className="max-w-2xl text-[15px] leading-relaxed text-ink/75">
-              Every chapter runs a monthly assembly. That is where the campaign is
-              planned, the next move is chosen, and the people who carry it to Parliament
-              are found.
-            </p>
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
+  const campaign = await getCampaign(slug, campaignSlug);
 
-export default function CampaignPage() {
-  const params = useParams<{ slug: string; campaign: string }>();
-  const { slug, campaign: campaignSlug } = params;
-  const chapter = getChapter(slug);
-  const campaign = getCampaign(slug, campaignSlug);
-  const related = campaigns.filter((c) => c.slug !== campaign.slug);
-  return (
-    <Suspense fallback={null}>
+  if (!campaign) {
+    return (
       <Shell dir={DIR}>
-        <PageHead kicker={chapter.name} title={campaign.title} />
-        <HeroBlock campaign={campaign} />
-        <ActRow />
-        <section className="border-b border-line">
-          <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
-            <Reveal>
-              <SectionHead index={2} title="The demands" />
-              <Demands items={campaign.demands} />
-            </Reveal>
-          </div>
-        </section>
-        <section className="border-b border-line">
-          <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
-            <Reveal>
-              <SectionHead index={3} title="Timeline" />
-              <Accordion
-                items={campaign.timeline.map((t) => ({ title: t.date, body: t.text }))}
-              />
-            </Reveal>
-          </div>
-        </section>
-        <NextSteps />
-        <CampaignSection items={related} headline="Related campaigns" />
-        <section className="border-b border-line">
-          <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6">
-            <ShareKit title={campaign.title} url={`https://ligamahasiswa.vercel.app/chapters/${slug}/campaigns/${campaignSlug}`} />
-          </div>
-        </section>
+        <PageHead kicker="Campaigns" title="Campaign not found" />
+        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+          <Link
+            href={`/chapters/${slug}/campaigns`}
+            className="press inline-flex border border-line px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-ink hover:border-ink hover:text-brand transition-colors"
+          >
+            Back to campaigns
+          </Link>
+        </div>
         <JoinBand />
         <NewsletterBand />
       </Shell>
-    </Suspense>
+    );
+  }
+
+  const [posts, zines, statements, podcasts, articles] = await Promise.all([
+    getPosts(campaign.chapterSlug),
+    getZines(campaign.chapterSlug),
+    getStatements(campaign.chapterSlug),
+    getPodcasts(campaign.chapterSlug),
+    getArticles(campaign.chapterSlug),
+  ]);
+
+  const typeLinks = (
+    <div className="mt-6 flex flex-wrap gap-2">
+      <Link
+        href={`/chapters/${slug}/campaigns/${campaignSlug}`}
+        className={`press border px-3 py-1.5 text-[12px] font-bold uppercase tracking-[0.1em] transition-colors ${!typeFilter ? "border-brand bg-brand/10 text-brand" : "border-line text-ink/60 hover:border-ink hover:text-ink"}`}
+      >
+        All
+      </Link>
+      {VALID_TYPES.map((t) => (
+        <Link
+          key={t}
+          href={`/chapters/${slug}/campaigns/${campaignSlug}?type=${t}`}
+          className={`press border px-3 py-1.5 text-[12px] font-bold uppercase tracking-[0.1em] transition-colors ${typeFilter === t ? "border-brand bg-brand/10 text-brand" : "border-line text-ink/60 hover:border-ink hover:text-ink"}`}
+        >
+          {t}
+        </Link>
+      ))}
+    </div>
+  );
+
+  return (
+    <Shell dir={DIR}>
+      <PageHead kicker={chapterLabel(slug)} title={campaign.title} sub={campaign.summary} />
+
+      <section id="introduction" className="border-b border-line">
+        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+          <SectionHead index={1} title="Overview" />
+          <p className="mt-6 max-w-2xl text-[15px] leading-relaxed text-ink/75">
+            {campaign.summary}
+          </p>
+          <div className="mt-6 flex flex-wrap gap-2">
+            <span className={`${BADGE} border-brand/40 bg-brand/10 text-brand-text`}>
+              {campaign.status}
+            </span>
+            <span className={TAG}>{chapterLabel(campaign.chapterSlug)}</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="demands" className="border-b border-line">
+        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+          <SectionHead index={2} title="Key demands" />
+          {campaign.demands.length > 0 ? (
+            <ol className="space-y-3">
+              {campaign.demands.map((d, i) => (
+                <li key={i} className="flex items-start gap-4 border border-line bg-cream p-5">
+                  <span className="mt-2 shrink-0 text-[14px] text-ink/50">{i + 1}.</span>
+                  <span className="text-[15px] leading-relaxed text-ink/80">{d}</span>
+                </li>
+              ))}
+            </ol>
+          ) : (
+            <EmptyState message="No demands published yet." />
+          )}
+        </div>
+      </section>
+
+      <section id="memorandum" className="border-b border-line">
+        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+          <SectionHead index={3} title="Memorandum" />
+          {campaign.memorandum ? (
+            <div className="prose max-w-none text-[15px] leading-relaxed text-ink/70">
+              {campaign.memorandum.split("\n").map((p, i) => (
+                <p key={i} className="mb-4">
+                  {p}
+                </p>
+              ))}
+            </div>
+          ) : (
+            <EmptyState message="The memorandum for this campaign has not been published yet." />
+          )}
+        </div>
+      </section>
+
+      <section id="media" className="border-b border-line">
+        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+          <SectionHead index={4} title="Related media" sub="Coverage and artifacts from this chapter." />
+          {typeLinks}
+
+          {show("posts") && (
+            <div className="mt-10">
+              <h3 className="mono text-[12px] font-bold uppercase tracking-[0.2em] text-ink/50">
+                Posts
+              </h3>
+              {posts.length > 0 ? (
+                <MediaGrid>
+                  {posts.map((p) => (
+                    <a
+                      key={p.id}
+                      href={p.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={CARD}
+                    >
+                      <span className={`${BADGE} ${PLATFORM_SKIN[p.platform] ?? "border-line text-ink/60"}`}>
+                        {p.platform}
+                      </span>
+                      <p className="mt-3 text-[13px] leading-relaxed text-ink/70 line-clamp-3">
+                        {p.caption || "View post"}
+                      </p>
+                    </a>
+                  ))}
+                </MediaGrid>
+              ) : (
+                <EmptyState message="No posts yet." />
+              )}
+            </div>
+          )}
+
+          {show("zines") && (
+            <div className="mt-10">
+              <h3 className="mono text-[12px] font-bold uppercase tracking-[0.2em] text-ink/50">
+                Zines
+              </h3>
+              {zines.length > 0 ? (
+                <MediaGrid>
+                  {zines.map((z) => (
+                    <Link key={z.slug} href="/media" className={CARD}>
+                      <h4 className="display text-xl">{z.title}</h4>
+                      <p className="mt-2 text-[13px] text-ink/60 line-clamp-2">{z.excerpt}</p>
+                    </Link>
+                  ))}
+                </MediaGrid>
+              ) : (
+                <EmptyState message="No zines yet." />
+              )}
+            </div>
+          )}
+
+          {show("statements") && (
+            <div className="mt-10">
+              <h3 className="mono text-[12px] font-bold uppercase tracking-[0.2em] text-ink/50">
+                Statements
+              </h3>
+              {statements.length > 0 ? (
+                <MediaGrid>
+                  {statements.map((s) => (
+                    <Link
+                      key={s.slug}
+                      href={`/chapters/${campaign.chapterSlug}/statements/${s.slug}`}
+                      className={CARD}
+                    >
+                      <h4 className="display text-xl">{s.title}</h4>
+                      <p className="mt-2 text-[13px] text-ink/60 line-clamp-3">{s.preview}</p>
+                    </Link>
+                  ))}
+                </MediaGrid>
+              ) : (
+                <EmptyState message="No statements yet." />
+              )}
+            </div>
+          )}
+
+          {show("podcasts") && (
+            <div className="mt-10">
+              <h3 className="mono text-[12px] font-bold uppercase tracking-[0.2em] text-ink/50">
+                Podcasts
+              </h3>
+              {podcasts.length > 0 ? (
+                <MediaGrid>
+                  {podcasts.map((p) => (
+                    <div key={p.slug} className={CARD}>
+                      <div className="flex items-center justify-between gap-3">
+                        <span className={TAG}>{chapterLabel(campaign.chapterSlug)}</span>
+                        {p.date ? (
+                          <span className="mono truncate text-[11px] tracking-[0.08em] text-ink/40">
+                            {p.date}
+                          </span>
+                        ) : null}
+                      </div>
+                      <h4 className="mt-3 display text-xl">{p.title}</h4>
+                    </div>
+                  ))}
+                </MediaGrid>
+              ) : (
+                <EmptyState message="Coming soon." />
+              )}
+            </div>
+          )}
+
+          {show("articles") && (
+            <div className="mt-10">
+              <h3 className="mono text-[12px] font-bold uppercase tracking-[0.2em] text-ink/50">
+                Articles
+              </h3>
+              {articles.length > 0 ? (
+                <MediaGrid>
+                  {articles.map((a) => (
+                    <a
+                      key={`${a.url}-${a.title}`}
+                      href={a.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={CARD}
+                    >
+                      <span className="mono truncate text-[11px] uppercase tracking-[0.14em] text-ink/50">
+                        {a.outlet}
+                      </span>
+                      <h4 className="mt-3 display text-xl">{a.title}</h4>
+                    </a>
+                  ))}
+                </MediaGrid>
+              ) : (
+                <EmptyState message="No coverage yet." />
+              )}
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className="border-b border-line bg-midnight">
+        <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6">
+          <div className="flex flex-col gap-4 border border-fog/20 bg-fog/5 p-5 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <p className="text-[15px] font-bold text-fog">Support this campaign</p>
+              <p className="mono mt-1 text-[12px] text-fog/60">Every contribution helps fund our work.</p>
+            </div>
+            <Link
+              href={`/chapters/${slug}/campaigns/${campaign}/fundraise`}
+              className="press inline-flex border-2 border-fog bg-fog/10 px-6 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-fog hover:bg-fog/20 transition-colors"
+            >
+              Fundraise
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-line">
+        <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6">
+          <ShareKit
+            title={campaign.title}
+            url={`https://ligamahasiswa.vercel.app/chapters/${slug}/campaigns/${campaignSlug}`}
+          />
+        </div>
+      </section>
+
+      <JoinBand />
+      <NewsletterBand />
+    </Shell>
   );
 }

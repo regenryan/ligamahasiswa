@@ -1,6 +1,7 @@
 import { Shell } from "@/components/shells";
 import { PageHead, SectionHead } from "@/components/sections/head";
 import { readSheet } from "@/lib/sheets-db";
+import { chapterLabel } from "@/lib/chapters";
 import Link from "next/link";
 
 async function getActiveCampaigns() {
@@ -11,8 +12,8 @@ async function getActiveCampaigns() {
       title: r.title ?? "",
       summary: r.summary ?? r.description ?? "",
       chapterSlug: r.chapter_slug ?? "",
-      href: r.chapter_slug === "malaysia"
-        ? `/chapters/malaysia/campaigns/${r.slug}`
+      href: r.chapter_slug === "ligamy"
+        ? `/chapters/ligamy/campaigns/${r.slug}`
         : `/chapters/${r.chapter_slug}/campaigns/${r.slug}`,
     }));
   } catch {
@@ -28,7 +29,7 @@ async function getUpcomingEvents() {
       title: r.title ?? "",
       date: r.date ?? "",
       chapterSlug: r.chapter_slug ?? "",
-      href: r.chapter_slug === "malaysia"
+      href: r.chapter_slug === "ligamy"
         ? `/events/${r.slug}`
         : `/chapters/${r.chapter_slug}/events/${r.slug}`,
     }));
@@ -61,7 +62,7 @@ export default async function FundraisePage() {
               {campaigns.map((c) => (
                 <Link key={c.slug} href={c.href} className="border border-line bg-cream p-6 hover:border-brand transition-colors">
                   <span className="mono text-[11px] uppercase tracking-[0.14em] text-ink/50">
-                    {c.chapterSlug === "malaysia" ? "National" : c.chapterSlug.toUpperCase()}
+                    {chapterLabel(c.chapterSlug)}
                   </span>
                   <h3 className="mt-2 display text-xl">{c.title}</h3>
                   <p className="mt-2 text-[14px] text-ink/60">{c.summary}</p>
@@ -94,7 +95,7 @@ export default async function FundraisePage() {
                         <span className="mono text-[10px] uppercase tracking-[0.2em] text-ink/50">{monthLabel}</span>
                       </div>
                       <div>
-                        <span className="mono text-[10px] uppercase tracking-[0.14em] text-ink/50">{e.chapterSlug === "malaysia" ? "National" : e.chapterSlug.toUpperCase()}</span>
+                        <span className="mono text-[10px] uppercase tracking-[0.14em] text-ink/50">{chapterLabel(e.chapterSlug)}</span>
                         <h3 className="display text-lg">{e.title}</h3>
                       </div>
                     </div>
@@ -111,7 +112,7 @@ export default async function FundraisePage() {
           <div className="grid gap-5 sm:grid-cols-3">
             {[
               { title: "Shop", desc: "Buy merch. Every ringgit funds campaigns.", href: "/shop" },
-              { title: "Donate", desc: "Pick a campaign and fund it directly.", href: "/chapters/malaysia/campaigns" },
+              { title: "Donate", desc: "Pick a campaign and fund it directly.", href: "/chapters/ligamy/campaigns" },
               { title: "Join", desc: "Become a member. Organize on the ground.", href: "/register" },
             ].map((item) => (
               <Link key={item.title} href={item.href} className="border border-fog/20 bg-fog/5 p-6 hover:border-brand transition-colors">

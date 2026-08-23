@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import { Shell } from "@/components/shells";
 import {
   PageHead,
@@ -10,8 +9,17 @@ import { readSheet } from "@/lib/sheets-db";
 import { products as mockProducts } from "@/lib/mock";
 import type { Product } from "@/lib/mock";
 import { ShopGridClient } from "./shop-grid-client";
+import Link from "next/link";
 
 const DIR = 27;
+
+type Catalog = "all" | "member" | "limited";
+
+const CATALOGS: { value: Catalog; label: string }[] = [
+  { value: "all", label: "All" },
+  { value: "member", label: "Member Exclusive" },
+  { value: "limited", label: "Limited Edition" },
+];
 
 async function getProducts(): Promise<Product[]> {
   try {
@@ -34,39 +42,69 @@ async function getProducts(): Promise<Product[]> {
   }
 }
 
-export default async function ShopPage() {
+export default async function ShopPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ catalog?: string }>;
+}) {
+  const params = await searchParams;
+  const catalog: Catalog =
+    params.catalog === "member"
+      ? "member"
+      : params.catalog === "limited"
+        ? "limited"
+        : "all";
+
   const products = await getProducts();
 
+  const filtered =
+    catalog === "member"
+      ? products.filter((p) => p.memberOnly)
+      : catalog === "limited"
+        ? products.filter((p) => p.preorder)
+        : products;
+
   return (
-    <Suspense fallback={null}>
-      <Shell dir={DIR}>
-        <CartProvider>
-          <PageHead
-            kicker="Shop"
-            title="Wear the movement"
-            sub="Every ringgit funds campaigns, prints, and the next assembly. Members get the best prices."
-          />
-          <ShopGridClient products={products} />
-          <section className="border-b border-line">
-            <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
-              <div className="flex flex-wrap items-center justify-between gap-6 border border-line bg-cream p-8">
-                <div className="max-w-xl">
-                  <p className="display text-2xl sm:text-3xl">Members pay less</p>
-                  <p className="mt-3 text-[14px] leading-relaxed text-ink/70">
-                    The member card is free and issued instantly. It unlocks member prices on the
-                    hoodie and lanyard, first dibs on every drop, and free shipping over RM50.
-                  </p>
-                </div>
-                <a href="/dashboard/card" className="press inline-flex border border-2 border-ink bg-brand px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-white hover:opacity-90 transition-opacity">
-                  Get your member card
-                </a>
-              </div>
+    <Shell dir={DIR}>
+      <CartProvider>
+        <PageHead
+          kicker="Shop"
+          title="Shop"
+          sub="Merchandise for the movement."
+        />
+        <section className="border-b border-line">
+          <div className="mx-auto w-full max-w-6xl px-4 pt-8 sm:px-6">
+            <div className="flex flex-wrap gap-2">
+              <Link
+                href="/shop"
+                className={`press border px-3 py-1.5 text-[12px] font-bold uppercase tracking-[0.1em] transition-colors ${
+                  catalog === "all"
+                    ? "border-brand bg-brand/10 text-brand"
+                    : "border-line text-ink/60 hover:border-ink hover:text-ink"
+                }`}
+              >
+                All
+              </Link>
+              {CATALOGS.slice(1).map((c) => (
+                <Link
+                  key={c.value}
+                  href={`/shop?catalog=${c.value}`}
+                  className={`press border px-3 py-1.5 text-[12px] font-bold uppercase tracking-[0.1em] transition-colors ${
+                    catalog === c.value
+                      ? "border-brand bg-brand/10 text-brand"
+                      : "border-line text-ink/60 hover:border-ink hover:text-ink"
+                  }`}
+                >
+                  {c.label}
+                </Link>
+              ))}
             </div>
-          </section>
-          <JoinBand />
-          <NewsletterBand />
-        </CartProvider>
-      </Shell>
-    </Suspense>
+          </div>
+        </section>
+        <ShopGridClient products={filtered} />
+        <JoinBand />
+        <NewsletterBand />
+      </CartProvider>
+    </Shell>
   );
 }

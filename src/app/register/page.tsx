@@ -3,15 +3,7 @@
 import { useActionState } from "react";
 import Link from "next/link";
 import { registerAction, type AuthState } from "@/app/actions/auth";
-
-const CHAPTERS: { slug: string; label: string }[] = [
-  { slug: "malaysia", label: "Malaysia (national)" },
-  { slug: "um", label: "UM" },
-  { slug: "utm", label: "UTM" },
-  { slug: "usm", label: "USM" },
-  { slug: "unisza", label: "UniSZA" },
-  { slug: "utem", label: "SPARC UTeM" },
-];
+import { CHAPTERS } from "@/lib/chapters";
 
 function FieldError({ name, state }: { name: string; state: AuthState }) {
   const msg = state?.fieldErrors?.[name];

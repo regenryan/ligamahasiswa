@@ -51,6 +51,8 @@ export const metadata: Metadata = {
 };
 
 import { AuthProvider } from "@/components/auth-provider";
+import { AuthModalProvider } from "@/components/auth-modal";
+import { ZineModalProvider } from "@/components/zine-submit-modal";
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -59,7 +61,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`h-full antialiased ${fontVars}`}
     >
       <body className="min-h-full">
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <AuthModalProvider>
+            <ZineModalProvider>{children}</ZineModalProvider>
+          </AuthModalProvider>
+        </AuthProvider>
       </body>
     </html>
   );

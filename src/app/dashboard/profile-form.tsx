@@ -2,15 +2,7 @@
 
 import { useActionState } from "react";
 import { updateProfile, type ProfileState } from "@/app/actions/profile";
-
-const CHAPTERS = [
-  { slug: "malaysia", label: "Malaysia (national)" },
-  { slug: "um", label: "UM" },
-  { slug: "utm", label: "UTM" },
-  { slug: "usm", label: "USM" },
-  { slug: "unisza", label: "UniSZA" },
-  { slug: "utem", label: "SPARC UTeM" },
-];
+import { CHAPTERS } from "@/lib/chapters";
 
 export function ProfileForm({
   name,

@@ -8,16 +8,16 @@ export async function GET(request: NextRequest) {
   const status = searchParams.get("status");
 
   if (!referenceId) {
-    return NextResponse.redirect(new URL("/membership?status=failed", request.url));
+    return NextResponse.redirect(new URL("/#member", request.url));
   }
 
   if (status !== "completed" && status !== "paid") {
-    return NextResponse.redirect(new URL("/membership?status=failed", request.url));
+    return NextResponse.redirect(new URL("/#member", request.url));
   }
 
   const match = referenceId.match(/^membership_(.+)_\d+$/);
   if (!match) {
-    return NextResponse.redirect(new URL("/membership?status=failed", request.url));
+    return NextResponse.redirect(new URL("/#member", request.url));
   }
 
   const userId = match[1];
@@ -32,5 +32,5 @@ export async function GET(request: NextRequest) {
     membership_expires_at: expires,
   });
 
-  return NextResponse.redirect(new URL("/membership?status=success", request.url));
+  return NextResponse.redirect(new URL("/#member", request.url));
 }

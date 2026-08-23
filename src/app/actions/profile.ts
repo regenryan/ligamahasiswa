@@ -29,7 +29,7 @@ export async function updateProfile(
     return { ok: false, error: "Select a chapter." };
   }
 
-  const allowedChapters = ["malaysia", "um", "utm", "usm", "unisza", "utem"];
+  const allowedChapters = ["ligamy", "ligaum", "ligautm", "ligausm", "ligaunisza", "sparcutem"];
   if (!allowedChapters.includes(chapter)) {
     return { ok: false, error: "Invalid chapter." };
   }

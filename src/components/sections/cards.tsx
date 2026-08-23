@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { StatusChip, Btn } from "@/components/sections/head";
 import { LikeButton, ShareButton } from "@/components/interactive";
+import { chapterLabel } from "@/lib/chapters";
 import type { Campaign, EventItem, MediaItem, Member, Product, ZinePost } from "@/lib/mock";
 
 const FRAME = "border border-line bg-cream card-hover";
@@ -35,7 +36,7 @@ function QrBox({ size = 4 }: { size?: number }) {
 
 export function CampaignCard({ c }: { c: Campaign }) {
   const href = `/chapters/${c.chapterSlug}/campaigns/${c.slug}`;
-  const chapLabel = c.chapterSlug === "malaysia" ? "National" : c.chapterSlug.toUpperCase();
+  const chapLabel = chapterLabel(c.chapterSlug);
 
   return (
     <article className={`group flex h-full flex-col p-6 ${FRAME}`}>
@@ -102,7 +103,7 @@ export function ShopCard({ p, onAdd, isMember = false }: { p: Product; onAdd: ()
 /* ---------- ZineCard ---------- */
 
 export function ZineCard({ z }: { z: ZinePost }) {
-  const chap = z.chapterSlug === "malaysia" ? "National" : z.chapterSlug.toUpperCase();
+  const chap = chapterLabel(z.chapterSlug);
   return (
     <article className={`flex h-full flex-col p-6 ${FRAME}`}>
       <div className="flex items-center justify-between">
@@ -114,7 +115,7 @@ export function ZineCard({ z }: { z: ZinePost }) {
         <span className="text-[13px] font-bold text-ink/60">{z.author}</span>
         <div className="flex items-center gap-3">
           <LikeButton initial={z.likes} />
-          <ShareButton title={z.title} url={`https://ligamahasiswa.vercel.app/zine`} />
+          <ShareButton title={z.title} url={`https://ligamahasiswa.vercel.app/media`} />
         </div>
       </div>
     </article>

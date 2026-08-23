@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { readSheet } from "@/lib/sheets-db";
 import { SectionHead } from "@/components/sections/head";
 
@@ -48,11 +47,6 @@ export async function SocialStrip() {
               <p className="mt-2 text-[14px] text-ink/70 line-clamp-2">{p.caption}</p>
             </a>
           ))}
-        </div>
-        <div className="mt-6 text-center">
-          <Link href="/social" className="press inline-flex border border-line px-4 py-2 text-[12px] font-bold uppercase tracking-[0.1em] text-ink/60 hover:border-ink hover:text-ink transition-colors">
-            View all social
-          </Link>
         </div>
       </div>
     </section>

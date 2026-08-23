@@ -6,16 +6,8 @@ import { Shell } from "@/components/shells";
 import { PageHead, SectionHead } from "@/components/sections/head";
 import { Reveal } from "@/components/interactive";
 import { submitNomination } from "@/app/actions/prk";
+import { CHAPTERS } from "@/lib/chapters";
 import { Suspense } from "react";
-
-const CHAPTERS = [
-  { slug: "malaysia", label: "Malaysia (national)" },
-  { slug: "um", label: "UM" },
-  { slug: "utm", label: "UTM" },
-  { slug: "usm", label: "USM" },
-  { slug: "unisza", label: "UniSZA" },
-  { slug: "utem", label: "SPARC UTeM" },
-];
 
 function NominationForm() {
   const [state, action, pending] = useActionState(submitNomination, undefined);
@@ -100,9 +92,9 @@ export default function PRKPage() {
   return (
     <Shell dir={27}>
       <PageHead
-        kicker="PRK"
-        title="Pilihan Raya Kampus"
-        sub="Campus elections. Nominate yourself or someone you trust."
+        kicker="Election"
+        title="Campus Election"
+        sub="Nominate yourself or someone you trust. Every campus deserves leadership that listens."
       />
       <Suspense fallback={null}>
         <PrkContent />

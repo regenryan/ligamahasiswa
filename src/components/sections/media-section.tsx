@@ -66,6 +66,7 @@ function MediaSectionInner({ items }: { items: MediaItem[] }) {
               key={t}
               type="button"
               onClick={() => setFilter(t)}
+              aria-pressed={activeLabel === t}
               className={`press border px-3 py-1.5 text-[12px] font-bold uppercase tracking-[0.1em] transition-colors ${
                 activeLabel === t
                   ? "border-brand bg-brand/10 text-brand"

@@ -68,7 +68,7 @@ export function Hero({ chapterName, campaign }: HeroProps) {
                   <span className="mono inline-flex h-6 w-6 shrink-0 items-center justify-center bg-brand text-[11px] font-bold text-white">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="text-ink/85">{demand}</span>
+                  <span className="text-ink/80">{demand}</span>
                 </li>
               </Reveal>
             ))}

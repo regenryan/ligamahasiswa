@@ -26,7 +26,7 @@ export function CartDrawerSlot() {
       >
         <span className="text-base">{"\uD83D\uDED2"}</span>
         {items.length > 0 ? (
-          <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center bg-brand text-[11px] font-bold text-white">
+          <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center bg-brand text-[11px] font-bold text-paper">
             {items.length}
           </span>
         ) : null}
@@ -54,7 +54,7 @@ export function CartDrawerSlot() {
                   {items.map((p) => (
                     <li key={p.slug} className="flex items-center gap-4 border border-line bg-cream p-3">
                       <div className="halftone flex h-14 w-14 shrink-0 items-center justify-center border border-line bg-midnight">
-                        <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-ink/50">{p.tag}</span>
+                        <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-fog/50">{p.tag}</span>
                       </div>
                       <div className="flex-1">
                         <p className="text-[14px] font-bold">{p.name}</p>
@@ -83,7 +83,7 @@ export function CartDrawerSlot() {
               <Link
                 href="/shop/checkout"
                 onClick={() => setOpen(false)}
-                className="press block w-full border border-2 border-ink bg-brand px-5 py-3.5 text-center text-[13px] font-extrabold uppercase tracking-[0.16em] text-white"
+                className="press block w-full border border-2 border-ink bg-brand px-5 py-3.5 text-center text-[13px] font-extrabold uppercase tracking-[0.16em] text-paper"
               >
                 Checkout
               </Link>

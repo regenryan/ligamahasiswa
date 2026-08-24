@@ -60,7 +60,7 @@ export function MemberTeaser() {
               <div className="flex items-start justify-between">
                 <div>
                   <p className="display text-2xl">Liga Mahasiswa</p>
-                  <p className="mono mt-1 text-[11px] uppercase tracking-[0.2em] text-ink/50">Digital member card</p>
+                  <p className="mono mt-1 text-[11px] uppercase tracking-[0.2em] text-fog/50">Digital member card</p>
                 </div>
                 <span className="accent text-xl" aria-hidden="true">{"\u2716"}</span>
               </div>
@@ -71,7 +71,7 @@ export function MemberTeaser() {
                 </div>
                 <div>
                   <p className="text-[15px] font-bold">Alyaah Hani</p>
-                  <p className="text-[13px] text-ink/60">President / Malaysia</p>
+                  <p className="text-[13px] text-fog/60">President / Malaysia</p>
                 </div>
               </div>
               <div className="mt-6 grid grid-cols-3 gap-2 text-center">
@@ -81,7 +81,7 @@ export function MemberTeaser() {
                   </div>
                 ))}
               </div>
-              <div className="mono mt-6 flex items-center justify-between text-[11px] uppercase tracking-[0.14em] text-ink/40">
+              <div className="mono mt-6 flex items-center justify-between text-[11px] uppercase tracking-[0.14em] text-fog/40">
                 <span>LMM-2026-0001</span>
                 <span className="accent">Verified</span>
               </div>
@@ -192,12 +192,12 @@ export function JoinBand() {
     <section id="join" className="border-b border-line bg-brand">
       <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-2">
         <Reveal>
-          <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-white/85">The movement is 2 minutes away</p>
-          <h2 className="display mt-4 text-4xl leading-[0.9] text-white sm:text-6xl">Join the movement</h2>
-          <p className="mt-4 max-w-md text-[15px] leading-relaxed text-white">
+          <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-paper/85">The movement is 2 minutes away</p>
+          <h2 className="display mt-4 text-4xl leading-[0.9] text-paper sm:text-6xl">Join the movement</h2>
+          <p className="mt-4 max-w-md text-[15px] leading-relaxed text-paper">
             Membership is free. Your digital card is issued instantly, and your chapter committee verifies you within days. What are you waiting for?
           </p>
-          <div className="mono mt-8 text-[11px] uppercase tracking-[0.16em] text-white/85">55 years is enough. Day 1 starts today.</div>
+          <div className="mono mt-8 text-[11px] uppercase tracking-[0.16em] text-paper/85">55 years is enough. Day 1 starts today.</div>
         </Reveal>
         <Reveal delay={80}>
           <JoinForm />

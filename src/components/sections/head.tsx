@@ -20,9 +20,9 @@ export function Btn({ kind, size = "md", href, children, onClick, type = "button
   const sizes = size === "lg" ? "px-7 py-3.5 text-[14px]" : "px-5 py-3 text-[13px]";
   let skin = "";
   if (kind === "join") {
-    skin = "bg-brand text-white hover:opacity-90 transition-opacity duration-150";
+    skin = "bg-brand text-paper hover:opacity-90 transition-opacity duration-150";
   } else if (kind === "act") {
-    skin = "border border-line text-ink hover:bg-brand hover:text-white transition-colors duration-150";
+    skin = "border border-line text-ink hover:bg-brand hover:text-paper transition-colors duration-150";
   } else if (kind === "ghost") {
     skin = "border border-line text-ink/70 hover:border-ink hover:text-ink";
   } else {
@@ -54,7 +54,7 @@ export function SectionHead({ index, title, sub }: SectionHeadProps) {
   return (
     <div className="mb-8">
       <div className="flex flex-wrap items-center gap-4">
-        <span className="mono inline-flex h-8 w-8 items-center justify-center bg-brand text-[12px] font-bold text-white">{num}</span>
+        <span className="mono inline-flex h-8 w-8 items-center justify-center bg-brand text-[12px] font-bold text-paper">{num}</span>
         <h2 className="display text-3xl leading-none sm:text-5xl">{title}</h2>
       </div>
       {sub ? <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-ink/70">{sub}</p> : null}

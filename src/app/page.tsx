@@ -4,17 +4,14 @@ import {
   Hero,
   CampaignSection,
   ShopStrip,
-  StoryStrip,
   JoinBand,
   NewsletterBand,
 } from "@/components/sections";
 import { CartProvider } from "@/components/interactive";
-import { LiveFeed } from "@/components/LiveFeed";
 import { Introduction } from "@/components/sections/introduction";
 import { Principles } from "@/components/sections/principles";
 import { Slogan } from "@/components/sections/slogan";
 import { MemberTeaser } from "@/components/sections/member-teaser";
-import { EventsSection } from "@/components/sections/events-section";
 import { MediaSection } from "@/components/sections/media-section";
 import { readSheet } from "@/lib/sheets-db";
 import { campaigns } from "@/lib/mock";
@@ -98,7 +95,6 @@ export default async function Home() {
   return (
     <Shell dir={DIR}>
       <Hero chapterName="Liga Mahasiswa Malaysia" campaign={campaigns[0]} />
-      <LiveFeed />
       <Introduction />
       <Principles />
       <Slogan />
@@ -106,14 +102,10 @@ export default async function Home() {
       <Suspense fallback={null}>
         <CampaignSection />
       </Suspense>
-      <Suspense fallback={null}>
-        <EventsSection />
-      </Suspense>
       <CartProvider>
         <ShopStrip />
       </CartProvider>
       <MediaSection items={mediaItems} />
-      <StoryStrip />
       <JoinBand />
       <NewsletterBand />
     </Shell>

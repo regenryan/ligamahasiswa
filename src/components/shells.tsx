@@ -6,8 +6,11 @@ import { MetroClock } from "@/components/MetroClock";
 import { NavAuth } from "@/components/nav-auth";
 
 const NAV_LINKS = [
-  { href: "/#campaigns", label: "Campaigns" },
-  { href: "/chapters/malaysia", label: "Chapters" },
+  { href: "/campaigns", label: "Campaigns" },
+  { href: "/chapters", label: "Chapters" },
+  { href: "/events", label: "Events" },
+  { href: "/fundraise", label: "Fundraise" },
+  { href: "/election", label: "Election" },
   { href: "/shop", label: "Shop" },
   { href: "/media", label: "Media" },
 ];
@@ -115,7 +118,7 @@ function Footer() {
             </ul>
             <p className="mono mt-4 mb-1 text-[11px] tracking-[0.18em] text-fog/50">Legal</p>
             <ul className="space-y-2.5 text-sm">
-              <li><Link href="/constitution" className="text-fog/75 hover:text-brand transition-colors">Constitution</Link></li>
+              <li><Link href="/dashboard" className="text-fog/75 hover:text-brand transition-colors">Dashboard</Link></li>
             </ul>
           </div>
         </div>

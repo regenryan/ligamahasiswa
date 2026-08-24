@@ -17,8 +17,8 @@ export function MemberTeaser() {
               <Link href="/register" className="press inline-flex border border-2 border-fog bg-fog/10 px-6 py-3.5 text-[13px] font-extrabold uppercase tracking-[0.12em] text-fog hover:bg-fog/20 transition-colors">
                 Sertai Liga
               </Link>
-              <Link href="/constitution" className="press inline-flex border border-fog/30 px-6 py-3.5 text-[13px] font-extrabold uppercase tracking-[0.12em] text-fog/60 hover:border-fog hover:text-fog transition-colors">
-                Read constitution
+              <Link href="/dashboard" className="press inline-flex border border-fog/30 px-6 py-3.5 text-[13px] font-extrabold uppercase tracking-[0.12em] text-fog/60 hover:border-fog hover:text-fog transition-colors">
+                Member dashboard
               </Link>
             </div>
           </div>

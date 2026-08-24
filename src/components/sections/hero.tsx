@@ -41,7 +41,7 @@ export function Hero({ chapterName, campaign }: HeroProps) {
               <Btn kind="join" href="/dashboard/card" size="lg">
                 Join the movement
               </Btn>
-              <Btn kind="act" href="#campaigns" size="lg">
+              <Btn kind="act" href="/campaigns" size="lg">
                 See our campaigns
               </Btn>
             </div>

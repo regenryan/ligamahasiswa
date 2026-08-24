@@ -50,7 +50,7 @@ export function MemberTeaser() {
           </ul>
           <div className="mt-8 flex flex-wrap gap-3">
             <Btn kind="join" href="/dashboard/card" size="lg">Get your card</Btn>
-            <Btn kind="ghost" href="/chapters/malaysia">Find your chapter</Btn>
+            <Btn kind="ghost" href="/chapters">Find your chapter</Btn>
           </div>
         </Reveal>
         <Reveal>

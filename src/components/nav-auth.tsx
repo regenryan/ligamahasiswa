@@ -41,14 +41,14 @@ export function NavAuth() {
         onClick={() => openModal("login")}
         className="press inline-flex items-center gap-2 border border-line px-4 py-2.5 text-[13px] font-extrabold uppercase tracking-[0.12em] text-ink hover:border-ink hover:text-brand transition-colors"
       >
-        Log in
+        Sign In
       </button>
       <button
         type="button"
         onClick={() => openModal("register")}
         className="press inline-flex items-center gap-2 bg-brand px-4 py-2.5 text-[13px] font-extrabold uppercase tracking-[0.12em] text-white hover:opacity-90 transition-opacity duration-150"
       >
-        Sertai
+        Sign Up
       </button>
     </div>
   );

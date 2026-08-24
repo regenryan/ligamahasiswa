@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import { Suspense } from "react";
 import Link from "next/link";
 
 type MediaItem = {
@@ -14,10 +15,38 @@ type MediaItem = {
 
 const TYPES = ["All", "Posts", "Statements", "Zines", "Podcasts", "Articles"] as const;
 
-export function MediaSection({ items }: { items: MediaItem[] }) {
-  const [filter, setFilter] = useState<string>("All");
+const TYPE_PARAM_MAP: Record<string, string> = {
+  posts: "Posts",
+  statements: "Statements",
+  zines: "Zines",
+  podcasts: "Podcasts",
+  articles: "Articles",
+};
 
-  const filtered = filter === "All" ? items : items.filter((i) => i.type === filter);
+const PARAM_FROM_LABEL: Record<string, string> = {
+  Posts: "posts",
+  Statements: "statements",
+  Zines: "zines",
+  Podcasts: "podcasts",
+  Articles: "articles",
+};
+
+function MediaSectionInner({ items }: { items: MediaItem[] }) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const mediaParam = searchParams.get("media") ?? "";
+  const activeLabel = TYPE_PARAM_MAP[mediaParam] ?? "All";
+
+  const filtered = activeLabel === "All" ? items : items.filter((i) => i.type === activeLabel);
+
+  function setFilter(label: string) {
+    const param = PARAM_FROM_LABEL[label];
+    if (param) {
+      router.push(`/?media=${param}#media`);
+    } else {
+      router.push("/#media");
+    }
+  }
 
   return (
     <section className="border-b border-line" id="media">
@@ -38,8 +67,8 @@ export function MediaSection({ items }: { items: MediaItem[] }) {
               type="button"
               onClick={() => setFilter(t)}
               className={`press border px-3 py-1.5 text-[12px] font-bold uppercase tracking-[0.1em] transition-colors ${
-                filter === t
-                  ? "border-brand bg-brand/10 text-brand-text"
+                activeLabel === t
+                  ? "border-brand bg-brand/10 text-brand"
                   : "border-line text-ink/60 hover:border-ink hover:text-ink"
               }`}
             >
@@ -57,7 +86,7 @@ export function MediaSection({ items }: { items: MediaItem[] }) {
               className="border border-line bg-cream p-5 hover:border-brand transition-colors"
             >
               <div className="flex items-center gap-2">
-                <span className="border border-brand/40 bg-brand/10 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-[0.12em] text-brand-text">
+                <span className="border border-brand/40 bg-brand/10 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-[0.12em] text-brand">
                   {item.type}
                 </span>
                 <span className="mono text-[11px] uppercase tracking-[0.14em] text-ink/50">{item.chapter}</span>
@@ -71,5 +100,13 @@ export function MediaSection({ items }: { items: MediaItem[] }) {
         )}
       </div>
     </section>
+  );
+}
+
+export function MediaSection({ items }: { items: MediaItem[] }) {
+  return (
+    <Suspense fallback={null}>
+      <MediaSectionInner items={items} />
+    </Suspense>
   );
 }

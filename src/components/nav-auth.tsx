@@ -46,7 +46,7 @@ export function NavAuth() {
       <button
         type="button"
         onClick={() => openModal("register")}
-        className="press inline-flex items-center gap-2 bg-brand px-4 py-2.5 text-[13px] font-extrabold uppercase tracking-[0.12em] text-white hover:opacity-90 transition-opacity duration-150"
+        className="press inline-flex items-center gap-2 bg-brand px-4 py-2.5 text-[13px] font-extrabold uppercase tracking-[0.12em] text-paper hover:opacity-90 transition-opacity duration-150"
       >
         Sign Up
       </button>

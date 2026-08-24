@@ -34,7 +34,7 @@ export function Hero({ chapterName, campaign }: HeroProps) {
             <h1 className="display mt-4 text-4xl leading-[0.9] sm:text-5xl lg:text-6xl xl:text-7xl">{campaign.title}</h1>
           </Reveal>
           <Reveal delay={200}>
-            <p className="mt-8 max-w-xl text-[16px] leading-relaxed text-ink/75">{campaign.summary}</p>
+            <p className="mt-8 max-w-xl text-[16px] leading-relaxed text-ink/70">{campaign.summary}</p>
           </Reveal>
           <Reveal delay={300}>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -65,7 +65,7 @@ export function Hero({ chapterName, campaign }: HeroProps) {
             {demands.map((demand, i) => (
               <Reveal key={demand} delay={450 + i * 80}>
                 <li className="flex items-baseline gap-3 border-b border-ink/25 pb-2 text-[14px]">
-                  <span className="mono inline-flex h-6 w-6 shrink-0 items-center justify-center bg-brand text-[11px] font-bold text-white">
+                  <span className="mono inline-flex h-6 w-6 shrink-0 items-center justify-center bg-brand text-[11px] font-bold text-paper">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <span className="text-ink/80">{demand}</span>

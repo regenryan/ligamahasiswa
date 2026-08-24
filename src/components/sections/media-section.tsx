@@ -50,7 +50,7 @@ function MediaSectionInner({ items }: { items: MediaItem[] }) {
 
   return (
     <section className="border-b border-line" id="media">
-      <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+      <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6">
         <div className="flex items-end justify-between gap-4">
           <div>
             <p className="mono text-[11px] uppercase tracking-[0.2em] text-ink/50">Latest</p>
@@ -67,7 +67,7 @@ function MediaSectionInner({ items }: { items: MediaItem[] }) {
               type="button"
               onClick={() => setFilter(t)}
               aria-pressed={activeLabel === t}
-              className={`press border px-3 py-1.5 text-[12px] font-bold uppercase tracking-[0.1em] transition-colors ${
+              className={`press border px-3 py-2 text-[12px] font-bold uppercase tracking-[0.1em] transition-colors min-h-[44px] ${
                 activeLabel === t
                   ? "border-brand bg-brand/10 text-brand"
                   : "border-line text-ink/60 hover:border-ink hover:text-ink"

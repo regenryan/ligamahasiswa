@@ -105,7 +105,7 @@ export function CampaignSection({
   const id = "campaigns";
   return (
     <section id={id} className="border-b border-line">
-      <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+      <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6">
         <Reveal><SectionHead index={2} title={headline} sub={sub} /></Reveal>
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {items.map((c, i) => (
@@ -132,7 +132,7 @@ export function ShopStrip({ items = allProducts }: { items?: Product[] }) {
   const onAdd = (p: Product) => add(p);
   return (
     <section className="border-b border-line bg-midnight">
-      <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+      <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6">
         <Reveal><SectionHead index={3} title="Wear the movement" sub="Every ringgit funds campaigns, prints, and the next assembly. Members get the best prices." /></Reveal>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {items.slice(0, 4).map((p, i) => (

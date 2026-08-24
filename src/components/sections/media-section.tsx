@@ -42,9 +42,9 @@ function MediaSectionInner({ items }: { items: MediaItem[] }) {
   function setFilter(label: string) {
     const param = PARAM_FROM_LABEL[label];
     if (param) {
-      router.push(`/?media=${param}#media`);
+      router.push(`/?media=${param}`);
     } else {
-      router.push("/#media");
+      router.push("/");
     }
   }
 

@@ -27,7 +27,6 @@ async function getRecentEvents(): Promise<Event[]> {
 
 export async function EventsSection() {
   const events = await getRecentEvents();
-  if (events.length === 0) return null;
 
   return (
     <section className="border-b border-line" id="events">
@@ -57,6 +56,9 @@ export async function EventsSection() {
             </Link>
           ))}
         </div>
+        {events.length === 0 && (
+          <p className="mt-8 text-center text-[14px] text-ink/50">No events scheduled yet.</p>
+        )}
       </div>
     </section>
   );

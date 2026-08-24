@@ -372,6 +372,45 @@ export const zinePosts: ZinePost[] = [
   },
 ];
 
+export type StatementPost = {
+  slug: string;
+  chapterSlug: string;
+  title: string;
+  content: string;
+  date: string;
+  author: string;
+};
+
+export const statements: StatementPost[] = [
+  {
+    slug: "mansuh-auku-sekarang",
+    chapterSlug: "ligamy",
+    title: "Mansuh AUKU now: our position",
+    content:
+      "Fifty-five years is enough. AUKU 1971 was written to control students, not to serve them.\nEvery generation since has paid for it with silenced campuses and student leaders dragged to disciplinary boards for the crime of speaking.\nWe call on the government to announce a clear timeline to abolish AUKU and replace it with a law that protects student rights, not restrains them.",
+    date: "2026-08-02",
+    author: "Alyaah Hani Anuar",
+  },
+  {
+    slug: "keadilan-untuk-zara-qairina",
+    chapterSlug: "ligamy",
+    title: "Justice for Zara Qairina",
+    content:
+      "What happened to Zara Qairina is not an isolated case. It is the product of a system that refuses to see bullying until it is too late.\nWe demand a transparent investigation, published findings, and real protection for survivors who come forward.\nWe will keep marching until no student has to be afraid of their own hostel.",
+    date: "2025-08-12",
+    author: "Adam Raiyan Abd. Rahim",
+  },
+  {
+    slug: "hentikan-ancaman-saman",
+    chapterSlug: "ligaum",
+    title: "Stop suing your own students",
+    content:
+      "A campus should never need a lawyer to talk to its students. Yet here we are.\nLegal threats against students who speak up are an admission that the university has run out of arguments.\nWe stand with every UM student facing intimidation and we will not be quiet about it.",
+    date: "2026-03-14",
+    author: "Ammar Daniel Noor Irwan",
+  },
+];
+
 export const products: Product[] = [
   {
     slug: "tee-mansuh-auku",

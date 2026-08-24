@@ -114,6 +114,12 @@ export function CampaignSection({
             </Reveal>
           ))}
         </div>
+        <Reveal className="mt-8">
+          <div className="flex items-center justify-between gap-4 border-t border-line pt-6">
+            <p className="mono text-[12px] uppercase tracking-[0.14em] text-ink/50">All campaigns across chapters</p>
+            <Btn kind="ghost" href="/campaigns">More campaigns</Btn>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

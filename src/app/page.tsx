@@ -12,6 +12,7 @@ import { Introduction } from "@/components/sections/introduction";
 import { Principles } from "@/components/sections/principles";
 import { Slogan } from "@/components/sections/slogan";
 import { MemberTeaser } from "@/components/sections/member-teaser";
+import { EventsSection } from "@/components/sections/events-section";
 import { MediaSection } from "@/components/sections/media-section";
 import { readSheet } from "@/lib/sheets-db";
 import { campaigns } from "@/lib/mock";
@@ -101,6 +102,9 @@ export default async function Home() {
       <MemberTeaser />
       <Suspense fallback={null}>
         <CampaignSection />
+      </Suspense>
+      <Suspense fallback={null}>
+        <EventsSection />
       </Suspense>
       <CartProvider>
         <ShopStrip />

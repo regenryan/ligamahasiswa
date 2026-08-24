@@ -14,7 +14,7 @@ export function Hero({ chapterName, campaign }: HeroProps) {
 
   return (
     <section className="border-b border-line bg-paper">
-      <div className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
+      <div className="mx-auto w-full max-w-6xl px-4 pb-14 pt-0 sm:px-6 sm:pb-20">
         <Reveal>
           <div className="mono flex flex-wrap items-center justify-center gap-3 border border-line bg-cream px-4 py-2 text-[11px] uppercase tracking-[0.14em] text-ink/60">
             <span className="flex items-center gap-2">

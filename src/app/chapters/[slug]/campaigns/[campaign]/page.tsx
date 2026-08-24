@@ -169,14 +169,16 @@ export default async function CampaignPage({
     return (
       <Shell dir={DIR}>
         <PageHead kicker="Campaigns" title="Campaign not found" />
-        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
-          <Link
-            href={`/chapters/${slug}/campaigns`}
-            className="press inline-flex border border-line px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-ink hover:border-ink hover:text-brand transition-colors"
-          >
-            Back to campaigns
-          </Link>
-        </div>
+        <section className="border-b border-line">
+          <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+            <Link
+              href={`/chapters/${slug}/campaigns`}
+              className="mono text-[11px] uppercase tracking-[0.14em] text-ink/50 hover:text-brand transition-colors"
+            >
+              {"\u2190"} Back to campaigns
+            </Link>
+          </div>
+        </section>
         <JoinBand />
         <NewsletterBand />
       </Shell>
@@ -218,7 +220,7 @@ export default async function CampaignPage({
       <section id="introduction" className="border-b border-line">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
           <SectionHead index={1} title="Overview" />
-          <p className="mt-6 max-w-2xl text-[15px] leading-relaxed text-ink/75">
+          <p className="mt-6 max-w-2xl text-[15px] leading-relaxed text-ink/70">
             {campaign.summary}
           </p>
           <div className="mt-6 flex flex-wrap gap-2">

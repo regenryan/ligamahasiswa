@@ -29,7 +29,7 @@ export function ProfileForm({
       ) : null}
       <div>
         <label htmlFor="prof-name" className="mb-1.5 block text-[13px] font-bold">Name</label>
-        <input id="prof-name" name="name" defaultValue={name} required className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/35 focus:outline-none" />
+        <input id="prof-name" name="name" defaultValue={name} required className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none" />
       </div>
       <div>
         <label htmlFor="prof-chapter" className="mb-1.5 block text-[13px] font-bold">Chapter</label>
@@ -41,12 +41,12 @@ export function ProfileForm({
       </div>
       <div>
         <label htmlFor="prof-phone" className="mb-1.5 block text-[13px] font-bold">Phone</label>
-        <input id="prof-phone" name="phone" type="tel" defaultValue={phone} placeholder="+60..." className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/35 focus:outline-none" />
+        <input id="prof-phone" name="phone" type="tel" defaultValue={phone} placeholder="+60..." className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none" />
       </div>
       <button
         type="submit"
         disabled={pending}
-        className="press w-full border border-2 border-ink bg-brand px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.14em] text-white disabled:opacity-50"
+        className="press w-full border border-2 border-ink bg-brand px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.14em] text-paper disabled:opacity-50"
       >
         {pending ? "Saving..." : "Save profile"}
       </button>

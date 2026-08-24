@@ -93,7 +93,7 @@ function ZineModal({ onClose }: { onClose: () => void }) {
               type="text"
               minLength={3}
               placeholder="Your zine title"
-              className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/35 focus:outline-none focus:ring-2 focus:ring-brand/50"
+              className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-brand/50"
             />
           </div>
 
@@ -128,14 +128,14 @@ function ZineModal({ onClose }: { onClose: () => void }) {
               rows={10}
               minLength={50}
               placeholder="Write your zine content here. At least 50 characters."
-              className="w-full resize-y border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/35 focus:outline-none focus:ring-2 focus:ring-brand/50"
+              className="w-full resize-y border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-brand/50"
             />
           </div>
 
           <button
             type="submit"
             disabled={pending}
-            className="press mt-2 w-full border border-2 border-ink bg-brand px-5 py-3.5 text-[13px] font-extrabold uppercase tracking-[0.16em] text-white disabled:opacity-50"
+            className="press mt-2 w-full border border-2 border-ink bg-brand px-5 py-3.5 text-[13px] font-extrabold uppercase tracking-[0.16em] text-paper disabled:opacity-50"
           >
             {pending ? "Submitting..." : "Submit for review"}
           </button>

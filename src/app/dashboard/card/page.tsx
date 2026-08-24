@@ -1,5 +1,5 @@
 import { Shell } from "@/components/shells";
-import { PageHead, SectionHead } from "@/components/sections/head";
+import { PageHead, SectionHead, Btn } from "@/components/sections/head";
 import { JoinBand } from "@/components/sections/strips";
 import { getCurrentUser } from "@/lib/auth";
 import { findRow } from "@/lib/sheets-db";
@@ -48,18 +48,8 @@ export default async function CardPage() {
                 Please log in to view your member card.
               </p>
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-                <Link
-                  href="/login"
-                  className="press inline-flex border border-2 border-ink bg-brand px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-white hover:opacity-90 transition-opacity duration-150"
-                >
-                  Log in
-                </Link>
-                <Link
-                  href="/register"
-                  className="press inline-flex border border-line px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-ink hover:border-ink hover:text-brand transition-colors"
-                >
-                  Register
-                </Link>
+                <Btn kind="join" href="/login">Log in</Btn>
+                <Btn kind="ghost" href="/register">Register</Btn>
               </div>
             </div>
           )}

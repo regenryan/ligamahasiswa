@@ -195,7 +195,7 @@ export function JoinBand() {
           <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-paper/85">The movement is 2 minutes away</p>
           <h2 className="display mt-4 text-4xl leading-[0.9] text-paper sm:text-6xl">Join the movement</h2>
           <p className="mt-4 max-w-md text-[15px] leading-relaxed text-paper">
-            Membership is free. Your digital card is issued instantly, and your chapter committee verifies you within days. What are you waiting for?
+            Membership is RM10. Your digital card is issued instantly, and your chapter committee verifies you within days. What are you waiting for?
           </p>
           <div className="mono mt-8 text-[11px] uppercase tracking-[0.16em] text-paper/85">55 years is enough. Day 1 starts today.</div>
         </Reveal>

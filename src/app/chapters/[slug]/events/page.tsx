@@ -44,6 +44,12 @@ export default async function ChapterEventsPage({
       />
       <section className="border-b border-line">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+          <Link
+            href={`/chapters/${slug}`}
+            className="mono mb-6 inline-block text-[11px] uppercase tracking-[0.14em] text-ink/50 hover:text-brand transition-colors"
+          >
+            {"\u2190"} Back to chapter
+          </Link>
           {events.length === 0 ? (
             <div className="border border-dashed border-line p-8 text-center">
               <p className="text-[14px] text-ink/50">No events scheduled yet. Check back soon.</p>
@@ -59,12 +65,6 @@ export default async function ChapterEventsPage({
           )}
         </div>
       </section>
-      <Link
-        href={`/chapters/${slug}`}
-        className="mx-auto block w-full max-w-6xl border-b border-line px-4 py-6 text-center text-[13px] font-extrabold uppercase tracking-[0.12em] text-ink/50 hover:text-brand transition-colors"
-      >
-        Back to chapter
-      </Link>
     </Shell>
   );
 }

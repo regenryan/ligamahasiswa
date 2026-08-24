@@ -418,14 +418,14 @@ export function NewsletterForm() {
             placeholder="you@campus.edu.my"
             disabled={sending}
             aria-invalid={error ? true : undefined}
-            className={`w-full border bg-paper px-4 py-3 text-[14px] text-ink placeholder:text-ink/35 focus:outline-none ${
+            className={`w-full border bg-paper px-4 py-3 text-[14px] text-ink placeholder:text-ink/40 focus:outline-none ${
               error ? "border-brand" : "border-line"
             }`}
           />
           <button
             type="submit"
             disabled={sending}
-            className="press shrink-0 border border-2 border-ink bg-brand px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.16em] text-white disabled:opacity-50"
+            className="press shrink-0 border border-2 border-ink bg-brand px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.16em] text-paper disabled:opacity-50"
           >
             {sending ? "Sending..." : "On the list"}
           </button>
@@ -506,7 +506,7 @@ export function JoinForm() {
         </div>
         <a
           href="/dashboard/card"
-          className="press mt-6 inline-flex border border-ink bg-ink px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-paper hover:bg-brand hover:text-white"
+          className="press mt-6 inline-flex border border-ink bg-ink px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-paper hover:bg-brand hover:text-paper"
         >
           Preview the member card
         </a>
@@ -545,7 +545,7 @@ export function JoinForm() {
             placeholder="Nur Aisyah Binti Ahmad"
             disabled={sending}
             aria-invalid={errors.name ? true : undefined}
-            className={`w-full border bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/35 focus:outline-none ${
+            className={`w-full border bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none ${
               errors.name ? "border-brand" : "border-line"
             }`}
           />
@@ -566,7 +566,7 @@ export function JoinForm() {
             placeholder="you@campus.edu.my"
             disabled={sending}
             aria-invalid={errors.email ? true : undefined}
-            className={`w-full border bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/35 focus:outline-none ${
+            className={`w-full border bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none ${
               errors.email ? "border-brand" : "border-line"
             }`}
           />
@@ -599,7 +599,7 @@ export function JoinForm() {
           {field("campus")}
         </div>
         <div>
-          <label className="flex items-start gap-3 text-[13px] leading-relaxed text-ink/75">
+          <label className="flex items-start gap-3 text-[13px] leading-relaxed text-ink/70">
             <input
               type="checkbox"
               checked={agree}
@@ -623,7 +623,7 @@ export function JoinForm() {
       <button
         type="submit"
         disabled={sending}
-        className="press mt-6 w-full border border-2 border-ink bg-brand px-5 py-3.5 text-[13px] font-extrabold uppercase tracking-[0.16em] text-white disabled:opacity-50"
+        className="press mt-6 w-full border border-2 border-ink bg-brand px-5 py-3.5 text-[13px] font-extrabold uppercase tracking-[0.16em] text-paper disabled:opacity-50"
       >
         {sending ? "Sending..." : "Join the movement"}
       </button>

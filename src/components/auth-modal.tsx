@@ -109,7 +109,7 @@ function LoginForm({
             type="email"
             required
             placeholder="you@campus.edu.my"
-            className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/35 focus:outline-none focus:ring-2 focus:ring-brand/50"
+            className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-brand/50"
           />
         </div>
 
@@ -123,14 +123,14 @@ function LoginForm({
             type="password"
             required
             placeholder="Your password"
-            className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/35 focus:outline-none focus:ring-2 focus:ring-brand/50"
+            className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-brand/50"
           />
         </div>
 
         <button
           type="submit"
           disabled={pending}
-          className="press mt-2 w-full border border-2 border-ink bg-brand px-5 py-3.5 text-[13px] font-extrabold uppercase tracking-[0.16em] text-white disabled:opacity-50"
+          className="press mt-2 w-full border border-2 border-ink bg-brand px-5 py-3.5 text-[13px] font-extrabold uppercase tracking-[0.16em] text-paper disabled:opacity-50"
         >
           {pending ? "Logging in..." : "Log in"}
         </button>
@@ -191,7 +191,7 @@ function RegisterForm({
             required
             minLength={3}
             placeholder="Nur Aisyah Binti Ahmad"
-            className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/35 focus:outline-none focus:ring-2 focus:ring-brand/50"
+            className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-brand/50"
           />
           <FieldError name="name" state={state} />
         </div>
@@ -206,7 +206,7 @@ function RegisterForm({
             type="email"
             required
             placeholder="you@campus.edu.my"
-            className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/35 focus:outline-none focus:ring-2 focus:ring-brand/50"
+            className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-brand/50"
           />
           <FieldError name="email" state={state} />
         </div>
@@ -222,7 +222,7 @@ function RegisterForm({
             required
             minLength={8}
             placeholder="At least 8 characters"
-            className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/35 focus:outline-none focus:ring-2 focus:ring-brand/50"
+            className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-brand/50"
           />
           <FieldError name="password" state={state} />
         </div>
@@ -235,7 +235,7 @@ function RegisterForm({
             id="auth-modal-reg-chapter"
             name="chapter"
             required
-            className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/35 focus:outline-none focus:ring-2 focus:ring-brand/50"
+            className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-brand/50"
           >
             <option value="">Pick your chapter...</option>
             {CHAPTERS.map((c) => (
@@ -250,7 +250,7 @@ function RegisterForm({
         <button
           type="submit"
           disabled={pending}
-          className="press mt-2 w-full border border-2 border-ink bg-brand px-5 py-3.5 text-[13px] font-extrabold uppercase tracking-[0.16em] text-white disabled:opacity-50"
+          className="press mt-2 w-full border border-2 border-ink bg-brand px-5 py-3.5 text-[13px] font-extrabold uppercase tracking-[0.16em] text-paper disabled:opacity-50"
         >
           {pending ? "Creating account..." : "Create account"}
         </button>

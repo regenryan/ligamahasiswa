@@ -59,14 +59,16 @@ export default async function StatementPage({
     return (
       <Shell dir={DIR}>
         <PageHead kicker="Statements" title="Statement not found" />
-        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
-          <Link
-            href={`/chapters/${slug}`}
-            className="press inline-flex border border-line px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-ink hover:border-ink hover:text-brand transition-colors"
-          >
-            Back to {chapter.label}
-          </Link>
-        </div>
+        <section className="border-b border-line">
+          <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+            <Link
+              href={`/chapters/${slug}`}
+              className="mono text-[11px] uppercase tracking-[0.14em] text-ink/50 hover:text-brand transition-colors"
+            >
+              {"\u2190"} Back to {chapter.label}
+            </Link>
+          </div>
+        </section>
         <JoinBand />
         <NewsletterBand />
       </Shell>
@@ -79,8 +81,13 @@ export default async function StatementPage({
 
       <section className="border-b border-line">
         <div className="mx-auto w-full max-w-3xl px-4 py-16 sm:px-6">
-          <p className="mono text-[11px] uppercase tracking-[0.2em] text-ink/50">{statement.date}</p>
-          <div className="mt-6 text-[15px] leading-relaxed text-ink/75">
+          <Link
+            href={`/chapters/${slug}`}
+            className="mono mb-8 inline-block text-[11px] uppercase tracking-[0.14em] text-ink/50 hover:text-brand transition-colors"
+          >
+            {"\u2190"} Back to {chapter.label}
+          </Link>
+          <div className="text-[15px] leading-relaxed text-ink/70">
             {statement.content.split("\n").map((p, i) => (
               <p key={i} className="mb-4">
                 {p}
@@ -99,17 +106,6 @@ export default async function StatementPage({
               {chapterLabel(statement.chapterSlug)}
             </span>
           </div>
-        </div>
-      </section>
-
-      <section className="border-b border-line">
-        <div className="mx-auto w-full max-w-3xl px-4 py-8 sm:px-6">
-          <Link
-            href={`/chapters/${slug}`}
-            className="mono text-[11px] font-bold uppercase tracking-[0.2em] text-ink/50 hover:text-brand transition-colors"
-          >
-            &larr; Back to {chapter.label}
-          </Link>
         </div>
       </section>
 

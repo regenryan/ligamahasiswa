@@ -12,7 +12,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
       type="button"
       onClick={() => add(product)}
       disabled={inCart}
-      className="press w-full border border-2 border-ink bg-brand px-5 py-3.5 text-[13px] font-extrabold uppercase tracking-[0.16em] text-white disabled:opacity-50"
+      className="press w-full border border-2 border-ink bg-brand px-5 py-3.5 text-[13px] font-extrabold uppercase tracking-[0.16em] text-paper disabled:opacity-50"
     >
       {inCart ? "In cart" : product.preorder ? "Preorder" : "Add to cart"}
     </button>

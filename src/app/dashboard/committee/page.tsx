@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Shell } from "@/components/shells";
-import { PageHead, SectionHead } from "@/components/sections";
+import { PageHead, Btn } from "@/components/sections";
 import { requireAuth, hasRole } from "@/lib/auth";
 import { readSheet } from "@/lib/sheets-db";
 import { CHAPTERS } from "@/lib/chapters";
@@ -19,9 +19,9 @@ export default async function CommitteePage() {
         <section className="border-b border-line">
           <div className="mx-auto w-full max-w-2xl px-4 py-16 text-center sm:px-6">
             <p className="text-[15px] text-ink/60">Please log in to manage your committee.</p>
-            <Link href="/login" className="press mt-6 inline-block border border-2 border-ink bg-brand px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.14em] text-white">
-              Log in
-            </Link>
+            <div className="mt-6">
+              <Btn kind="join" href="/login">Log in</Btn>
+            </div>
           </div>
         </section>
       </Shell>
@@ -72,14 +72,15 @@ export default async function CommitteePage() {
         sub={isAdmin ? "Manage chapter committees, approvals, and content." : "View your chapter committee and content."}
       />
       <section className="border-b border-line">
-        <div className="mx-auto w-full max-w-4xl px-4 py-14 sm:px-6">
+        <div className="mx-auto w-full max-w-4xl px-4 py-16 sm:px-6">
           {isAdmin ? (
             <CommitteeForm chapters={chapters} userChapter={user.chapterSlug} />
           ) : null}
 
           {isCommitteeMember && (
             <div className="mt-10">
-              <SectionHead index={0} title="My positions" sub="Your committee positions in this chapter." />
+              <h2 className="display text-2xl">My positions</h2>
+              <p className="mt-2 text-[14px] text-ink/60">Your committee positions in this chapter.</p>
               <div className="mt-4 space-y-2">
                 {visibleChapters.flatMap((ch) =>
                   (committees[ch.slug] ?? [])
@@ -100,23 +101,27 @@ export default async function CommitteePage() {
 
           {pendingApprovals.length > 0 && (isCommitteeMember || isAdmin) && (
             <div className="mt-10">
-              <SectionHead index={1} title="Pending approvals" sub="Resignation requests awaiting approval." />
-              <CommitteeActions
-                approvals={pendingApprovals.map((a) => ({
-                  id: a.id,
-                  type: a.type,
-                  requesterId: a.requester_id,
-                  payload: a.payload,
-                  approverIds: a.approver_ids,
-                }))}
-                currentUserId={user.id}
-                isAdmin={isAdmin}
-              />
+              <h2 className="display text-2xl">Pending approvals</h2>
+              <p className="mt-2 text-[14px] text-ink/60">Resignation requests awaiting approval.</p>
+              <div className="mt-4">
+                <CommitteeActions
+                  approvals={pendingApprovals.map((a) => ({
+                    id: a.id,
+                    type: a.type,
+                    requesterId: a.requester_id,
+                    payload: a.payload,
+                    approverIds: a.approver_ids,
+                  }))}
+                  currentUserId={user.id}
+                  isAdmin={isAdmin}
+                />
+              </div>
             </div>
           )}
 
           <div className="mt-10 space-y-8">
-            <SectionHead index={2} title="Committee members" sub="The people leading each chapter." />
+            <h2 className="display text-2xl">Committee members</h2>
+            <p className="-mt-4 text-[14px] text-ink/60">The people leading each chapter.</p>
             {visibleChapters.map((ch) => (
               <div key={ch.slug}>
                 <h3 className="display text-xl">{ch.label}</h3>

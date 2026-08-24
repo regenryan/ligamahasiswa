@@ -22,7 +22,7 @@ function ShopMarquee() {
         "Free shipping over RM50",
         "Every ringgit stays in the fight",
       ]}
-      className="border-y border-line bg-brand py-2 text-[13px] font-extrabold uppercase tracking-[0.14em] text-white"
+      className="border-y border-line bg-brand py-2 text-[13px] font-extrabold uppercase tracking-[0.14em] text-paper"
     />
   );
 }

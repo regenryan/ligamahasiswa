@@ -37,11 +37,13 @@ export default async function EventFundraisePage({
     return (
       <Shell dir={27}>
         <PageHead kicker="Fundraise" title="Event not found" />
-        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
-          <Link href={`/chapters/${slug}/events`} className="press inline-flex border border-line px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-ink hover:border-ink hover:text-brand transition-colors">
-            Back to events
-          </Link>
-        </div>
+        <section className="border-b border-line">
+          <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+            <Link href={`/chapters/${slug}/events`} className="mono text-[11px] uppercase tracking-[0.14em] text-ink/50 hover:text-brand transition-colors">
+              {"\u2190"} Back to events
+            </Link>
+          </div>
+        </section>
       </Shell>
     );
   }
@@ -88,7 +90,7 @@ export default async function EventFundraisePage({
                   href={event.donateUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="press mt-6 inline-flex w-full items-center justify-center border-2 border-ink bg-brand px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-white hover:opacity-90 transition-opacity"
+                  className="press mt-6 inline-flex w-full items-center justify-center border-2 border-ink bg-brand px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-paper hover:opacity-90 transition-opacity"
                 >
                   Donate via HitPay
                 </a>
@@ -104,9 +106,6 @@ export default async function EventFundraisePage({
               )}
             </div>
           </div>
-          <Link href={`/chapters/${slug}/events`} className="press mt-10 inline-flex border border-line px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-ink hover:border-ink hover:text-brand transition-colors">
-            Back to events
-          </Link>
         </div>
       </section>
       <section className="border-b border-line bg-midnight">

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Shell } from "@/components/shells";
-import { PageHead } from "@/components/sections";
+import { PageHead, Btn } from "@/components/sections";
 import { requireAuth } from "@/lib/auth";
 import { readSheet } from "@/lib/sheets-db";
 
@@ -15,12 +15,9 @@ export default async function OrderHistoryPage() {
         <section className="border-b border-line">
           <div className="mx-auto w-full max-w-2xl px-4 py-16 text-center sm:px-6">
             <p className="text-[15px] text-ink/60">Please log in to view your orders.</p>
-            <Link
-              href="/login"
-              className="press mt-6 inline-block border border-2 border-ink bg-brand px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.14em] text-white"
-            >
-              Log in
-            </Link>
+            <div className="mt-6">
+              <Btn kind="join" href="/login">Log in</Btn>
+            </div>
           </div>
         </section>
       </Shell>
@@ -35,8 +32,8 @@ export default async function OrderHistoryPage() {
     : [];
 
   const statusColors: Record<string, string> = {
-    completed: "bg-brand/20 text-brand-text",
-    paid: "bg-brand/20 text-brand-text",
+    completed: "bg-term/20 text-term",
+    paid: "bg-term/20 text-term",
     pending: "bg-midnight text-ink/50",
     failed: "bg-brand/10 text-ink/40",
     cancelled: "bg-brand/10 text-ink/40",
@@ -46,16 +43,13 @@ export default async function OrderHistoryPage() {
     <Shell dir={DIR}>
       <PageHead kicker="Dashboard" title="Order history" sub="View all your purchases from the Liga shop." />
       <section className="border-b border-line">
-        <div className="mx-auto w-full max-w-3xl px-4 py-14 sm:px-6">
+        <div className="mx-auto w-full max-w-4xl px-4 py-16 sm:px-6">
           {orders.length === 0 ? (
             <div className="text-center">
               <p className="text-[15px] text-ink/50">No orders yet.</p>
-              <Link
-                href="/shop"
-                className="press mt-6 inline-block border border-2 border-ink bg-brand px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.14em] text-white"
-              >
-                Visit shop
-              </Link>
+              <div className="mt-6">
+                <Btn kind="join" href="/shop">Visit shop</Btn>
+              </div>
             </div>
           ) : (
             <div className="space-y-3">

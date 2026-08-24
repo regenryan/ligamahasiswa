@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Shell } from "@/components/shells";
-import { PageHead } from "@/components/sections";
+import { PageHead, Btn } from "@/components/sections";
 import { requireAuth, hasRole } from "@/lib/auth";
 import { readSheet } from "@/lib/sheets-db";
 import { ProfileForm } from "./profile-form";
@@ -18,9 +18,9 @@ export default async function DashboardPage() {
         <section className="border-b border-line">
           <div className="mx-auto w-full max-w-2xl px-4 py-16 text-center sm:px-6">
             <p className="text-[15px] text-ink/60">Please log in to access your dashboard.</p>
-            <Link href="/login" className="press mt-6 inline-block border border-2 border-ink bg-brand px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.14em] text-white">
-              Log in
-            </Link>
+            <div className="mt-6">
+              <Btn kind="join" href="/login">Log in</Btn>
+            </div>
           </div>
         </section>
       </Shell>
@@ -66,7 +66,7 @@ export default async function DashboardPage() {
       <PageHead kicker="Dashboard" title={`Hey, ${user.name}`} sub={`You are logged in as ${user.chapterSlug} chapter.`} />
 
       <section className="border-b border-line">
-        <div className="mx-auto w-full max-w-3xl px-4 py-8 sm:px-6">
+        <div className="mx-auto w-full max-w-4xl px-4 py-16 sm:px-6">
           <div className="flex flex-wrap items-center gap-3">
             <span className={`inline-flex border px-2 py-1 text-[10px] font-extrabold uppercase tracking-[0.14em] ${statusSkin}`}>
               {statusLabel}
@@ -77,12 +77,7 @@ export default async function DashboardPage() {
               </span>
             ) : null}
           </div>
-        </div>
-      </section>
-
-      <section className="border-b border-line">
-        <div className="mx-auto w-full max-w-3xl px-4 py-14 sm:px-6">
-          <div className="grid gap-3">
+          <div className="mt-6 grid gap-3">
             {links.map((link) => (
               <Link key={link.href} href={link.href} className="group flex items-center justify-between border border-line bg-cream px-5 py-4 hover:border-brand hover:bg-brand/5 transition-colors">
                 <div>
@@ -99,8 +94,8 @@ export default async function DashboardPage() {
 
       {goingRsvps.length > 0 ? (
         <section className="border-b border-line">
-          <div className="mx-auto w-full max-w-3xl px-4 py-14 sm:px-6">
-            <h2 className="display text-2xl">My RSVPs</h2>
+          <div className="mx-auto w-full max-w-4xl px-4 py-16 sm:px-6">
+            <h2 className="display text-3xl">My RSVPs</h2>
             <div className="mt-6 space-y-3">
               {goingRsvps.map((r) => (
                 <Link key={r.id} href={`/events/${r.event_slug}`} className="block border border-line bg-cream px-5 py-4 hover:border-brand transition-colors">
@@ -114,8 +109,8 @@ export default async function DashboardPage() {
       ) : null}
 
       <section className="border-b border-line">
-        <div className="mx-auto w-full max-w-3xl px-4 py-14 sm:px-6">
-          <h2 className="display text-2xl">Election status</h2>
+        <div className="mx-auto w-full max-w-4xl px-4 py-16 sm:px-6">
+          <h2 className="display text-3xl">Election status</h2>
           {myNomination ? (
             <div className="mt-4 border border-line bg-cream px-5 py-4">
               <div className="flex items-center gap-2">
@@ -140,8 +135,8 @@ export default async function DashboardPage() {
       </section>
 
       <section className="border-b border-line">
-        <div className="mx-auto w-full max-w-3xl px-4 py-14 sm:px-6">
-          <h2 className="display text-2xl">Edit profile</h2>
+        <div className="mx-auto w-full max-w-4xl px-4 py-16 sm:px-6">
+          <h2 className="display text-3xl">Edit profile</h2>
           <p className="mt-2 text-[14px] text-ink/60">Update your name, chapter, and phone number.</p>
           <div className="mt-6 max-w-md">
             <ProfileForm name={user.name} chapterSlug={user.chapterSlug} phone={user.phone} />
@@ -151,8 +146,8 @@ export default async function DashboardPage() {
 
       {!isMember ? (
         <section className="border-b border-line bg-midnight">
-          <div className="mx-auto w-full max-w-3xl px-4 py-14 sm:px-6">
-            <h2 className="display text-2xl text-fog">
+          <div className="mx-auto w-full max-w-4xl px-4 py-16 sm:px-6">
+            <h2 className="display text-3xl text-fog">
               {isExpired ? "Renew your membership" : "Become a verified member"}
             </h2>
             <p className="mt-3 max-w-lg text-[14px] leading-relaxed text-fog/60">
@@ -166,8 +161,8 @@ export default async function DashboardPage() {
               </p>
             ) : null}
             <div className="mt-6 flex flex-wrap gap-3">
-              <Link href="/#member" className="press inline-flex border border-2 border-fog bg-fog/10 px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-fog hover:bg-fog/20 transition-colors">
-                {isExpired ? "Renew now" : "Sertai Liga"}
+              <Link href="/#member" className="press inline-flex border border-fog bg-fog/10 px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-fog hover:bg-fog/20 transition-colors">
+                {isExpired ? "Renew now" : "Sign up"}
               </Link>
             </div>
           </div>

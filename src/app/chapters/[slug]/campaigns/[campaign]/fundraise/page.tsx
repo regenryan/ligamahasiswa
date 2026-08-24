@@ -62,14 +62,16 @@ export default async function CampaignFundraisePage({
     return (
       <Shell dir={27}>
         <PageHead kicker="Fundraise" title="Campaign not found" />
-        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
-          <Link
-            href={`/chapters/${slug}/campaigns`}
-            className="press inline-flex border border-line px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-ink hover:border-ink hover:text-brand transition-colors"
-          >
-            Back to campaigns
-          </Link>
-        </div>
+        <section className="border-b border-line">
+          <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+            <Link
+              href={`/chapters/${slug}/campaigns`}
+              className="mono text-[11px] uppercase tracking-[0.14em] text-ink/50 hover:text-brand transition-colors"
+            >
+              {"\u2190"} Back to campaigns
+            </Link>
+          </div>
+        </section>
         <JoinBand />
         <NewsletterBand />
       </Shell>
@@ -110,7 +112,7 @@ export default async function CampaignFundraisePage({
                   href={info.paymentUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="press mt-6 inline-flex w-full items-center justify-center bg-brand px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-white hover:opacity-90 transition-opacity duration-150"
+                  className="press mt-6 inline-flex w-full items-center justify-center bg-brand px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-paper hover:opacity-90 transition-opacity duration-150"
                 >
                   Donate via HitPay
                 </a>
@@ -126,12 +128,6 @@ export default async function CampaignFundraisePage({
               )}
             </div>
           </div>
-          <Link
-            href={`/chapters/${slug}/campaigns/${campaignSlug}`}
-            className="press mt-10 inline-flex border border-line px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-ink hover:border-ink hover:text-brand transition-colors"
-          >
-            Back to campaign
-          </Link>
         </div>
       </section>
       <JoinBand />

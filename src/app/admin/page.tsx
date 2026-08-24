@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Shell } from "@/components/shells";
-import { PageHead } from "@/components/sections";
+import { PageHead, Btn } from "@/components/sections";
 import { getCurrentUser } from "@/lib/auth";
 import { readSheet } from "@/lib/sheets-db";
 
@@ -16,9 +16,9 @@ export default async function AdminPage() {
         <section className="border-b border-line">
           <div className="mx-auto w-full max-w-2xl px-4 py-16 text-center sm:px-6">
             <p className="text-[15px] text-ink/60">You do not have admin access.</p>
-            <Link href="/dashboard" className="press mt-6 inline-block border border-2 border-ink bg-brand px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.14em] text-white">
-              Back to dashboard
-            </Link>
+            <div className="mt-6">
+              <Btn kind="join" href="/dashboard">Back to dashboard</Btn>
+            </div>
           </div>
         </section>
       </Shell>
@@ -39,7 +39,7 @@ export default async function AdminPage() {
         sub="Manage users, orders, content, and settings across all chapters."
       />
       <section className="border-b border-line">
-        <div className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6">
+        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
           <div className="grid gap-3">
             <Link href="/admin/users" className="group flex items-center justify-between border border-line bg-cream px-5 py-4 hover:border-brand hover:bg-brand/5 transition-colors">
               <div>
@@ -80,8 +80,8 @@ export default async function AdminPage() {
         </div>
       </section>
       <section className="border-b border-line">
-        <div className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6">
-          <h2 className="display text-2xl">Quick stats</h2>
+        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+          <h2 className="display text-3xl">Quick stats</h2>
           <div className="mt-6 grid gap-4 sm:grid-cols-3">
             <div className="border border-line bg-cream p-5">
               <p className="mono text-[11px] uppercase tracking-[0.14em] text-ink/50">Total users</p>

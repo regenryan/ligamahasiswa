@@ -80,26 +80,26 @@ function ContactInner() {
             >
               <div>
                 <label htmlFor="ct-name" className="mb-1.5 block text-[13px] font-bold">Name</label>
-                <input id="ct-name" value={name} onChange={(e) => setName(e.target.value)} disabled={sending} className={`w-full border bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/35 focus:outline-none ${errors.name ? "border-brand" : "border-line"}`} />
+                <input id="ct-name" value={name} onChange={(e) => setName(e.target.value)} disabled={sending} className={`w-full border bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none ${errors.name ? "border-brand" : "border-line"}`} />
                 {field("name")}
               </div>
               <div>
                 <label htmlFor="ct-email" className="mb-1.5 block text-[13px] font-bold">Email</label>
-                <input id="ct-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled={sending} className={`w-full border bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/35 focus:outline-none ${errors.email ? "border-brand" : "border-line"}`} />
+                <input id="ct-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled={sending} className={`w-full border bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none ${errors.email ? "border-brand" : "border-line"}`} />
                 {field("email")}
               </div>
               <div>
                 <label htmlFor="ct-subject" className="mb-1.5 block text-[13px] font-bold">Subject</label>
-                <input id="ct-subject" value={subject} onChange={(e) => setSubject(e.target.value)} disabled={sending} className={`w-full border bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/35 focus:outline-none ${errors.subject ? "border-brand" : "border-line"}`} />
+                <input id="ct-subject" value={subject} onChange={(e) => setSubject(e.target.value)} disabled={sending} className={`w-full border bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none ${errors.subject ? "border-brand" : "border-line"}`} />
                 {field("subject")}
               </div>
               <div>
                 <label htmlFor="ct-message" className="mb-1.5 block text-[13px] font-bold">Message</label>
-                <textarea id="ct-message" rows={6} value={message} onChange={(e) => setMessage(e.target.value)} disabled={sending} className={`w-full border bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/35 focus:outline-none ${errors.message ? "border-brand" : "border-line"}`} />
+                <textarea id="ct-message" rows={6} value={message} onChange={(e) => setMessage(e.target.value)} disabled={sending} className={`w-full border bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none ${errors.message ? "border-brand" : "border-line"}`} />
                 {field("message")}
               </div>
               {errors.submit && <p role="alert" className="text-[12px] text-brand-text">{errors.submit}</p>}
-              <button type="submit" disabled={sending} className="press w-full border border-2 border-ink bg-brand px-5 py-3.5 text-[13px] font-extrabold uppercase tracking-[0.16em] text-white disabled:opacity-50">
+              <button type="submit" disabled={sending} className="press w-full border border-2 border-ink bg-brand px-5 py-3.5 text-[13px] font-extrabold uppercase tracking-[0.16em] text-paper disabled:opacity-50">
                 {sending ? "Sending..." : "Send message"}
               </button>
             </form>

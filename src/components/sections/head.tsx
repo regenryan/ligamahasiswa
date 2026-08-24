@@ -14,9 +14,10 @@ type BtnProps = {
   onClick?: () => void;
   type?: "button" | "submit";
   className?: string;
+  disabled?: boolean;
 };
 
-export function Btn({ kind, size = "md", href, children, onClick, type = "button", className = "" }: BtnProps) {
+export function Btn({ kind, size = "md", href, children, onClick, type = "button", className = "", disabled }: BtnProps) {
   const sizes = size === "lg" ? "px-7 py-3.5 text-[14px]" : "px-5 py-3 text-[13px]";
   let skin = "";
   if (kind === "join") {
@@ -28,8 +29,8 @@ export function Btn({ kind, size = "md", href, children, onClick, type = "button
   } else {
     skin = "mono underline underline-offset-4 text-ink/70 hover:text-brand";
   }
-  const cls = `press inline-flex items-center justify-center gap-2 font-extrabold uppercase tracking-[0.12em] ${sizes} ${skin} ${className}`;
-  if (href) {
+  const cls = `press inline-flex items-center justify-center gap-2 font-extrabold uppercase tracking-[0.12em] disabled:opacity-50 ${sizes} ${skin} ${className}`;
+  if (href && !disabled) {
     return (
       <Link href={href} className={cls} onClick={onClick}>
         {children}
@@ -37,7 +38,7 @@ export function Btn({ kind, size = "md", href, children, onClick, type = "button
     );
   }
   return (
-    <button type={type} className={cls} onClick={onClick}>
+    <button type={type} className={cls} onClick={onClick} disabled={disabled}>
       {children}
     </button>
   );

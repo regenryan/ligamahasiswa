@@ -50,7 +50,7 @@ export function CommitteeForm({
             id="comm-title"
             name="title"
             placeholder="Chairperson, Secretary..."
-            className="w-full border border-line bg-midnight px-3 py-2.5 text-[13px] placeholder:text-ink/35 focus:outline-none"
+            className="w-full border border-line bg-midnight px-3 py-2.5 text-[13px] placeholder:text-ink/40 focus:outline-none"
           />
         </div>
         <div>
@@ -59,7 +59,7 @@ export function CommitteeForm({
             id="comm-name"
             name="name"
             placeholder="Full name"
-            className="w-full border border-line bg-midnight px-3 py-2.5 text-[13px] placeholder:text-ink/35 focus:outline-none"
+            className="w-full border border-line bg-midnight px-3 py-2.5 text-[13px] placeholder:text-ink/40 focus:outline-none"
           />
         </div>
         <div>
@@ -69,14 +69,14 @@ export function CommitteeForm({
             name="email"
             type="email"
             placeholder="email@campus.edu.my"
-            className="w-full border border-line bg-midnight px-3 py-2.5 text-[13px] placeholder:text-ink/35 focus:outline-none"
+            className="w-full border border-line bg-midnight px-3 py-2.5 text-[13px] placeholder:text-ink/40 focus:outline-none"
           />
         </div>
         <div className="sm:col-span-2">
           <button
             type="submit"
             disabled={pending}
-            className="press border border-2 border-ink bg-brand px-5 py-2.5 text-[12px] font-extrabold uppercase tracking-[0.14em] text-white disabled:opacity-50"
+            className="press border border-2 border-ink bg-brand px-5 py-2.5 text-[12px] font-extrabold uppercase tracking-[0.14em] text-paper disabled:opacity-50"
           >
             {pending ? "Adding..." : "Add member"}
           </button>

@@ -48,7 +48,7 @@ export function RsvpButton({ eventSlug }: { eventSlug: string }) {
       type="button"
       onClick={handleRsvp}
       disabled={loading}
-      className="press mt-6 block w-full border border-2 border-ink bg-brand px-5 py-3 text-center text-[13px] font-extrabold uppercase tracking-[0.12em] text-white hover:opacity-90 transition-opacity duration-150 disabled:opacity-50"
+      className="press mt-6 block w-full border border-2 border-ink bg-brand px-5 py-3 text-center text-[13px] font-extrabold uppercase tracking-[0.12em] text-paper hover:opacity-90 transition-opacity duration-150 disabled:opacity-50"
     >
       {loading ? "Sending..." : "RSVP"}
     </button>

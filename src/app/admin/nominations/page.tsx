@@ -13,7 +13,7 @@ export default async function AdminNominationsPage() {
         <PageHead kicker="Admin" title="Access denied" />
         <section className="border-b border-line">
           <div className="mx-auto w-full max-w-2xl px-4 py-16 text-center sm:px-6">
-            <Link href="/dashboard" className="press mt-6 inline-block border border-2 border-ink bg-brand px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.14em] text-white">Back to dashboard</Link>
+            <Link href="/dashboard" className="press mt-6 inline-block border border-2 border-ink bg-brand px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.14em] text-paper">Back to dashboard</Link>
           </div>
         </section>
       </Shell>

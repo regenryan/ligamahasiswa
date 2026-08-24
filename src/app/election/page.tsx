@@ -28,11 +28,11 @@ function NominationForm() {
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
               <label htmlFor="prk-name" className="mb-1.5 block text-[13px] font-bold">Nominee name</label>
-              <input id="prk-name" name="name" type="text" required placeholder="Full name" className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/35 focus:outline-none focus:ring-2 focus:ring-brand/50" />
+              <input id="prk-name" name="name" type="text" required placeholder="Full name" className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-brand/50" />
             </div>
             <div>
               <label htmlFor="prk-email" className="mb-1.5 block text-[13px] font-bold">Contact email</label>
-              <input id="prk-email" name="email" type="email" required placeholder="you@campus.edu.my" className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/35 focus:outline-none focus:ring-2 focus:ring-brand/50" />
+              <input id="prk-email" name="email" type="email" required placeholder="you@campus.edu.my" className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-brand/50" />
             </div>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -47,14 +47,14 @@ function NominationForm() {
             </div>
             <div>
               <label htmlFor="prk-position" className="mb-1.5 block text-[13px] font-bold">Position</label>
-              <input id="prk-position" name="position" type="text" required placeholder="e.g. President, Secretary" className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/35 focus:outline-none focus:ring-2 focus:ring-brand/50" />
+              <input id="prk-position" name="position" type="text" required placeholder="e.g. President, Secretary" className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-brand/50" />
             </div>
           </div>
           <div>
             <label htmlFor="prk-statement" className="mb-1.5 block text-[13px] font-bold">Platform / statement</label>
-            <textarea id="prk-statement" name="statement" required minLength={10} rows={4} placeholder="What they stand for. At least 10 characters." className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/35 focus:outline-none focus:ring-2 focus:ring-brand/50 resize-y" />
+            <textarea id="prk-statement" name="statement" required minLength={10} rows={4} placeholder="What they stand for. At least 10 characters." className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-brand/50 resize-y" />
           </div>
-          <button type="submit" disabled={pending} className="press w-full border border-2 border-ink bg-brand px-5 py-3.5 text-[13px] font-extrabold uppercase tracking-[0.16em] text-white disabled:opacity-50">
+          <button type="submit" disabled={pending} className="press w-full border border-2 border-ink bg-brand px-5 py-3.5 text-[13px] font-extrabold uppercase tracking-[0.16em] text-paper disabled:opacity-50">
             {pending ? "Submitting..." : "Submit nomination"}
           </button>
         </form>

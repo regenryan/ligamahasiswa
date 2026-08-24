@@ -42,11 +42,13 @@ export default async function ChapterEventDetailPage({
     return (
       <Shell dir={27}>
         <PageHead kicker={ch.name} title="Event not found" />
-        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
-          <Link href={`/chapters/${slug}/events`} className="press inline-flex border border-line px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-ink hover:border-ink hover:text-brand transition-colors">
-            Back to events
-          </Link>
-        </div>
+        <section className="border-b border-line">
+          <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+            <Link href={`/chapters/${slug}/events`} className="mono text-[11px] uppercase tracking-[0.14em] text-ink/50 hover:text-brand transition-colors">
+              {"\u2190"} Back to events
+            </Link>
+          </div>
+        </section>
       </Shell>
     );
   }
@@ -63,6 +65,9 @@ export default async function ChapterEventDetailPage({
       />
       <section className="border-b border-line">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+          <Link href={`/chapters/${slug}/events`} className="mono mb-8 inline-block text-[11px] uppercase tracking-[0.14em] text-ink/50 hover:text-brand transition-colors">
+            {"\u2190"} Back to events
+          </Link>
           <div className="grid gap-8 md:grid-cols-3">
             <div className="md:col-span-2">
               <p className="text-[15px] leading-relaxed text-ink/70">{event.blurb}</p>
@@ -89,9 +94,6 @@ export default async function ChapterEventDetailPage({
               <RsvpButton eventSlug={eventSlug} />
             </div>
           </div>
-          <Link href={`/chapters/${slug}/events`} className="press mt-8 inline-flex border border-line px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-ink hover:border-ink hover:text-brand transition-colors">
-            Back to events
-          </Link>
           <div className="mt-8">
             <ShareKit title={event.title} url={`https://ligamahasiswa.vercel.app/chapters/${slug}/events/${eventSlug}`} />
           </div>

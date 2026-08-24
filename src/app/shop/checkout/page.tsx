@@ -103,11 +103,11 @@ function CheckoutInner() {
             <div className="space-y-4">
               <div>
                 <label htmlFor="co-name" className="mb-1.5 block text-[13px] font-bold">Name</label>
-                <input id="co-name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Your full name" className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/35 focus:outline-none" />
+                <input id="co-name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Your full name" className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none" />
               </div>
               <div>
                 <label htmlFor="co-email" className="mb-1.5 block text-[13px] font-bold">Email</label>
-                <input id="co-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@campus.edu.my" className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/35 focus:outline-none" />
+                <input id="co-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@campus.edu.my" className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none" />
               </div>
             </div>
 
@@ -139,7 +139,7 @@ function CheckoutInner() {
               type="button"
               onClick={handleSubmit}
               disabled={sending}
-              className="press mt-6 w-full border border-2 border-ink bg-brand px-5 py-3.5 text-[13px] font-extrabold uppercase tracking-[0.16em] text-white disabled:opacity-50"
+              className="press mt-6 w-full border border-2 border-ink bg-brand px-5 py-3.5 text-[13px] font-extrabold uppercase tracking-[0.16em] text-paper disabled:opacity-50"
             >
               {sending ? "Redirecting to payment..." : `Pay ${total} RM`}
             </button>

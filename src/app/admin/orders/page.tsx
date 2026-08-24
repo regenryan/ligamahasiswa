@@ -1,5 +1,5 @@
 import { Shell } from "@/components/shells";
-import { PageHead } from "@/components/sections";
+import { PageHead, Btn } from "@/components/sections";
 import { getCurrentUser } from "@/lib/auth";
 import { readSheet } from "@/lib/sheets-db";
 import Link from "next/link";
@@ -12,7 +12,10 @@ export default async function AdminOrdersPage() {
         <PageHead kicker="Admin" title="Access denied" />
         <section className="border-b border-line">
           <div className="mx-auto w-full max-w-2xl px-4 py-16 text-center sm:px-6">
-            <Link href="/dashboard" className="press mt-6 inline-block border border-2 border-ink bg-brand px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.14em] text-white">Back to dashboard</Link>
+            <p className="text-[15px] text-ink/60">You do not have admin access.</p>
+            <div className="mt-6">
+              <Btn kind="join" href="/dashboard">Back to dashboard</Btn>
+            </div>
           </div>
         </section>
       </Shell>
@@ -34,7 +37,7 @@ export default async function AdminOrdersPage() {
     <Shell dir={27}>
       <PageHead kicker="Admin" title="Order management" sub="View all orders and update payment status." />
       <section className="border-b border-line">
-        <div className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6">
+        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
           <Link href="/admin" className="mono mb-6 inline-block text-[11px] uppercase tracking-[0.14em] text-ink/50 hover:text-brand transition-colors">
             {"\u2190"} Back to admin
           </Link>

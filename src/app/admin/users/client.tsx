@@ -82,7 +82,7 @@ export default function AdminUsersClient({ users }: { users: UserRow[] }) {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by name, email, or chapter..."
-              className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/35 focus:outline-none focus:ring-2 focus:ring-brand/50 sm:max-w-md"
+              className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-brand/50 sm:max-w-md"
             />
           </div>
           <div className="space-y-3">

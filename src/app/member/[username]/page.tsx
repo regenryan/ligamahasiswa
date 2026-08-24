@@ -1,5 +1,6 @@
 import { Shell } from "@/components/shells";
 import { PageHead } from "@/components/sections/head";
+import { Btn } from "@/components/sections/head";
 import { findRow } from "@/lib/sheets-db";
 import { chapterLabel } from "@/lib/chapters";
 import Link from "next/link";
@@ -37,12 +38,9 @@ export default async function MemberProfilePage({
           <p className="text-[14px] text-ink/60">
             This member profile does not exist or is not yet verified.
           </p>
-          <Link
-            href="/"
-            className="press mt-6 inline-flex border border-line px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-ink hover:border-ink hover:text-brand transition-colors"
-          >
-            Back to home
-          </Link>
+          <div className="mt-6">
+            <Btn kind="ghost" href="/">Back to home</Btn>
+          </div>
         </div>
       </Shell>
     );

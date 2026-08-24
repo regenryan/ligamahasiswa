@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import type { ReactNode } from "react";
 import { ActiveLink } from "@/components/ActiveLink";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -19,7 +22,7 @@ type DirProps = { dir: number };
 
 function TopStrip() {
   return (
-    <div className="mono grid grid-cols-3 items-center border-b border-line bg-midnight px-4 py-1.5 text-[11px] uppercase tracking-[0.12em] text-fog/80">
+    <div className="mono grid grid-cols-3 items-center border-b border-line bg-midnight px-4 py-2 text-[11px] uppercase tracking-[0.12em] text-fog/80">
       <div className="flex items-center justify-start">
         <MetroClock />
       </div>
@@ -43,15 +46,45 @@ function NavCta() {
   return <NavAuth />;
 }
 
+function Hamburger({ open, onToggle }: { open: boolean; onToggle: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      className="flex h-10 w-10 items-center justify-center md:hidden"
+      aria-label={open ? "Close menu" : "Open menu"}
+      aria-expanded={open}
+    >
+      <span className="relative h-4 w-5" aria-hidden="true">
+        <span className={`absolute left-0 h-px w-full bg-ink transition-all duration-200 ${open ? "top-1/2 -translate-y-1/2 rotate-45" : "top-0"}`} />
+        <span className={`absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-ink transition-all duration-200 ${open ? "opacity-0" : "opacity-100"}`} />
+        <span className={`absolute left-0 h-px w-full bg-ink transition-all duration-200 ${open ? "top-1/2 -translate-y-1/2 -rotate-45" : "bottom-0"}`} />
+      </span>
+    </button>
+  );
+}
+
 function Nav() {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
+
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-paper/95 backdrop-blur">
       <TopStrip />
-      <div className="mx-auto grid w-full max-w-6xl grid-cols-[1fr_auto_auto] items-center gap-6 border-x border-line px-4 py-4 sm:px-6">
+      <div className="mx-auto grid w-full max-w-6xl grid-cols-[auto_1fr_auto] items-center gap-4 border-x border-line px-4 py-3 sm:px-6 md:grid-cols-[1fr_auto_auto] md:gap-6 md:py-4">
+        <Hamburger open={open} onToggle={() => setOpen(!open)} />
         <Link href="/" className="focus-visible:outline-none" aria-label="Liga Mahasiswa home">
           <Logo />
         </Link>
-        <nav aria-label="Primary" className="flex items-center gap-1">
+        <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">
           {NAV_LINKS.map((l, i) => (
             <ActiveLink
               key={l.href}
@@ -66,6 +99,42 @@ function Nav() {
         </nav>
         <NavCta />
       </div>
+
+      {open && (
+        <nav
+          aria-label="Mobile navigation"
+          className="absolute left-0 right-0 top-full z-50 max-h-[calc(100vh-88px)] overflow-y-auto border-t border-line bg-paper/98 backdrop-blur md:hidden"
+        >
+          <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6">
+            <ul className="space-y-1">
+              {NAV_LINKS.map((l, i) => (
+                <li key={l.href}>
+                  <ActiveLink
+                    href={l.href}
+                    className="flex items-center gap-3 border-b border-line py-3 text-[15px] font-bold uppercase tracking-[0.08em] text-ink/70 hover:text-brand"
+                    activeClassName="metro-active"
+                    onClick={() => setOpen(false)}
+                  >
+                    <span className="mono text-[12px] text-ink/40">{String(i + 1).padStart(2, "0")}</span>
+                    <span>{l.label}</span>
+                  </ActiveLink>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-6 flex flex-col gap-3">
+              <NavAuth />
+            </div>
+          </div>
+        </nav>
+      )}
+
+      {open && (
+        <div
+          className="fixed inset-0 z-40 bg-ink/20 md:hidden"
+          onClick={() => setOpen(false)}
+          aria-hidden="true"
+        />
+      )}
     </header>
   );
 }

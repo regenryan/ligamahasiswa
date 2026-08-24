@@ -54,7 +54,7 @@ function MediaSectionInner({ items }: { items: MediaItem[] }) {
         <div className="flex items-end justify-between gap-4">
           <div>
             <p className="mono text-[11px] uppercase tracking-[0.2em] text-ink/50">Latest</p>
-            <h2 className="display mt-2 text-2xl sm:text-3xl">Media</h2>
+            <h2 className="display mt-2 text-3xl sm:text-5xl">Media</h2>
           </div>
           <Link href="/media" className="press inline-flex border border-line px-4 py-2 text-[12px] font-bold uppercase tracking-[0.1em] text-ink/60 hover:border-ink hover:text-ink transition-colors">
             View all

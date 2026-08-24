@@ -61,10 +61,10 @@ export function Hero({ chapterName, campaign }: HeroProps) {
         </Reveal>
 
         <Reveal delay={450}>
-          <ul className="mx-auto mt-12 grid max-w-xl gap-2">
+          <ul className="mx-auto mt-10 grid max-w-xl gap-2">
             {demands.map((demand, i) => (
               <Reveal key={demand} delay={450 + i * 80}>
-                <li className="flex items-baseline gap-3 border-b border-ink/25 pb-2 text-[14px]">
+                <li className="flex items-baseline gap-3 border-b border-ink/25 pb-3 text-[14px]">
                   <span className="mono inline-flex h-6 w-6 shrink-0 items-center justify-center bg-brand text-[11px] font-bold text-paper">
                     {String(i + 1).padStart(2, "0")}
                   </span>

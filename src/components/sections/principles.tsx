@@ -26,7 +26,7 @@ export function Principles() {
         </h2>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {PRINCIPLES.map((p) => (
-            <div key={p.title} className="border border-fog/20 bg-fog/5 p-6">
+            <div key={p.title} className="border border-fog/20 bg-fog/5 p-7">
               <h3 className="display text-xl text-fog">{p.title}</h3>
               <p className="mono mt-1 text-[11px] uppercase tracking-[0.14em] text-fog/50">{p.subtitle}</p>
               <p className="mt-4 text-[14px] leading-relaxed text-fog/70">{p.description}</p>

@@ -7,9 +7,10 @@ type ActiveLinkProps = {
   children: React.ReactNode;
   className?: string;
   activeClassName?: string;
+  onClick?: () => void;
 };
 
-export function ActiveLink({ href, children, className = "", activeClassName = "metro-active" }: ActiveLinkProps) {
+export function ActiveLink({ href, children, className = "", activeClassName = "metro-active", onClick }: ActiveLinkProps) {
   const pathname = usePathname();
   const clean = href.split("?")[0].split("#")[0];
   const isHash = href.includes("#");
@@ -19,7 +20,7 @@ export function ActiveLink({ href, children, className = "", activeClassName = "
       ? pathname === "/"
       : pathname.startsWith(clean);
   return (
-    <Link href={href} className={`${className} ${isActive ? activeClassName : ""}`}>
+    <Link href={href} className={`${className} ${isActive ? activeClassName : ""}`} onClick={onClick}>
       {children}
     </Link>
   );

@@ -4,7 +4,7 @@ import { PageHead, SectionHead, JoinBand, NewsletterBand } from "@/components/se
 import { readSheet } from "@/lib/sheets-db";
 import { CHAPTERS, chapterLabel } from "@/lib/chapters";
 import { events as mockEvents, type EventItem } from "@/lib/mock";
-import { SkeletonGrid } from "@/components/skeleton";
+import { SkeletonEventGrid } from "@/components/skeleton";
 import Link from "next/link";
 
 const DIR = 27;
@@ -122,7 +122,7 @@ export default async function EventsPage({
             title="Fundraise"
             sub="Our next three gatherings take donations on the door."
           />
-          <Suspense fallback={<SkeletonGrid />}>
+          <Suspense fallback={<SkeletonEventGrid />}>
             <FundraiseGrid />
           </Suspense>
         </div>
@@ -162,7 +162,7 @@ export default async function EventsPage({
             ))}
           </div>
 
-          <Suspense fallback={<SkeletonGrid />}>
+          <Suspense fallback={<SkeletonEventGrid />}>
             <AllEvents chapterFilter={chapterFilter} />
           </Suspense>
         </div>

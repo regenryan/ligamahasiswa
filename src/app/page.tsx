@@ -14,6 +14,7 @@ import { Slogan } from "@/components/sections/slogan";
 import { MemberTeaser } from "@/components/sections/member-teaser";
 import { EventsSection } from "@/components/sections/events-section";
 import { MediaSectionAsync } from "@/components/sections/media-section-async";
+import { SkeletonSectionHead, SkeletonEventGrid } from "@/components/skeleton";
 import { campaigns } from "@/lib/mock";
 
 const DIR = 27;
@@ -27,7 +28,7 @@ export default function Home() {
       <Slogan />
       <MemberTeaser />
       <CampaignSection />
-      <Suspense fallback={null}>
+      <Suspense fallback={<div className="border-b border-line"><div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6"><SkeletonSectionHead /><SkeletonEventGrid count={4} cols={2} /></div></div>}>
         <EventsSection />
       </Suspense>
       <CartProvider>

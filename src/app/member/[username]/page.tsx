@@ -1,9 +1,11 @@
+import { Suspense } from "react";
 import { Shell } from "@/components/shells";
 import { PageHead } from "@/components/sections/head";
 import { Btn } from "@/components/sections/head";
 import { findRow } from "@/lib/sheets-db";
 import { chapterLabel } from "@/lib/chapters";
 import Link from "next/link";
+import { SkeletonDetail } from "@/components/skeleton";
 
 async function getMember(username: string) {
   try {
@@ -22,27 +24,19 @@ async function getMember(username: string) {
   }
 }
 
-export default async function MemberProfilePage({
-  params,
-}: {
-  params: Promise<{ username: string }>;
-}) {
-  const { username } = await params;
+async function MemberContent({ username }: { username: string }) {
   const member = await getMember(username);
 
   if (!member) {
     return (
-      <Shell dir={27}>
-        <PageHead kicker="Profile" title="Member not found" />
-        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
-          <p className="text-[14px] text-ink/60">
-            This member profile does not exist or is not yet verified.
-          </p>
-          <div className="mt-6">
-            <Btn kind="ghost" href="/">Back to home</Btn>
-          </div>
+      <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+        <p className="text-[14px] text-ink/60">
+          This member profile does not exist or is not yet verified.
+        </p>
+        <div className="mt-6">
+          <Btn kind="ghost" href="/">Back to home</Btn>
         </div>
-      </Shell>
+      </div>
     );
   }
 
@@ -60,7 +54,7 @@ export default async function MemberProfilePage({
         : "Member";
 
   return (
-    <Shell dir={27}>
+    <>
       <PageHead
         kicker={`Member / ${member.chapterSlug.toUpperCase()}`}
         title={member.name}
@@ -119,6 +113,23 @@ export default async function MemberProfilePage({
           </div>
         </div>
       </div>
+    </>
+  );
+}
+
+export default async function MemberProfilePage({
+  params,
+}: {
+  params: Promise<{ username: string }>;
+}) {
+  const { username } = await params;
+
+  return (
+    <Shell dir={27}>
+      <PageHead kicker="Profile" title="Member" sub="" />
+      <Suspense fallback={<SkeletonDetail />}>
+        <MemberContent username={username} />
+      </Suspense>
     </Shell>
   );
 }

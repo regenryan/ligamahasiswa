@@ -10,7 +10,7 @@ import { readSheet } from "@/lib/sheets-db";
 import { products as mockProducts } from "@/lib/mock";
 import type { Product } from "@/lib/mock";
 import { ShopGridClient } from "./shop-grid-client";
-import { SkeletonGrid } from "@/components/skeleton";
+import { SkeletonShopGrid } from "@/components/skeleton";
 import Link from "next/link";
 
 const DIR = 27;
@@ -105,7 +105,7 @@ export default async function ShopPage({
             </div>
           </div>
         </section>
-        <Suspense fallback={<SkeletonGrid count={4} />}>
+        <Suspense fallback={<SkeletonShopGrid />}>
           <ProductGrid catalog={catalog} />
         </Suspense>
         <JoinBand />

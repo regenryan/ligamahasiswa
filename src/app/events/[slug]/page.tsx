@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Shell } from "@/components/shells";
 import { PageHead, JoinBand } from "@/components/sections";
 import { readSheet } from "@/lib/sheets-db";
@@ -7,6 +8,7 @@ import type { EventItem } from "@/lib/mock";
 import Link from "next/link";
 import { RsvpButton } from "@/components/RsvpButton";
 import { ShareKit } from "@/components/ShareKit";
+import { SkeletonDetail } from "@/components/skeleton";
 
 async function getEvent(slug: string): Promise<EventItem | null> {
   try {
@@ -30,26 +32,18 @@ async function getEvent(slug: string): Promise<EventItem | null> {
   return mockEvents.find((e) => e.slug === slug) ?? null;
 }
 
-export default async function EventDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+async function EventContent({ slug }: { slug: string }) {
   const event = await getEvent(slug);
-
   if (!event) {
     return (
-      <Shell dir={27}>
-        <PageHead kicker="Events" title="Event not found" />
-        <section className="border-b border-line">
-          <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
-            <Link href="/events" className="mono text-[11px] uppercase tracking-[0.14em] text-ink/50 hover:text-brand transition-colors">
-              {"\u2190"} All events
-            </Link>
-          </div>
-        </section>
-      </Shell>
+      <section className="border-b border-line">
+        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+          <p className="text-[14px] text-ink/60">Event not found.</p>
+          <Link href="/events" className="mono mt-4 inline-block text-[11px] uppercase tracking-[0.14em] text-ink/50 hover:text-brand transition-colors">
+            {"\u2190"} All events
+          </Link>
+        </div>
+      </section>
     );
   }
 
@@ -57,12 +51,7 @@ export default async function EventDetailPage({
   const monthLabel = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][(mon ?? 1) - 1];
 
   return (
-    <Shell dir={27}>
-      <PageHead
-        kicker={`Events / ${chapterLabel(event.chapterSlug)}`}
-        title={event.title}
-        sub={event.blurb}
-      />
+    <>
       <section className="border-b border-line">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
           <Link href="/events" className="mono mb-8 inline-block text-[11px] uppercase tracking-[0.14em] text-ink/50 hover:text-brand transition-colors">
@@ -117,6 +106,23 @@ export default async function EventDetailPage({
         </div>
       </section>
       <JoinBand />
+    </>
+  );
+}
+
+export default async function EventDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+
+  return (
+    <Shell dir={27}>
+      <PageHead kicker="Events" title="Event" sub="" />
+      <Suspense fallback={<SkeletonDetail />}>
+        <EventContent slug={slug} />
+      </Suspense>
     </Shell>
   );
 }

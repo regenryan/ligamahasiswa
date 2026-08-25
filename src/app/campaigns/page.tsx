@@ -4,7 +4,7 @@ import { PageHead, SectionHead, JoinBand, NewsletterBand } from "@/components/se
 import { readSheet } from "@/lib/sheets-db";
 import { CHAPTERS, chapterLabel } from "@/lib/chapters";
 import { campaigns as mockCampaigns, type Campaign } from "@/lib/mock";
-import { SkeletonGrid } from "@/components/skeleton";
+import { SkeletonCampaignGrid } from "@/components/skeleton";
 import Link from "next/link";
 
 const DIR = 27;
@@ -117,7 +117,7 @@ export default async function CampaignsPage({
             title="Fundraise"
             sub="Top active campaigns taking donations right now."
           />
-          <Suspense fallback={<SkeletonGrid />}>
+          <Suspense fallback={<SkeletonCampaignGrid />}>
             <FundraiseGrid />
           </Suspense>
         </div>
@@ -157,7 +157,7 @@ export default async function CampaignsPage({
             ))}
           </div>
 
-          <Suspense fallback={<SkeletonGrid />}>
+          <Suspense fallback={<SkeletonCampaignGrid />}>
             <AllCampaigns chapterFilter={chapterFilter} />
           </Suspense>
         </div>

@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { MediaSection } from "@/components/sections/media-section";
-import { SkeletonGrid } from "@/components/skeleton";
+import { SkeletonMediaGrid } from "@/components/skeleton";
 import { readSheet } from "@/lib/sheets-db";
 
 type MediaItem = {
@@ -84,7 +84,7 @@ async function MediaSectionInner() {
 
 export function MediaSectionAsync() {
   return (
-    <Suspense fallback={<SkeletonGrid />}>
+    <Suspense fallback={<SkeletonMediaGrid />}>
       <MediaSectionInner />
     </Suspense>
   );

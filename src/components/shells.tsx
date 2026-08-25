@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import type { ReactNode } from "react";
 import { ActiveLink } from "@/components/ActiveLink";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { MetroClock } from "@/components/MetroClock";
 import { NavAuth } from "@/components/nav-auth";
 
@@ -22,15 +21,13 @@ type DirProps = { dir: number };
 
 function TopStrip() {
   return (
-    <div className="mono grid grid-cols-3 items-center border-b border-line bg-midnight px-4 py-2 text-[11px] uppercase tracking-[0.12em] text-fog/80">
-      <div className="flex items-center justify-start">
-        <MetroClock />
+      <div className="mono grid grid-cols-3 items-center border-b border-line bg-midnight px-4 py-2 text-[11px] uppercase tracking-[0.12em] text-fog/80">
+        <div className="flex items-center justify-start">
+          <MetroClock />
+        </div>
+        <span className="text-center">One system, one struggle</span>
+        <span />
       </div>
-      <span className="text-center">One system, one struggle</span>
-      <div className="flex items-center justify-end">
-        <ThemeToggle />
-      </div>
-    </div>
   );
 }
 
@@ -121,9 +118,6 @@ function Nav() {
                 </li>
               ))}
             </ul>
-            <div className="mt-6 flex flex-col gap-3">
-              <NavAuth />
-            </div>
           </div>
         </nav>
       )}

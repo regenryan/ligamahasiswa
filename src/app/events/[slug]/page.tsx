@@ -1,5 +1,5 @@
 import { Shell } from "@/components/shells";
-import { PageHead } from "@/components/sections/head";
+import { PageHead, JoinBand } from "@/components/sections";
 import { readSheet } from "@/lib/sheets-db";
 import { chapterLabel } from "@/lib/chapters";
 import { events as mockEvents } from "@/lib/mock";
@@ -99,6 +99,24 @@ export default async function EventDetailPage({
           </div>
         </div>
       </section>
+
+      <section className="border-b border-line bg-midnight">
+        <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6">
+          <div className="flex flex-col gap-4 border border-fog/20 bg-fog/5 p-5 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <p className="text-[15px] font-bold text-fog">Support this event</p>
+              <p className="mono mt-1 text-[12px] text-fog/60">Every contribution helps fund our work.</p>
+            </div>
+            <Link
+              href={`/chapters/${event.chapterSlug}/events/${slug}/fundraise`}
+              className="press inline-flex border-2 border-fog bg-fog/10 px-6 py-3 text-[13px] font-extrabold uppercase tracking-[0.12em] text-fog hover:bg-fog/20 transition-colors"
+            >
+              Fundraise
+            </Link>
+          </div>
+        </div>
+      </section>
+      <JoinBand />
     </Shell>
   );
 }

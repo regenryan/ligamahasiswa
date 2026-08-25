@@ -8,6 +8,7 @@ import { readSheet } from "@/lib/sheets-db";
 import { products as mockProducts } from "@/lib/mock";
 import type { Product } from "@/lib/mock";
 import { ProductDetailClient } from "./product-detail-client";
+import { SkeletonGrid } from "@/components/skeleton";
 
 const DIR = 27;
 
@@ -47,7 +48,7 @@ export default async function ProductDetailPage({
   }
 
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<SkeletonGrid />}>
       <Shell dir={DIR}>
         <CartProvider>
           <section className="border-b border-line">

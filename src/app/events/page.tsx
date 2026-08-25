@@ -33,8 +33,8 @@ function formatDate(date: string): string {
   return `${String(day).padStart(2, "0")} ${MONTHS[mon - 1]} ${date.slice(0, 4)}`;
 }
 
-function EventCard({ e }: { e: EventItem }) {
-  const href = `/chapters/${e.chapterSlug}/events/${e.slug}`;
+function EventCard({ e, hrefOverride }: { e: EventItem; hrefOverride?: string }) {
+  const href = hrefOverride ?? `/chapters/${e.chapterSlug}/events/${e.slug}`;
   return (
     <Link
       href={href}
@@ -88,7 +88,7 @@ export default async function EventsPage({
           />
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {fundraisers.map((e) => (
-              <EventCard key={`${e.chapterSlug}-${e.slug}`} e={e} />
+              <EventCard key={`${e.chapterSlug}-${e.slug}`} e={e} hrefOverride={`/chapters/${e.chapterSlug}/events/${e.slug}/fundraise`} />
             ))}
           </div>
           {fundraisers.length === 0 && (

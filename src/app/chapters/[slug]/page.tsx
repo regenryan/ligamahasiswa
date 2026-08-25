@@ -1,5 +1,5 @@
 import { Shell } from "@/components/shells";
-import { PageHead, SectionHead, EventCard } from "@/components/sections";
+import { PageHead, SectionHead, EventCard, JoinBand } from "@/components/sections";
 import { readSheet } from "@/lib/sheets-db";
 import { getChapter, chapterLabel } from "@/lib/chapters";
 import { chapters as mockChapters, campaigns as mockCampaigns, events as mockEvents, members as mockMembers } from "@/lib/mock";
@@ -386,6 +386,7 @@ export default async function ChapterPage({
           <ShareKit title={`${ch.name} - Liga Mahasiswa`} url={`https://ligamahasiswa.vercel.app/chapters/${slug}`} />
         </div>
       </section>
+      <JoinBand />
     </Shell>
   );
 }

@@ -26,8 +26,8 @@ async function getCampaigns(): Promise<Campaign[]> {
   }
 }
 
-function CampaignCard({ c }: { c: Campaign }) {
-  const href = `/chapters/${c.chapterSlug}/campaigns/${c.slug}`;
+function CampaignCard({ c, hrefOverride }: { c: Campaign; hrefOverride?: string }) {
+  const href = hrefOverride ?? `/chapters/${c.chapterSlug}/campaigns/${c.slug}`;
   return (
     <Link
       href={href}
@@ -83,7 +83,7 @@ export default async function CampaignsPage({
           />
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {fundraisers.map((c) => (
-              <CampaignCard key={`${c.chapterSlug}-${c.slug}`} c={c} />
+              <CampaignCard key={`${c.chapterSlug}-${c.slug}`} c={c} hrefOverride={`/chapters/${c.chapterSlug}/campaigns/${c.slug}/fundraise`} />
             ))}
           </div>
           {fundraisers.length === 0 && (

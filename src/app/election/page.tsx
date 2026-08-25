@@ -8,6 +8,7 @@ import { Reveal } from "@/components/interactive";
 import { submitNomination } from "@/app/actions/prk";
 import { CHAPTERS } from "@/lib/chapters";
 import { Suspense } from "react";
+import { SkeletonGrid } from "@/components/skeleton";
 
 function NominationForm() {
   const [state, action, pending] = useActionState(submitNomination, undefined);
@@ -96,7 +97,7 @@ export default function PRKPage() {
         title="Campus Election"
         sub="Nominate yourself or someone you trust. Every campus deserves leadership that listens."
       />
-      <Suspense fallback={null}>
+      <Suspense fallback={<SkeletonGrid />}>
         <PrkContent />
       </Suspense>
     </Shell>

@@ -14,6 +14,7 @@ import { Slogan } from "@/components/sections/slogan";
 import { MemberTeaser } from "@/components/sections/member-teaser";
 import { EventsSection } from "@/components/sections/events-section";
 import { MediaSection } from "@/components/sections/media-section";
+import { SkeletonGrid } from "@/components/skeleton";
 import { readSheet } from "@/lib/sheets-db";
 import { campaigns } from "@/lib/mock";
 
@@ -100,10 +101,10 @@ export default async function Home() {
       <Principles />
       <Slogan />
       <MemberTeaser />
-      <Suspense fallback={null}>
+      <Suspense fallback={<SkeletonGrid />}>
         <CampaignSection />
       </Suspense>
-      <Suspense fallback={null}>
+      <Suspense fallback={<SkeletonGrid />}>
         <EventsSection />
       </Suspense>
       <CartProvider>

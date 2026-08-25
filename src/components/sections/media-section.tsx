@@ -3,6 +3,7 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import { Suspense } from "react";
 import Link from "next/link";
+import { SkeletonGrid } from "@/components/skeleton";
 
 type MediaItem = {
   id: string;
@@ -104,7 +105,7 @@ function MediaSectionInner({ items }: { items: MediaItem[] }) {
 
 export function MediaSection({ items }: { items: MediaItem[] }) {
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<SkeletonGrid />}>
       <MediaSectionInner items={items} />
     </Suspense>
   );

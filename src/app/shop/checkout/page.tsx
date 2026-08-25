@@ -4,6 +4,7 @@ import { Suspense, useState } from "react";
 import { Shell } from "@/components/shells";
 import { PageHead, Btn } from "@/components/sections";
 import { CartProvider, useCart } from "@/components/interactive";
+import { SkeletonGrid } from "@/components/skeleton";
 
 const DIR = 27;
 
@@ -161,7 +162,7 @@ function CheckoutInner() {
 
 export default function CheckoutPage() {
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<SkeletonGrid />}>
       <CartProvider>
         <CheckoutInner />
       </CartProvider>

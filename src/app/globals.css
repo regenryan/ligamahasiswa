@@ -1,31 +1,6 @@
 @import "tailwindcss";
 
 @theme {
-  --color-paper: #0a0a0a;
-  --color-ink: #f4efe6;
-  --color-cream: #141416;
-  --color-mist: #1b1b1d;
-  --color-midnight: #050505;
-  --color-fog: #f4efe6;
-  --color-brand: #e11d2e;
-  --color-brand-text: #ff6b5e;
-  --color-hi: #ffe500;
-  --color-glow: #ff3b30;
-  --color-line: #2a2a2e;
-  --color-term: #00ff9c;
-  --color-pink: #ff2e88;
-  --color-cyan: #00e5ff;
-
-  --font-archivo: var(--font-archivo);
-  --font-mono: var(--font-mono);
-
-  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
-  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
-}
-
-:root {
-  color-scheme: light;
   --color-paper: #ffffff;
   --color-ink: #111111;
   --color-cream: #eaeae5;
@@ -40,31 +15,17 @@
   --color-term: #007a3d;
   --color-pink: #d6006e;
   --color-cyan: #0057b8;
-}
 
-[data-theme="dark"] {
-  color-scheme: dark;
-  --color-paper: #0d0d0d;
-  --color-ink: #f0f0ee;
-  --color-cream: #1a1a18;
-  --color-mist: #252523;
-  --color-midnight: #080807;
-  --color-fog: #e8e8e6;
-  --color-brand: #ff6d00;
-  --color-brand-text: #ff8a50;
-  --color-hi: #ffffff;
-  --color-glow: #ff6d00;
-  --color-line: #2a2a28;
-  --color-term: #4caf50;
-  --color-pink: #ff4081;
-  --color-cyan: #42a5f5;
-}
+  --font-archivo: var(--font-archivo);
+  --font-mono: var(--font-mono);
 
-[data-theme="dark"] .bg-midnight {
-  box-shadow: 4px 4px 0 0 rgba(255, 255, 255, 0.06);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 html {
+  color-scheme: light;
   scroll-behavior: smooth;
 }
 
@@ -127,6 +88,7 @@ body {
 }
 
 .press {
+  white-space: nowrap;
   transition: transform 80ms steps(2, end), box-shadow 80ms steps(2, end);
 }
 .press:active {
@@ -190,13 +152,6 @@ body {
 }
 .metro-dot {
   animation: metro-dot-pulse 2s steps(2, end) infinite;
-}
-
-.theme-transitioning,
-.theme-transitioning *,
-.theme-transitioning *::before,
-.theme-transitioning *::after {
-  transition: background-color 200ms steps(3, end), color 200ms steps(3, end), border-color 200ms steps(3, end), box-shadow 200ms steps(3, end) !important;
 }
 
 [class*="bg-midnight"] { color: var(--color-fog); }

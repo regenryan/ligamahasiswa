@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Shell } from "@/components/shells";
 import { PageHead, Btn } from "@/components/sections";
+import { SkeletonGrid } from "@/components/skeleton";
 
 const DIR = 27;
 
@@ -40,7 +41,7 @@ function SuccessInner() {
 
 export default function CheckoutSuccessPage() {
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<SkeletonGrid />}>
       <SuccessInner />
     </Suspense>
   );

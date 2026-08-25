@@ -1,7 +1,9 @@
+import { Suspense } from "react";
 import { Shell } from "@/components/shells";
 import { PageHead, SectionHead, JoinBand, NewsletterBand } from "@/components/sections";
 import { chapterLabel, CHAPTERS } from "@/lib/chapters";
 import { readSheet } from "@/lib/sheets-db";
+import { SkeletonGrid } from "@/components/skeleton";
 import Link from "next/link";
 
 const DIR = 27;
@@ -137,6 +139,196 @@ function viewAllHref(section: string, chapter?: string): string {
   return `/media?${qs.toString()}`;
 }
 
+async function PostsSection({
+  chapterFilter,
+  expanded,
+}: {
+  chapterFilter?: string;
+  expanded?: boolean;
+}) {
+  const posts = await getPosts();
+  const shown = chapterFilter ? posts.filter((p) => p.chapter === chapterFilter) : posts;
+  const cards = expanded ? shown : shown.slice(0, PREVIEW);
+  return (
+    <>
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {cards.map((p) => (
+          <a key={p.id} href={p.url} target="_blank" rel="noreferrer" className={CARD}>
+            <span className={`${BADGE} ${PLATFORM_SKIN[p.platform] ?? "border-line text-ink/60"}`}>
+              {p.platform}
+            </span>
+            <p className="mt-3 text-[13px] leading-relaxed text-ink/70 line-clamp-3">
+              {p.caption || "View post"}
+            </p>
+          </a>
+        ))}
+      </div>
+      {!expanded && shown.length > PREVIEW && (
+        <div className="mt-8">
+          <Link href={viewAllHref("posts", chapterFilter)} className={VIEW_ALL}>
+            View all {shown.length}
+          </Link>
+        </div>
+      )}
+      {shown.length === 0 && <EmptyState message="No posts yet." />}
+    </>
+  );
+}
+
+async function ZinesSection({
+  chapterFilter,
+  expanded,
+}: {
+  chapterFilter?: string;
+  expanded?: boolean;
+}) {
+  const zines = await getZines();
+  const shown = chapterFilter ? zines.filter((z) => z.chapter === chapterFilter) : zines;
+  const cards = expanded ? shown : shown.slice(0, PREVIEW);
+  return (
+    <>
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {cards.map((z) => (
+          <Link key={z.slug} href="/media" className={CARD}>
+            <span className={TAG}>{chapterLabel(z.chapter)}</span>
+            <h3 className="mt-3 display text-xl">{z.title}</h3>
+            <p className="mt-2 text-[13px] text-ink/60 line-clamp-2">{z.excerpt}</p>
+            {z.author ? (
+              <p className="mono mt-3 truncate text-[11px] uppercase tracking-[0.14em] text-ink/40">
+                {z.author}
+              </p>
+            ) : null}
+          </Link>
+        ))}
+      </div>
+      {!expanded && shown.length > PREVIEW && (
+        <div className="mt-8">
+          <Link href={viewAllHref("zines", chapterFilter)} className={VIEW_ALL}>
+            View all {shown.length}
+          </Link>
+        </div>
+      )}
+      {shown.length === 0 && <EmptyState message="No zines yet." />}
+    </>
+  );
+}
+
+async function StatementsSection({
+  chapterFilter,
+  expanded,
+}: {
+  chapterFilter?: string;
+  expanded?: boolean;
+}) {
+  const statements = await getStatements();
+  const shown = chapterFilter ? statements.filter((s) => s.chapter === chapterFilter) : statements;
+  const cards = expanded ? shown : shown.slice(0, PREVIEW);
+  return (
+    <>
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {cards.map((s) => (
+          <Link
+            key={s.slug}
+            href={`/chapters/${s.chapter}/statements/${s.slug}`}
+            className={CARD}
+          >
+            <span className={TAG}>{chapterLabel(s.chapter)}</span>
+            <h3 className="mt-3 display text-xl">{s.title}</h3>
+            <p className="mt-2 text-[13px] text-ink/60 line-clamp-3">{s.preview}</p>
+          </Link>
+        ))}
+      </div>
+      {!expanded && shown.length > PREVIEW && (
+        <div className="mt-8">
+          <Link href={viewAllHref("statements", chapterFilter)} className={VIEW_ALL}>
+            View all {shown.length}
+          </Link>
+        </div>
+      )}
+      {shown.length === 0 && <EmptyState message="No statements yet." />}
+    </>
+  );
+}
+
+async function PodcastsSection({
+  chapterFilter,
+  expanded,
+}: {
+  chapterFilter?: string;
+  expanded?: boolean;
+}) {
+  const podcasts = await getPodcasts();
+  const shown = chapterFilter ? podcasts.filter((p) => p.chapter === chapterFilter) : podcasts;
+  const cards = expanded ? shown : shown.slice(0, PREVIEW);
+  return (
+    <>
+      {cards.length > 0 ? (
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {cards.map((p) => (
+            <div key={p.slug} className={CARD}>
+              <div className="flex items-center justify-between gap-3">
+                <span className={TAG}>{chapterLabel(p.chapter)}</span>
+                {p.date ? (
+                  <span className="mono truncate text-[11px] tracking-[0.08em] text-ink/40">
+                    {p.date}
+                  </span>
+                ) : null}
+              </div>
+              <h3 className="mt-3 display text-xl">{p.title}</h3>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <EmptyState message="Coming soon." />
+      )}
+      {!expanded && shown.length > PREVIEW && (
+        <div className="mt-8">
+          <Link href={viewAllHref("podcasts", chapterFilter)} className={VIEW_ALL}>
+            View all {shown.length}
+          </Link>
+        </div>
+      )}
+    </>
+  );
+}
+
+async function ArticlesSection({
+  chapterFilter,
+  expanded,
+}: {
+  chapterFilter?: string;
+  expanded?: boolean;
+}) {
+  const articles = await getArticles();
+  const shown = chapterFilter ? articles.filter((a) => a.chapter === chapterFilter) : articles;
+  const cards = expanded ? shown : shown.slice(0, PREVIEW);
+  return (
+    <>
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {cards.map((a) => (
+          <a key={`${a.url}-${a.title}`} href={a.url} target="_blank" rel="noreferrer" className={CARD}>
+            <div className="flex items-center justify-between gap-3">
+              <span className="mono truncate text-[11px] uppercase tracking-[0.14em] text-ink/50">
+                {a.outlet}
+              </span>
+              <span className={TAG}>{chapterLabel(a.chapter)}</span>
+            </div>
+            <h3 className="mt-3 display text-xl">{a.title}</h3>
+          </a>
+        ))}
+      </div>
+      {!expanded && shown.length > PREVIEW && (
+        <div className="mt-8">
+          <Link href={viewAllHref("articles", chapterFilter)} className={VIEW_ALL}>
+            View all {shown.length}
+          </Link>
+        </div>
+      )}
+      {shown.length === 0 && <EmptyState message="No coverage yet." />}
+    </>
+  );
+}
+
 export default async function MediaPage({
   searchParams,
 }: {
@@ -150,14 +342,6 @@ export default async function MediaPage({
     return v && validSlugs.has(v) ? v : undefined;
   };
 
-  const [posts, zines, statements, podcasts, articles] = await Promise.all([
-    getPosts(),
-    getZines(),
-    getStatements(),
-    getPodcasts(),
-    getArticles(),
-  ]);
-
   const views = new Set((first(raw.view) ?? "").split(",").filter(Boolean));
 
   const postsFilter = pick("posts");
@@ -165,24 +349,6 @@ export default async function MediaPage({
   const statementsFilter = pick("statements");
   const podcastsFilter = pick("podcasts");
   const articlesFilter = pick("articles");
-
-  const shownPosts = postsFilter ? posts.filter((p) => p.chapter === postsFilter) : posts;
-  const shownZines = zinesFilter ? zines.filter((z) => z.chapter === zinesFilter) : zines;
-  const shownStatements = statementsFilter
-    ? statements.filter((s) => s.chapter === statementsFilter)
-    : statements;
-  const shownPodcasts = podcastsFilter
-    ? podcasts.filter((p) => p.chapter === podcastsFilter)
-    : podcasts;
-  const shownArticles = articlesFilter
-    ? articles.filter((a) => a.chapter === articlesFilter)
-    : articles;
-
-  const postCards = views.has("posts") ? shownPosts : shownPosts.slice(0, PREVIEW);
-  const zineCards = views.has("zines") ? shownZines : shownZines.slice(0, PREVIEW);
-  const statementCards = views.has("statements") ? shownStatements : shownStatements.slice(0, PREVIEW);
-  const podcastCards = views.has("podcasts") ? shownPodcasts : shownPodcasts.slice(0, PREVIEW);
-  const articleCards = views.has("articles") ? shownArticles : shownArticles.slice(0, PREVIEW);
 
   return (
     <Shell dir={DIR}>
@@ -196,26 +362,9 @@ export default async function MediaPage({
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
           <SectionHead index={1} title="Social posts" sub="Fresh from our social channels." />
           <FilterBar section="posts" active={postsFilter} />
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {postCards.map((p) => (
-              <a key={p.id} href={p.url} target="_blank" rel="noreferrer" className={CARD}>
-                <span className={`${BADGE} ${PLATFORM_SKIN[p.platform] ?? "border-line text-ink/60"}`}>
-                  {p.platform}
-                </span>
-                <p className="mt-3 text-[13px] leading-relaxed text-ink/70 line-clamp-3">
-                  {p.caption || "View post"}
-                </p>
-              </a>
-            ))}
-          </div>
-          {!views.has("posts") && shownPosts.length > PREVIEW && (
-            <div className="mt-8">
-              <Link href={viewAllHref("posts", postsFilter)} className={VIEW_ALL}>
-                View all {shownPosts.length}
-              </Link>
-            </div>
-          )}
-          {shownPosts.length === 0 && <EmptyState message="No posts yet." />}
+          <Suspense fallback={<SkeletonGrid />}>
+            <PostsSection chapterFilter={postsFilter} expanded={views.has("posts")} />
+          </Suspense>
         </div>
       </section>
 
@@ -223,28 +372,9 @@ export default async function MediaPage({
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
           <SectionHead index={2} title="Zines" sub="Art and writing from the movement." />
           <FilterBar section="zines" active={zinesFilter} />
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {zineCards.map((z) => (
-              <Link key={z.slug} href="/media" className={CARD}>
-                <span className={TAG}>{chapterLabel(z.chapter)}</span>
-                <h3 className="mt-3 display text-xl">{z.title}</h3>
-                <p className="mt-2 text-[13px] text-ink/60 line-clamp-2">{z.excerpt}</p>
-                {z.author ? (
-                  <p className="mono mt-3 truncate text-[11px] uppercase tracking-[0.14em] text-ink/40">
-                    {z.author}
-                  </p>
-                ) : null}
-              </Link>
-            ))}
-          </div>
-          {!views.has("zines") && shownZines.length > PREVIEW && (
-            <div className="mt-8">
-              <Link href={viewAllHref("zines", zinesFilter)} className={VIEW_ALL}>
-                View all {shownZines.length}
-              </Link>
-            </div>
-          )}
-          {shownZines.length === 0 && <EmptyState message="No zines yet." />}
+          <Suspense fallback={<SkeletonGrid />}>
+            <ZinesSection chapterFilter={zinesFilter} expanded={views.has("zines")} />
+          </Suspense>
         </div>
       </section>
 
@@ -252,27 +382,9 @@ export default async function MediaPage({
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
           <SectionHead index={3} title="Statements" sub="Official positions, on the record." />
           <FilterBar section="statements" active={statementsFilter} />
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {statementCards.map((s) => (
-              <Link
-                key={s.slug}
-                href={`/chapters/${s.chapter}/statements/${s.slug}`}
-                className={CARD}
-              >
-                <span className={TAG}>{chapterLabel(s.chapter)}</span>
-                <h3 className="mt-3 display text-xl">{s.title}</h3>
-                <p className="mt-2 text-[13px] text-ink/60 line-clamp-3">{s.preview}</p>
-              </Link>
-            ))}
-          </div>
-          {!views.has("statements") && shownStatements.length > PREVIEW && (
-            <div className="mt-8">
-              <Link href={viewAllHref("statements", statementsFilter)} className={VIEW_ALL}>
-                View all {shownStatements.length}
-              </Link>
-            </div>
-          )}
-          {shownStatements.length === 0 && <EmptyState message="No statements yet." />}
+          <Suspense fallback={<SkeletonGrid />}>
+            <StatementsSection chapterFilter={statementsFilter} expanded={views.has("statements")} />
+          </Suspense>
         </div>
       </section>
 
@@ -280,32 +392,9 @@ export default async function MediaPage({
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
           <SectionHead index={4} title="Podcasts" sub="Conversations with the movement." />
           <FilterBar section="podcasts" active={podcastsFilter} />
-          {podcastCards.length > 0 ? (
-            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {podcastCards.map((p) => (
-                <div key={p.slug} className={CARD}>
-                  <div className="flex items-center justify-between gap-3">
-                    <span className={TAG}>{chapterLabel(p.chapter)}</span>
-                    {p.date ? (
-                      <span className="mono truncate text-[11px] tracking-[0.08em] text-ink/40">
-                        {p.date}
-                      </span>
-                    ) : null}
-                  </div>
-                  <h3 className="mt-3 display text-xl">{p.title}</h3>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <EmptyState message="Coming soon." />
-          )}
-          {!views.has("podcasts") && shownPodcasts.length > PREVIEW && (
-            <div className="mt-8">
-              <Link href={viewAllHref("podcasts", podcastsFilter)} className={VIEW_ALL}>
-                View all {shownPodcasts.length}
-              </Link>
-            </div>
-          )}
+          <Suspense fallback={<SkeletonGrid />}>
+            <PodcastsSection chapterFilter={podcastsFilter} expanded={views.has("podcasts")} />
+          </Suspense>
         </div>
       </section>
 
@@ -313,27 +402,9 @@ export default async function MediaPage({
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
           <SectionHead index={5} title="News articles" sub="Coverage in the press." />
           <FilterBar section="articles" active={articlesFilter} />
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {articleCards.map((a) => (
-              <a key={`${a.url}-${a.title}`} href={a.url} target="_blank" rel="noreferrer" className={CARD}>
-                <div className="flex items-center justify-between gap-3">
-                  <span className="mono truncate text-[11px] uppercase tracking-[0.14em] text-ink/50">
-                    {a.outlet}
-                  </span>
-                  <span className={TAG}>{chapterLabel(a.chapter)}</span>
-                </div>
-                <h3 className="mt-3 display text-xl">{a.title}</h3>
-              </a>
-            ))}
-          </div>
-          {!views.has("articles") && shownArticles.length > PREVIEW && (
-            <div className="mt-8">
-              <Link href={viewAllHref("articles", articlesFilter)} className={VIEW_ALL}>
-                View all {shownArticles.length}
-              </Link>
-            </div>
-          )}
-          {shownArticles.length === 0 && <EmptyState message="No coverage yet." />}
+          <Suspense fallback={<SkeletonGrid />}>
+            <ArticlesSection chapterFilter={articlesFilter} expanded={views.has("articles")} />
+          </Suspense>
         </div>
       </section>
 

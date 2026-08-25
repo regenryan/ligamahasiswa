@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Shell } from "@/components/shells";
 import {
   PageHead,
@@ -9,6 +10,7 @@ import { readSheet } from "@/lib/sheets-db";
 import { products as mockProducts } from "@/lib/mock";
 import type { Product } from "@/lib/mock";
 import { ShopGridClient } from "./shop-grid-client";
+import { SkeletonGrid } from "@/components/skeleton";
 import Link from "next/link";
 
 const DIR = 27;
@@ -42,6 +44,17 @@ async function getProducts(): Promise<Product[]> {
   }
 }
 
+async function ProductGrid({ catalog }: { catalog: Catalog }) {
+  const products = await getProducts();
+  const filtered =
+    catalog === "member"
+      ? products.filter((p) => p.memberOnly)
+      : catalog === "limited"
+        ? products.filter((p) => p.preorder)
+        : products;
+  return <ShopGridClient products={filtered} />;
+}
+
 export default async function ShopPage({
   searchParams,
 }: {
@@ -54,15 +67,6 @@ export default async function ShopPage({
       : params.catalog === "limited"
         ? "limited"
         : "all";
-
-  const products = await getProducts();
-
-  const filtered =
-    catalog === "member"
-      ? products.filter((p) => p.memberOnly)
-      : catalog === "limited"
-        ? products.filter((p) => p.preorder)
-        : products;
 
   return (
     <Shell dir={DIR}>
@@ -101,7 +105,9 @@ export default async function ShopPage({
             </div>
           </div>
         </section>
-        <ShopGridClient products={filtered} />
+        <Suspense fallback={<SkeletonGrid count={4} />}>
+          <ProductGrid catalog={catalog} />
+        </Suspense>
         <JoinBand />
         <NewsletterBand />
       </CartProvider>

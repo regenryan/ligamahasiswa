@@ -1,8 +1,10 @@
+import { Suspense } from "react";
 import { Shell } from "@/components/shells";
 import { PageHead, SectionHead, JoinBand, NewsletterBand } from "@/components/sections";
 import { readSheet } from "@/lib/sheets-db";
 import { CHAPTERS, chapterLabel } from "@/lib/chapters";
 import { campaigns as mockCampaigns, type Campaign } from "@/lib/mock";
+import { SkeletonGrid } from "@/components/skeleton";
 import Link from "next/link";
 
 const DIR = 27;
@@ -52,6 +54,46 @@ function CampaignCard({ c, hrefOverride }: { c: Campaign; hrefOverride?: string 
   );
 }
 
+async function FundraiseGrid() {
+  const campaigns = await getCampaigns();
+  const fundraisers = campaigns.filter((c) => c.status === "Active").slice(0, 3);
+  return (
+    <>
+      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {fundraisers.map((c) => (
+          <CampaignCard key={`${c.chapterSlug}-${c.slug}`} c={c} hrefOverride={`/chapters/${c.chapterSlug}/campaigns/${c.slug}/fundraise`} />
+        ))}
+      </div>
+      {fundraisers.length === 0 && (
+        <div className="border border-dashed border-line p-8 text-center">
+          <p className="text-[14px] text-ink/50">No active fundraisers right now.</p>
+        </div>
+      )}
+    </>
+  );
+}
+
+async function AllCampaigns({ chapterFilter }: { chapterFilter?: string }) {
+  const campaigns = await getCampaigns();
+  const filtered = chapterFilter
+    ? campaigns.filter((c) => c.chapterSlug === chapterFilter)
+    : campaigns;
+  return (
+    <>
+      <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {filtered.map((c) => (
+          <CampaignCard key={`${c.chapterSlug}-${c.slug}`} c={c} />
+        ))}
+      </div>
+      {filtered.length === 0 && (
+        <div className="border border-dashed border-line p-8 text-center">
+          <p className="text-[14px] text-ink/50">No campaigns for this chapter yet.</p>
+        </div>
+      )}
+    </>
+  );
+}
+
 export default async function CampaignsPage({
   searchParams,
 }: {
@@ -59,12 +101,6 @@ export default async function CampaignsPage({
 }) {
   const params = await searchParams;
   const chapterFilter = params.chapter;
-  const campaigns = await getCampaigns();
-
-  const fundraisers = campaigns.filter((c) => c.status === "Active").slice(0, 3);
-  const filtered = chapterFilter
-    ? campaigns.filter((c) => c.chapterSlug === chapterFilter)
-    : campaigns;
 
   return (
     <Shell dir={DIR}>
@@ -81,16 +117,9 @@ export default async function CampaignsPage({
             title="Fundraise"
             sub="Top active campaigns taking donations right now."
           />
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {fundraisers.map((c) => (
-              <CampaignCard key={`${c.chapterSlug}-${c.slug}`} c={c} hrefOverride={`/chapters/${c.chapterSlug}/campaigns/${c.slug}/fundraise`} />
-            ))}
-          </div>
-          {fundraisers.length === 0 && (
-            <div className="border border-dashed border-line p-8 text-center">
-              <p className="text-[14px] text-ink/50">No active fundraisers right now.</p>
-            </div>
-          )}
+          <Suspense fallback={<SkeletonGrid />}>
+            <FundraiseGrid />
+          </Suspense>
         </div>
       </section>
 
@@ -128,17 +157,9 @@ export default async function CampaignsPage({
             ))}
           </div>
 
-          <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {filtered.map((c) => (
-              <CampaignCard key={`${c.chapterSlug}-${c.slug}`} c={c} />
-            ))}
-          </div>
-
-          {filtered.length === 0 && (
-            <div className="border border-dashed border-line p-8 text-center">
-              <p className="text-[14px] text-ink/50">No campaigns for this chapter yet.</p>
-            </div>
-          )}
+          <Suspense fallback={<SkeletonGrid />}>
+            <AllCampaigns chapterFilter={chapterFilter} />
+          </Suspense>
         </div>
       </section>
 

@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Shell } from "@/components/shells";
 import { PageHead, SectionHead, EventCard, JoinBand } from "@/components/sections";
 import { readSheet } from "@/lib/sheets-db";
@@ -7,6 +8,7 @@ import type { Campaign, EventItem } from "@/lib/mock";
 import Link from "next/link";
 import { ShareKit } from "@/components/ShareKit";
 import { notFound } from "next/navigation";
+import { SkeletonGrid, SkeletonSectionHead, SkeletonStats } from "@/components/skeleton";
 
 type CommitteeMember = { name: string; role: string; email: string; id: string };
 type SocialPost = { id: string; platform: string; url: string; caption: string };
@@ -193,92 +195,101 @@ function StatsStrip({
   );
 }
 
-export default async function ChapterPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const ch = getChapterData(slug);
-  if (!ch) notFound();
-  const meta = getChapter(slug)!;
-  const [campaigns, events, memberCount, leadership, socialPosts, zines, statements, podcasts, articles] =
-    await Promise.all([
-      getChapterCampaigns(slug),
-      getChapterEvents(slug),
-      getChapterMemberCount(slug),
-      getChapterLeadership(slug),
-      getChapterSocialPosts(slug),
-      getChapterZines(slug),
-      getChapterStatements(slug),
-      getChapterPodcasts(slug),
-      getChapterArticles(slug),
-    ]);
+async function ChapterStats({ slug }: { slug: string }) {
+  const [memberCount, campaigns] = await Promise.all([
+    getChapterMemberCount(slug),
+    getChapterCampaigns(slug),
+  ]);
+  return <StatsStrip memberCount={memberCount} campaignCount={campaigns.length} />;
+}
 
+async function ChapterLeadership({ slug }: { slug: string }) {
+  const leadership = await getChapterLeadership(slug);
+  if (leadership.length === 0) return null;
   return (
-    <Shell dir={DIR}>
-      <PageHead kicker="Chapters" title={ch.name} sub={ch.tagline} />
-      <StatsStrip memberCount={memberCount} campaignCount={campaigns.length} />
-      {leadership.length > 0 ? (
-        <section className="border-b border-line">
-          <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
-            <SectionHead index={0} title="Leadership" sub="The people leading this chapter." />
-            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {leadership.map((m) => (
-                <Link key={m.id} href={`/member/${m.id}`} className="group border border-line bg-cream p-5 hover:border-brand transition-colors">
-                  <p className="mono text-[11px] uppercase tracking-[0.14em] text-ink/50">{m.role}</p>
-                  <h3 className="mt-2 display text-xl group-hover:text-brand transition-colors">{m.name}</h3>
-                  {m.email ? <p className="mono mt-1 text-[12px] text-ink/40">{m.email}</p> : null}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      ) : null}
-      <section id="campaigns" className="border-b border-line">
-        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
-          <SectionHead index={1} title="Campaigns" sub="What this chapter is fighting for right now." />
-          <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {campaigns.length > 0 ? (
-              campaigns.slice(0, 3).map((c) => (
-                <Link key={c.slug} href={`/chapters/${slug}/campaigns/${c.slug}`} className="group border border-line bg-cream p-6 hover:border-brand transition-colors">
-                  <p className="mono text-[11px] uppercase tracking-[0.14em] text-ink/50">{chapterLabel(c.chapterSlug)}</p>
-                  <h3 className="display mt-2 text-xl group-hover:text-brand transition-colors">{c.title}</h3>
-                  <p className="mt-2 text-[14px] text-ink/70 line-clamp-3">{c.summary}</p>
-                </Link>
-              ))
-            ) : (
-              <p className="border border-dashed border-line bg-cream p-6 text-[14px] text-ink/60">No active campaigns yet.</p>
-            )}
-          </div>
+    <section className="border-b border-line">
+      <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+        <SectionHead index={0} title="Leadership" sub="The people leading this chapter." />
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {leadership.map((m) => (
+            <Link key={m.id} href={`/member/${m.id}`} className="group border border-line bg-cream p-5 hover:border-brand transition-colors">
+              <p className="mono text-[11px] uppercase tracking-[0.14em] text-ink/50">{m.role}</p>
+              <h3 className="mt-2 display text-xl group-hover:text-brand transition-colors">{m.name}</h3>
+              {m.email ? <p className="mono mt-1 text-[12px] text-ink/40">{m.email}</p> : null}
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+async function ChapterCampaigns({ slug }: { slug: string }) {
+  const campaigns = await getChapterCampaigns(slug);
+  return (
+    <section id="campaigns" className="border-b border-line">
+      <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+        <SectionHead index={1} title="Campaigns" sub="What this chapter is fighting for right now." />
+        <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {campaigns.length > 0 ? (
-            <div className="mt-6">
-              <Link href={`/chapters/${slug}/campaigns`} className="mono text-[12px] uppercase tracking-[0.14em] text-ink/60 underline underline-offset-4 hover:text-brand transition-colors">
-                View all campaigns
+            campaigns.slice(0, 3).map((c) => (
+              <Link key={c.slug} href={`/chapters/${slug}/campaigns/${c.slug}`} className="group border border-line bg-cream p-6 hover:border-brand transition-colors">
+                <p className="mono text-[11px] uppercase tracking-[0.14em] text-ink/50">{chapterLabel(c.chapterSlug)}</p>
+                <h3 className="display mt-2 text-xl group-hover:text-brand transition-colors">{c.title}</h3>
+                <p className="mt-2 text-[14px] text-ink/70 line-clamp-3">{c.summary}</p>
               </Link>
-            </div>
-          ) : null}
+            ))
+          ) : (
+            <p className="border border-dashed border-line bg-cream p-6 text-[14px] text-ink/60">No active campaigns yet.</p>
+          )}
         </div>
-      </section>
-      <section id="events" className="border-b border-line">
-        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
-          <SectionHead index={2} title="Upcoming events" sub={`Sessions for the ${meta.short} chapter.`} />
-          <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {events.length > 0 ? (
-              events.slice(0, 3).map((e) => <EventCard key={e.slug} e={e} />)
-            ) : (
-              <p className="border border-dashed border-line bg-cream p-6 text-[14px] text-ink/60">Nothing scheduled yet. Check back soon.</p>
-            )}
+        {campaigns.length > 0 ? (
+          <div className="mt-6">
+            <Link href={`/chapters/${slug}/campaigns`} className="mono text-[12px] uppercase tracking-[0.14em] text-ink/60 underline underline-offset-4 hover:text-brand transition-colors">
+              View all campaigns
+            </Link>
           </div>
+        ) : null}
+      </div>
+    </section>
+  );
+}
+
+async function ChapterEvents({ slug, chapterShort }: { slug: string; chapterShort: string }) {
+  const events = await getChapterEvents(slug);
+  return (
+    <section id="events" className="border-b border-line">
+      <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+        <SectionHead index={2} title="Upcoming events" sub={`Sessions for the ${chapterShort} chapter.`} />
+        <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {events.length > 0 ? (
-            <div className="mt-6">
-              <Link href={`/chapters/${slug}/events`} className="mono text-[12px] uppercase tracking-[0.14em] text-ink/60 underline underline-offset-4 hover:text-brand transition-colors">
-                View all events
-              </Link>
-            </div>
-          ) : null}
+            events.slice(0, 3).map((e) => <EventCard key={e.slug} e={e} />)
+          ) : (
+            <p className="border border-dashed border-line bg-cream p-6 text-[14px] text-ink/60">Nothing scheduled yet. Check back soon.</p>
+          )}
         </div>
-      </section>
+        {events.length > 0 ? (
+          <div className="mt-6">
+            <Link href={`/chapters/${slug}/events`} className="mono text-[12px] uppercase tracking-[0.14em] text-ink/60 underline underline-offset-4 hover:text-brand transition-colors">
+              View all events
+            </Link>
+          </div>
+        ) : null}
+      </div>
+    </section>
+  );
+}
+
+async function ChapterMedia({ slug }: { slug: string }) {
+  const [socialPosts, zines, statements, podcasts, articles] = await Promise.all([
+    getChapterSocialPosts(slug),
+    getChapterZines(slug),
+    getChapterStatements(slug),
+    getChapterPodcasts(slug),
+    getChapterArticles(slug),
+  ]);
+  return (
+    <>
       {socialPosts.length > 0 ? (
         <section id="posts" className="border-b border-line">
           <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
@@ -368,6 +379,53 @@ export default async function ChapterPage({
           </div>
         </section>
       ) : null}
+    </>
+  );
+}
+
+export default async function ChapterPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const ch = getChapterData(slug);
+  if (!ch) notFound();
+  const meta = getChapter(slug)!;
+
+  const sectionFallback = (
+    <section className="border-b border-line">
+      <div className="mx-auto w-full max-w-6xl px-4 pt-16 sm:px-6">
+        <SkeletonSectionHead />
+      </div>
+      <SkeletonGrid />
+    </section>
+  );
+
+  return (
+    <Shell dir={DIR}>
+      <PageHead kicker="Chapters" title={ch.name} sub={ch.tagline} />
+      <Suspense
+        fallback={
+          <section className="border-b border-line">
+            <SkeletonStats />
+          </section>
+        }
+      >
+        <ChapterStats slug={slug} />
+      </Suspense>
+      <Suspense fallback={sectionFallback}>
+        <ChapterLeadership slug={slug} />
+      </Suspense>
+      <Suspense fallback={sectionFallback}>
+        <ChapterCampaigns slug={slug} />
+      </Suspense>
+      <Suspense fallback={sectionFallback}>
+        <ChapterEvents slug={slug} chapterShort={meta.short} />
+      </Suspense>
+      <Suspense fallback={sectionFallback}>
+        <ChapterMedia slug={slug} />
+      </Suspense>
       <section className="border-b border-line">
         <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-3 px-4 py-10 sm:px-6">
           <span className="mono mr-1 text-[11px] uppercase tracking-[0.2em] text-ink/50">Jump to</span>

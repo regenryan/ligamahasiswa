@@ -1,8 +1,10 @@
+import { Suspense } from "react";
 import { Shell } from "@/components/shells";
 import { PageHead, SectionHead, JoinBand, NewsletterBand } from "@/components/sections";
 import { readSheet } from "@/lib/sheets-db";
 import { CHAPTERS, chapterLabel } from "@/lib/chapters";
 import { events as mockEvents, type EventItem } from "@/lib/mock";
+import { SkeletonGrid } from "@/components/skeleton";
 import Link from "next/link";
 
 const DIR = 27;
@@ -56,6 +58,47 @@ function EventCard({ e, hrefOverride }: { e: EventItem; hrefOverride?: string })
   );
 }
 
+async function FundraiseGrid() {
+  const events = await getEvents();
+  const sorted = [...events].sort((a, b) => a.date.localeCompare(b.date));
+  const fundraisers = sorted.slice(0, 3);
+  return (
+    <>
+      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {fundraisers.map((e) => (
+          <EventCard key={`${e.chapterSlug}-${e.slug}`} e={e} hrefOverride={`/chapters/${e.chapterSlug}/events/${e.slug}/fundraise`} />
+        ))}
+      </div>
+      {fundraisers.length === 0 && (
+        <div className="border border-dashed border-line p-8 text-center">
+          <p className="text-[14px] text-ink/50">No upcoming events right now.</p>
+        </div>
+      )}
+    </>
+  );
+}
+
+async function AllEvents({ chapterFilter }: { chapterFilter?: string }) {
+  const events = await getEvents();
+  const filtered = chapterFilter
+    ? events.filter((e) => e.chapterSlug === chapterFilter)
+    : events;
+  return (
+    <>
+      <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {filtered.map((e) => (
+          <EventCard key={`${e.chapterSlug}-${e.slug}`} e={e} />
+        ))}
+      </div>
+      {filtered.length === 0 && (
+        <div className="border border-dashed border-line p-8 text-center">
+          <p className="text-[14px] text-ink/50">No events for this chapter yet.</p>
+        </div>
+      )}
+    </>
+  );
+}
+
 export default async function EventsPage({
   searchParams,
 }: {
@@ -63,13 +106,6 @@ export default async function EventsPage({
 }) {
   const params = await searchParams;
   const chapterFilter = params.chapter;
-  const events = await getEvents();
-
-  const sorted = [...events].sort((a, b) => a.date.localeCompare(b.date));
-  const fundraisers = sorted.slice(0, 3);
-  const filtered = chapterFilter
-    ? events.filter((e) => e.chapterSlug === chapterFilter)
-    : events;
 
   return (
     <Shell dir={DIR}>
@@ -86,16 +122,9 @@ export default async function EventsPage({
             title="Fundraise"
             sub="Our next three gatherings take donations on the door."
           />
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {fundraisers.map((e) => (
-              <EventCard key={`${e.chapterSlug}-${e.slug}`} e={e} hrefOverride={`/chapters/${e.chapterSlug}/events/${e.slug}/fundraise`} />
-            ))}
-          </div>
-          {fundraisers.length === 0 && (
-            <div className="border border-dashed border-line p-8 text-center">
-              <p className="text-[14px] text-ink/50">No upcoming events right now.</p>
-            </div>
-          )}
+          <Suspense fallback={<SkeletonGrid />}>
+            <FundraiseGrid />
+          </Suspense>
         </div>
       </section>
 
@@ -133,17 +162,9 @@ export default async function EventsPage({
             ))}
           </div>
 
-          <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {filtered.map((e) => (
-              <EventCard key={`${e.chapterSlug}-${e.slug}`} e={e} />
-            ))}
-          </div>
-
-          {filtered.length === 0 && (
-            <div className="border border-dashed border-line p-8 text-center">
-              <p className="text-[14px] text-ink/50">No events for this chapter yet.</p>
-            </div>
-          )}
+          <Suspense fallback={<SkeletonGrid />}>
+            <AllEvents chapterFilter={chapterFilter} />
+          </Suspense>
         </div>
       </section>
 

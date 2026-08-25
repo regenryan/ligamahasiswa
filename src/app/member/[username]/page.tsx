@@ -126,7 +126,6 @@ export default async function MemberProfilePage({
 
   return (
     <Shell dir={27}>
-      <PageHead kicker="Profile" title="Member" sub="" />
       <Suspense fallback={<SkeletonDetail />}>
         <MemberContent username={username} />
       </Suspense>

@@ -53,6 +53,11 @@ async function ChapterEventContent({ slug, eventSlug }: { slug: string; eventSlu
 
   return (
     <>
+      <PageHead
+        kicker={`${ch.name} / Events`}
+        title={event.title}
+        sub={event.blurb}
+      />
       <section className="border-b border-line">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
           <Link href={`/chapters/${slug}/events`} className="mono mb-8 inline-block text-[11px] uppercase tracking-[0.14em] text-ink/50 hover:text-brand transition-colors">
@@ -121,7 +126,6 @@ export default async function ChapterEventDetailPage({
 
   return (
     <Shell dir={27}>
-      <PageHead kicker={`${ch.name} / Events`} title="Event" sub="" />
       <Suspense fallback={<SkeletonDetail />}>
         <ChapterEventContent slug={slug} eventSlug={eventSlug} />
       </Suspense>

@@ -43,7 +43,9 @@ async function ProductContent({ slug }: { slug: string }) {
   }
 
   return (
-    <CartProvider>
+    <>
+      <PageHead kicker="Shop" title={product.name} sub={product.tag} />
+      <CartProvider>
       <section className="border-b border-line">
         <div className="mx-auto grid w-full max-w-4xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1fr_1fr]">
           <div className="flex aspect-square items-center justify-center border border-line bg-midnight">
@@ -75,6 +77,7 @@ async function ProductContent({ slug }: { slug: string }) {
         </div>
       </section>
     </CartProvider>
+    </>
   );
 }
 
@@ -87,7 +90,6 @@ export default async function ProductDetailPage({
 
   return (
     <Shell dir={DIR}>
-      <PageHead kicker="Shop" title="Product" sub="" />
       <Suspense fallback={<SkeletonDetail />}>
         <ProductContent slug={slug} />
       </Suspense>

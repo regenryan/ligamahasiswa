@@ -29,7 +29,7 @@ export {
   JoinBand,
   NewsletterBand,
 } from "@/components/sections/strips";
-export { Introduction } from "@/components/sections/introduction";
 export { Principles } from "@/components/sections/principles";
-export { Slogan } from "@/components/sections/slogan";
-export { MediaSection } from "@/components/sections/media-section";
+export { ChaptersSection } from "@/components/sections/chapters-section";
+export { CampaignsSection } from "@/components/sections/campaigns-section";
+export { MediaSectionAsync } from "@/components/sections/media-section-async";

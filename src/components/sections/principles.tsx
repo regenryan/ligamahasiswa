@@ -1,17 +1,17 @@
 const PRINCIPLES = [
   {
+    num: "01",
     title: "Keadilan Sosial",
-    subtitle: "Social Justice",
     description: "Equitable access to education, resources, and opportunity for every student — regardless of background, identity, or campus.",
   },
   {
+    num: "02",
     title: "Intelektualisme",
-    subtitle: "Intellectualism",
     description: "Rigorous scholarship, critical inquiry, and academic freedom. The classroom is a site of struggle, not compliance.",
   },
   {
+    num: "03",
     title: "Autonomi",
-    subtitle: "Autonomy",
     description: "Student self-governance free from institutional overreach. Our campuses belong to us.",
   },
 ];
@@ -24,12 +24,14 @@ export function Principles() {
         <h2 className="display mt-4 text-3xl sm:text-4xl leading-[0.95] text-fog">
           What we stand for
         </h2>
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <div className="mt-12 space-y-0">
           {PRINCIPLES.map((p) => (
-            <div key={p.title} className="border border-fog/20 bg-fog/5 p-7">
-              <h3 className="display text-xl text-fog">{p.title}</h3>
-              <p className="mono mt-1 text-[11px] uppercase tracking-[0.14em] text-fog/50">{p.subtitle}</p>
-              <p className="mt-4 text-[14px] leading-relaxed text-fog/70">{p.description}</p>
+            <div key={p.num} className="flex gap-6 border-t border-fog/15 py-8 first:border-t-0">
+              <span className="display shrink-0 text-4xl text-fog/20">{p.num}</span>
+              <div>
+                <h3 className="display text-xl text-fog">{p.title}</h3>
+                <p className="mt-3 max-w-lg text-[14px] leading-relaxed text-fog/70">{p.description}</p>
+              </div>
             </div>
           ))}
         </div>

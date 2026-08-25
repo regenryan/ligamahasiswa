@@ -11,7 +11,6 @@ const NAV_LINKS = [
   { href: "/campaigns", label: "Campaigns" },
   { href: "/chapters", label: "Chapters" },
   { href: "/events", label: "Events" },
-  { href: "/fundraise", label: "Fundraise" },
   { href: "/election", label: "Election" },
   { href: "/shop", label: "Shop" },
   { href: "/media", label: "Media" },

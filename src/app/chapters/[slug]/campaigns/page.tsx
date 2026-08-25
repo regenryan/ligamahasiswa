@@ -5,6 +5,7 @@ import { campaigns as mockCampaigns } from "@/lib/mock";
 import type { Campaign } from "@/lib/mock";
 import { chapters as mockChapters } from "@/lib/mock";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 async function getChapterCampaigns(slug: string): Promise<Campaign[]> {
   try {
@@ -33,7 +34,8 @@ export default async function ChapterCampaignsPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const ch = mockChapters.find((c) => c.slug === slug) ?? mockChapters[0];
+  const ch = mockChapters.find((c) => c.slug === slug);
+  if (!ch) notFound();
   const campaigns = await getChapterCampaigns(slug);
 
   return (

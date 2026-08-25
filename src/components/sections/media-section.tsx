@@ -13,21 +13,19 @@ type MediaItem = {
   url: string;
 };
 
-const TYPES = ["All", "Posts", "Statements", "Zines", "Podcasts", "Articles"] as const;
+const TYPES = ["All", "Social", "Statements", "Zines", "Articles"] as const;
 
 const TYPE_PARAM_MAP: Record<string, string> = {
-  posts: "Posts",
+  social: "Social",
   statements: "Statements",
   zines: "Zines",
-  podcasts: "Podcasts",
   articles: "Articles",
 };
 
 const PARAM_FROM_LABEL: Record<string, string> = {
-  Posts: "posts",
+  Social: "social",
   Statements: "statements",
   Zines: "zines",
-  Podcasts: "podcasts",
   Articles: "articles",
 };
 

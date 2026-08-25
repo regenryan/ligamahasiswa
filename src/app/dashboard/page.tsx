@@ -45,7 +45,6 @@ export default async function DashboardPage() {
     { href: "/#member", label: "Membership", desc: isMember ? "Manage your membership" : "Become a verified member" },
     { href: "/dashboard/card", label: "Member card", desc: "Your Liga ID card with QR code" },
     { href: "/dashboard/orders", label: "Order history", desc: "All your shop purchases" },
-    { href: "/constitution", label: "Constitution", desc: "Read the Liga constitution (members only)" },
     ...(isCommittee ? [{ href: "/dashboard/committee", label: "Committee", desc: "Manage your chapter committee" }] : []),
     ...(isAdmin ? [{ href: "/admin", label: "Admin panel", desc: "Manage users, orders, and content" }] : []),
   ];

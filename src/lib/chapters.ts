@@ -16,5 +16,5 @@ export function chapterLabel(slug: string): string {
 }
 
 export function getChapter(slug: string) {
-  return CHAPTERS.find((c) => c.slug === slug) ?? CHAPTERS[0];
+  return CHAPTERS.find((c) => c.slug === slug) ?? null;
 }

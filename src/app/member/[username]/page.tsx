@@ -8,7 +8,7 @@ import Link from "next/link";
 async function getMember(username: string) {
   try {
     const row = await findRow("Users", "id", username);
-    if (!row || row.status !== "approved") return null;
+    if (!row || row.status !== "active") return null;
     return {
       id: row.id ?? "",
       name: row.name ?? "",

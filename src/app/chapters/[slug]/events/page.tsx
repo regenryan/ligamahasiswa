@@ -4,6 +4,7 @@ import { readSheet } from "@/lib/sheets-db";
 import { events as mockEvents, chapters as mockChapters } from "@/lib/mock";
 import type { EventItem } from "@/lib/mock";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 async function getChapterEvents(slug: string): Promise<EventItem[]> {
   try {
@@ -32,7 +33,8 @@ export default async function ChapterEventsPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const ch = mockChapters.find((c) => c.slug === slug) ?? mockChapters[0];
+  const ch = mockChapters.find((c) => c.slug === slug);
+  if (!ch) notFound();
   const events = await getChapterEvents(slug);
 
   return (

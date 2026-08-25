@@ -5,6 +5,7 @@ import { chapterLabel, getChapter } from "@/lib/chapters";
 import { statements as mockStatements } from "@/lib/mock";
 import { ShareKit } from "@/components/ShareKit";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 const DIR = 27;
 
@@ -54,6 +55,7 @@ export default async function StatementPage({
   const { slug, statement: statementSlug } = await params;
   const statement = await getStatement(slug, statementSlug);
   const chapter = getChapter(slug);
+  if (!chapter) notFound();
 
   if (!statement) {
     return (

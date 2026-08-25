@@ -6,6 +6,7 @@ import { chapters as mockChapters, campaigns as mockCampaigns, events as mockEve
 import type { Campaign, EventItem } from "@/lib/mock";
 import Link from "next/link";
 import { ShareKit } from "@/components/ShareKit";
+import { notFound } from "next/navigation";
 
 type CommitteeMember = { name: string; role: string; email: string; id: string };
 type SocialPost = { id: string; platform: string; url: string; caption: string };
@@ -17,7 +18,7 @@ type PodcastPreview = { slug: string; title: string; date: string };
 const DIR = 27;
 
 function getChapterData(slug: string) {
-  return mockChapters.find((c) => c.slug === slug) ?? mockChapters[0];
+  return mockChapters.find((c) => c.slug === slug) ?? null;
 }
 
 async function getChapterCampaigns(slug: string): Promise<Campaign[]> {
@@ -64,7 +65,7 @@ async function getChapterEvents(slug: string): Promise<EventItem[]> {
 
 async function getChapterMemberCount(slug: string): Promise<number> {
   try {
-    const rows = await readSheet("Users", { chapter_slug: slug, status: "approved" });
+    const rows = await readSheet("Users", { chapter_slug: slug, status: "active" });
     return rows.length || mockMembers.filter((m) => m.chapterSlug === slug).length;
   } catch {
     return mockMembers.filter((m) => m.chapterSlug === slug).length;
@@ -199,7 +200,8 @@ export default async function ChapterPage({
 }) {
   const { slug } = await params;
   const ch = getChapterData(slug);
-  const meta = getChapter(slug);
+  if (!ch) notFound();
+  const meta = getChapter(slug)!;
   const [campaigns, events, memberCount, leadership, socialPosts, zines, statements, podcasts, articles] =
     await Promise.all([
       getChapterCampaigns(slug),

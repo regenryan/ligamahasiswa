@@ -32,21 +32,26 @@ function CheckoutInner() {
     setError(null);
     setSending(true);
 
-    const res = await fetch("/api/checkout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items, paymentMethod, buyerName: name, buyerEmail: email }),
-    });
-    const data = await res.json();
-    setSending(false);
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items, paymentMethod, buyerName: name, buyerEmail: email }),
+      });
+      const data = await res.json();
+      setSending(false);
 
-    if (data.ok && data.url) {
-      clear();
-      window.location.href = data.url;
-    } else if (data.error) {
-      setError(data.error);
-    } else {
-      setError("Could not start payment. Try again.");
+      if (data.ok && data.url) {
+        clear();
+        window.location.href = data.url;
+      } else if (data.error) {
+        setError(data.error);
+      } else {
+        setError("Could not start payment. Try again.");
+      }
+    } catch {
+      setSending(false);
+      setError("Network error. Check your connection and try again.");
     }
   };
 

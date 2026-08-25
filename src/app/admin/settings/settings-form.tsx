@@ -32,9 +32,9 @@ export function SettingsForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 rounded-xl border border-mist bg-white p-6">
+    <form onSubmit={handleSubmit} className="space-y-6 border border-line bg-cream p-6">
       <div>
-        <label htmlFor="fee" className="mb-1 block text-sm font-medium">
+        <label htmlFor="fee" className="mb-1.5 block text-[13px] font-bold uppercase tracking-[0.08em]">
           Yuran Keahlian (RM)
         </label>
         <input
@@ -43,15 +43,15 @@ export function SettingsForm({
           min={0}
           value={fee}
           onChange={(e) => setFee(e.target.value)}
-          className="w-full rounded border border-mist bg-paper px-4 py-2.5 text-sm"
+          className="w-full border border-line bg-midnight px-4 py-3 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand/50"
         />
-        <p className="mt-1 text-xs text-stone">
+        <p className="mt-1.5 text-[12px] text-ink/50">
           Tetapkan 0 untuk keahlian percuma.
         </p>
       </div>
 
       <div>
-        <label htmlFor="duration" className="mb-1 block text-sm font-medium">
+        <label htmlFor="duration" className="mb-1.5 block text-[13px] font-bold uppercase tracking-[0.08em]">
           Tempoh Keahlian (hari)
         </label>
         <input
@@ -60,15 +60,15 @@ export function SettingsForm({
           min={1}
           value={duration}
           onChange={(e) => setDuration(e.target.value)}
-          className="w-full rounded border border-mist bg-paper px-4 py-2.5 text-sm"
+          className="w-full border border-line bg-midnight px-4 py-3 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand/50"
         />
-        <p className="mt-1 text-xs text-stone">
+        <p className="mt-1.5 text-[12px] text-ink/50">
           365 hari = 1 tahun.
         </p>
       </div>
 
       <div>
-        <label htmlFor="sitename" className="mb-1 block text-sm font-medium">
+        <label htmlFor="sitename" className="mb-1.5 block text-[13px] font-bold uppercase tracking-[0.08em]">
           Nama Laman
         </label>
         <input
@@ -76,7 +76,7 @@ export function SettingsForm({
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full rounded border border-mist bg-paper px-4 py-2.5 text-sm"
+          className="w-full border border-line bg-midnight px-4 py-3 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand/50"
         />
       </div>
 
@@ -84,12 +84,12 @@ export function SettingsForm({
         <button
           type="submit"
           disabled={isPending}
-          className="rounded bg-liga-red px-6 py-2.5 text-sm font-display uppercase tracking-wider text-white hover:bg-liga-red-deep disabled:opacity-50"
+          className="press border border-2 border-ink bg-brand px-6 py-2.5 text-[13px] font-extrabold uppercase tracking-[0.14em] text-paper hover:opacity-90 transition-opacity disabled:opacity-50"
         >
           {isPending ? "Menyimpan..." : "Simpan"}
         </button>
         {saved && (
-          <span className="text-sm text-success font-medium">Tersimpan</span>
+          <span className="text-[13px] text-term font-medium">Tersimpan</span>
         )}
       </div>
     </form>

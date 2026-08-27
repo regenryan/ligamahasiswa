@@ -6,13 +6,31 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:push": "drizzle-kit push",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@libsql/client": "^0.17.4",
+    "@react-email/components": "^1.0.12",
+    "@tiptap/extension-color": "^3.30.5",
+    "@tiptap/extension-text-style": "^3.30.5",
+    "@tiptap/react": "^3.30.5",
+    "@tiptap/starter-kit": "^3.30.5",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.38.3",
+    "@vercel/blob": "^2.8.0",
+    "bcryptjs": "^3.0.3",
+    "dompurify": "^3.4.14",
+    "drizzle-orm": "^0.45.2",
     "jose": "^6.2.9",
     "next": "16.3.1",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "react-email": "^6.9.3",
+    "resend": "^6.24.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

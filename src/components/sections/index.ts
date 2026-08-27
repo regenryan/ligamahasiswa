@@ -14,7 +14,6 @@ export { Hero } from "@/components/sections/hero";
 export {
   CampaignCard,
   ShopCard,
-  ZineCard,
   MediaCard,
   MemberCard,
   EventCard,
@@ -27,5 +26,4 @@ export {
   ShopStrip,
   StoryStrip,
   JoinBand,
-  NewsletterBand,
 } from "@/components/sections/strips";

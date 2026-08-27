@@ -1,5 +1,5 @@
 import { Shell } from "@/components/shells";
-import { PageHead, JoinBand, NewsletterBand } from "@/components/sections";
+import { PageHead, JoinBand } from "@/components/sections";
 import { dbGetEvents, type EventData } from "@/lib/queries";
 import { EventsClient } from "./events-client";
 
@@ -17,7 +17,6 @@ export default async function EventsPage() {
       />
       <EventsClient events={events} />
       <JoinBand />
-      <NewsletterBand />
     </Shell>
   );
 }

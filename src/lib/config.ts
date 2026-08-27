@@ -12,11 +12,7 @@ export const siteConfig = {
 export const config = {
   siteUrl: siteConfig.siteUrl,
   sessionSecret: siteConfig.sessionSecret,
-  hitpayApiKey: process.env.HITPAY_API_KEY ?? "",
-  hitpaySalt: process.env.HITPAY_SALT ?? "",
   youtubeApiKey: process.env.YOUTUBE_API_KEY ?? "",
-  appsScriptUrl: process.env.NEXT_PUBLIC_APPS_SCRIPT_URL ?? "",
-  appsScriptApiKey: process.env.APPS_SCRIPT_API_KEY ?? "",
 } as const;
 
 const configCache = new Map<string, { value: string; ts: number }>();

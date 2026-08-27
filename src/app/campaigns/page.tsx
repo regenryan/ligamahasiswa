@@ -1,5 +1,5 @@
 import { Shell } from "@/components/shells";
-import { PageHead, JoinBand, NewsletterBand } from "@/components/sections";
+import { PageHead, JoinBand } from "@/components/sections";
 import { dbGetCampaigns, type CampaignData } from "@/lib/queries";
 import { CampaignsClient } from "./campaigns-client";
 
@@ -17,7 +17,6 @@ export default async function CampaignsPage() {
       />
       <CampaignsClient campaigns={campaigns} />
       <JoinBand />
-      <NewsletterBand />
     </Shell>
   );
 }

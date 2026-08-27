@@ -17,9 +17,6 @@ import {
 async function submitJoinForm(_data: Record<string, string>): Promise<{ ok: boolean; error?: string }> {
   return { ok: true };
 }
-async function submitNewsletter(_email: string): Promise<{ ok: boolean; error?: string }> {
-  return { ok: true };
-}
   type Product = { slug: string; name: string; price: string; tag: string; memberOnly: boolean; preorder: boolean; deliveryEstimate: string };
 
 export function Reveal({
@@ -366,82 +363,6 @@ export function Accordion({
           </div>
         );
       })}
-    </div>
-  );
-}
-
-export function NewsletterForm() {
-  const [email, setEmail] = useState("");
-  const [honeypot, setHoneypot] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [sending, setSending] = useState(false);
-  const [done, setDone] = useState(false);
-  const id = useId();
-
-  const submit = async () => {
-    if (honeypot) { setDone(true); return; }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError("Enter a valid email address.");
-      return;
-    }
-    setError(null);
-    setSending(true);
-    const res = await submitNewsletter(email);
-    setSending(false);
-    if (res.ok) {
-      setDone(true);
-    } else {
-      setError(res.error ?? "Something went wrong. Try again.");
-    }
-  };
-
-  return (
-    <div className="w-full max-w-md">
-      {done ? (
-        <p className="mono border border-term/50 bg-term/10 px-4 py-3 text-[13px] text-term">
-          You are on the list. Spread the word.
-        </p>
-      ) : (
-        <form
-          className="flex w-full flex-col gap-2 sm:flex-row"
-          onSubmit={(e) => {
-            e.preventDefault();
-            submit();
-          }}
-          noValidate
-        >
-          <label className="sr-only" htmlFor={id}>
-            Email address
-          </label>
-          <div className="sr-only" aria-hidden="true">
-            <input tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} name="website" />
-          </div>
-          <input
-            id={id}
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@campus.edu.my"
-            disabled={sending}
-            aria-invalid={error ? true : undefined}
-            className={`w-full border bg-paper px-4 py-3 text-[14px] text-ink placeholder:text-ink/40 focus:outline-none ${
-              error ? "border-brand" : "border-line"
-            }`}
-          />
-          <button
-            type="submit"
-            disabled={sending}
-            className="press shrink-0 border border-2 border-ink bg-brand px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.16em] text-paper disabled:opacity-50"
-          >
-            {sending ? "Sending..." : "On the list"}
-          </button>
-        </form>
-      )}
-      {error ? (
-        <p role="alert" className="mono mt-2 text-[12px] text-brand-text">
-          {error}
-        </p>
-      ) : null}
     </div>
   );
 }
@@ -967,3 +888,4 @@ export function WobbleReveal({
     </div>
   );
 }
+

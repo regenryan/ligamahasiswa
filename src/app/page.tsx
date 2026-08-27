@@ -3,7 +3,6 @@ import { Shell } from "@/components/shells";
 import {
   Hero,
   JoinBand,
-  NewsletterBand,
 } from "@/components/sections";
 import { Principles } from "@/components/sections/principles";
 import { ChaptersSection } from "@/components/sections/chapters-section";
@@ -32,7 +31,6 @@ export default async function Home() {
       </Suspense>
       <MediaSectionAsync />
       <JoinBand />
-      <NewsletterBand />
     </Shell>
   );
 }

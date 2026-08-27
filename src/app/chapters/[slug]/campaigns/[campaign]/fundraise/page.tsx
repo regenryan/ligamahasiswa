@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Shell } from "@/components/shells";
 import { PageHead } from "@/components/sections/head";
-import { JoinBand, NewsletterBand } from "@/components/sections";
+import { JoinBand } from "@/components/sections";
 import { dbGetCampaignBySlug } from "@/lib/queries";
 import { chapterLabel } from "@/lib/chapters";
 
@@ -57,7 +57,6 @@ export default async function CampaignFundraisePage({
           </div>
         </section>
         <JoinBand />
-        <NewsletterBand />
       </Shell>
     );
   }
@@ -115,7 +114,6 @@ export default async function CampaignFundraisePage({
         </div>
       </section>
       <JoinBand />
-      <NewsletterBand />
     </Shell>
   );
 }

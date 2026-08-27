@@ -3,7 +3,6 @@ import { Shell } from "@/components/shells";
 import {
   PageHead,
   JoinBand,
-  NewsletterBand,
 } from "@/components/sections";
 import { CartProvider } from "@/components/interactive";
 import { dbGetProducts } from "@/lib/queries";
@@ -56,7 +55,6 @@ export default async function ShopPage() {
           <ShopGridClient products={products} />
         </Suspense>
         <JoinBand />
-        <NewsletterBand />
       </CartProvider>
     </Shell>
   );

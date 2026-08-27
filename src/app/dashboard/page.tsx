@@ -6,7 +6,6 @@ import { db } from "@/lib/db";
 import { eq } from "drizzle-orm";
 import { nomination } from "@/lib/schema";
 import { ProfileForm } from "./profile-form";
-import { ZineSubmitButton } from "./zine-submit-button";
 
 const DIR = 27;
 
@@ -88,7 +87,6 @@ export default async function DashboardPage() {
                 <span className="mono text-[12px] text-ink/30 group-hover:text-brand transition-colors">{"\u2192"}</span>
               </Link>
             ))}
-            {isMember ? <ZineSubmitButton /> : null}
           </div>
         </div>
       </section>

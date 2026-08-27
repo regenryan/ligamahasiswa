@@ -7,7 +7,6 @@ import { getChapter, getChapterSync, CHAPTERS } from "@/lib/chapters";
 import { and, eq } from "drizzle-orm";
 import type { EventData } from "@/lib/queries";
 import Link from "next/link";
-import { RsvpButton } from "@/components/RsvpButton";
 import { ShareKit } from "@/components/ShareKit";
 import { SkeletonDetail } from "@/components/skeleton";
 
@@ -91,7 +90,6 @@ async function ChapterEventContent({ slug, eventSlug }: { slug: string; eventSlu
                   <p className="text-[14px]">{event.type}</p>
                 </div>
               </div>
-              <RsvpButton eventSlug={eventSlug} />
             </div>
           </div>
           <div className="mt-8">

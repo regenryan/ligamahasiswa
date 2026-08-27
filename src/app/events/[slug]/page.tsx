@@ -4,7 +4,6 @@ import { PageHead, JoinBand } from "@/components/sections";
 import { dbGetEventBySlug } from "@/lib/queries";
 import { chapterLabel } from "@/lib/chapters";
 import Link from "next/link";
-import { RsvpButton } from "@/components/RsvpButton";
 import { ShareKit } from "@/components/ShareKit";
 import { SkeletonDetail } from "@/components/skeleton";
 
@@ -93,7 +92,6 @@ async function EventContent({ slug }: { slug: string }) {
                   <p className="text-[14px]">{event.type}</p>
                 </div>
               </div>
-              <RsvpButton eventSlug={slug} />
             </div>
           </div>
           <div className="mt-8">

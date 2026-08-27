@@ -1,5 +1,5 @@
 import { Shell } from "@/components/shells";
-import { PageHead, JoinBand, NewsletterBand } from "@/components/sections";
+import { PageHead, JoinBand } from "@/components/sections";
 import { chapterLabel, getChapterSync } from "@/lib/chapters";
 import { ShareKit } from "@/components/ShareKit";
 import Link from "next/link";
@@ -45,7 +45,6 @@ export default async function StatementPage({
           </div>
         </section>
         <JoinBand />
-        <NewsletterBand />
       </Shell>
     );
   }
@@ -94,7 +93,6 @@ export default async function StatementPage({
       </section>
 
       <JoinBand />
-      <NewsletterBand />
     </Shell>
   );
 }

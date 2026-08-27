@@ -52,9 +52,8 @@ export const metadata: Metadata = {
 
 import { AuthProvider } from "@/components/auth-provider";
 import { AuthModalProvider } from "@/components/auth-modal";
-import { ZineModalProvider } from "@/components/zine-submit-modal";
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
@@ -63,7 +62,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full">
         <AuthProvider>
           <AuthModalProvider>
-            <ZineModalProvider>{children}</ZineModalProvider>
+            {children}
           </AuthModalProvider>
         </AuthProvider>
       </body>

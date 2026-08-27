@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Shell } from "@/components/shells";
 import { PageHead } from "@/components/sections/head";
-import { JoinBand, NewsletterBand } from "@/components/sections";
+import { JoinBand } from "@/components/sections";
 import { CHAPTERS } from "@/lib/chapters";
 
 const DIR = 27;
@@ -36,7 +36,6 @@ export default function ChaptersPage() {
         </div>
       </section>
       <JoinBand />
-      <NewsletterBand />
     </Shell>
   );
 }

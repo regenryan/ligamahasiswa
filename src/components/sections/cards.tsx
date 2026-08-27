@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { StatusChip, Btn } from "@/components/sections/head";
-import { LikeButton, ShareButton } from "@/components/interactive";
+import { ShareButton } from "@/components/interactive";
 import { chapterLabel } from "@/lib/chapters";
 
 type Campaign = { slug: string; chapterSlug: string; title: string; status: string; summary: string; demands: string[] };
@@ -103,28 +103,6 @@ export function ShopCard({ p, onAdd, isMember = false }: { p: Product; onAdd: ()
         </Btn>
       )}
     </div>
-  );
-}
-
-/* ---------- ZineCard ---------- */
-
-export function ZineCard({ z }: { z: ZinePost }) {
-  const chap = chapterLabel(z.chapterSlug);
-  return (
-    <article className={`flex h-full flex-col p-6 ${FRAME}`}>
-      <div className="flex items-center justify-between">
-        <span className="mono text-[11px] uppercase tracking-[0.14em] text-ink/50">{chap}</span>
-      </div>
-      <h3 className="mt-4 text-2xl leading-none display">{z.title}</h3>
-      <p className="mt-3 flex-1 text-[14px] leading-relaxed text-ink/70">{z.excerpt}</p>
-      <div className="mt-5 flex items-center justify-between border-t border-line pt-4">
-        <span className="text-[13px] font-bold text-ink/60">{z.author}</span>
-        <div className="flex items-center gap-3">
-          <LikeButton initial={z.likes} />
-          <ShareButton title={z.title} url={`https://ligamahasiswa.vercel.app/media`} />
-        </div>
-      </div>
-    </article>
   );
 }
 

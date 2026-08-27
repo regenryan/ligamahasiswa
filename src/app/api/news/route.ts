@@ -1,5 +1,0 @@
-import { NextRequest, NextResponse } from "next/server";
-
-export async function GET(_req: NextRequest) {
-  return NextResponse.json({ ok: true, items: [], total: 0, page: 1, limit: 20 });
-}

@@ -4,7 +4,7 @@ import { SectionHead, Btn } from "@/components/sections/head";
 import { CampaignCard, ShopCard } from "@/components/sections/cards";
 import { CartDrawerSlot } from "@/components/sections/cart";
 import { Marquee } from "@/components/Marquee";
-import { Reveal, NewsletterForm, JoinForm, useCart } from "@/components/interactive";
+import { Reveal, JoinForm, useCart } from "@/components/interactive";
 import { useAuth } from "@/components/auth-provider";
 
 type Product = { slug: string; chapterSlug: string; name: string; price: string; tag: string; memberOnly: boolean; preorder: boolean; deliveryEstimate: string };
@@ -223,20 +223,4 @@ export function JoinBand() {
   );
 }
 
-export function NewsletterBand() {
-  return (
-    <section className="border-b border-line bg-midnight">
-      <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
-        <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
-          <div>
-            <p className="display text-2xl sm:text-3xl">Get the memos</p>
-            <p className="mt-2 max-w-md text-[14px] text-fog/60">
-              One email a week. Campaign updates, assembly notices, zine drops. No spam.
-            </p>
-          </div>
-          <NewsletterForm />
-        </div>
-      </div>
-    </section>
-  );
-}
+

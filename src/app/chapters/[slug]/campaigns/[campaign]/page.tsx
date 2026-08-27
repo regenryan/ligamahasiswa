@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { Shell } from "@/components/shells";
-import { PageHead, SectionHead, JoinBand, NewsletterBand } from "@/components/sections";
+import { PageHead, SectionHead, JoinBand } from "@/components/sections";
 import { dbGetCampaignBySlug } from "@/lib/queries";
 import type { CampaignData } from "@/lib/queries";
 import { chapterLabel } from "@/lib/chapters";
@@ -396,7 +396,6 @@ export default async function CampaignPage({
         />
       </Suspense>
       <JoinBand />
-      <NewsletterBand />
     </Shell>
   );
 }

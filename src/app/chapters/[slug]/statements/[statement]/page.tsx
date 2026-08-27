@@ -1,8 +1,6 @@
 import { Shell } from "@/components/shells";
 import { PageHead, JoinBand, NewsletterBand } from "@/components/sections";
-import { readSheet } from "@/lib/sheets-db";
 import { chapterLabel, getChapterSync } from "@/lib/chapters";
-import { statements as mockStatements } from "@/lib/mock";
 import { ShareKit } from "@/components/ShareKit";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -18,32 +16,7 @@ type StatementData = {
   chapterSlug: string;
 };
 
-async function getStatement(slug: string, statementSlug: string): Promise<StatementData | null> {
-  try {
-    const rows = await readSheet("Statements", { chapter_slug: slug, slug: statementSlug });
-    if (rows.length > 0) {
-      const r = rows[0];
-      return {
-        slug: r.slug ?? statementSlug,
-        title: r.title ?? "",
-        content: r.content ?? r.body ?? "",
-        date: r.date ?? "",
-        author: r.author ?? "",
-        chapterSlug: r.chapter_slug ?? slug,
-      };
-    }
-  } catch {}
-  const mock = mockStatements.find((s) => s.slug === statementSlug && s.chapterSlug === slug);
-  if (mock) {
-    return {
-      slug: mock.slug,
-      title: mock.title,
-      content: mock.content,
-      date: mock.date,
-      author: mock.author,
-      chapterSlug: mock.chapterSlug,
-    };
-  }
+async function getStatement(_slug: string, _statementSlug: string): Promise<StatementData | null> {
   return null;
 }
 

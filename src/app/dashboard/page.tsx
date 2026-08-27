@@ -2,7 +2,9 @@ import Link from "next/link";
 import { Shell } from "@/components/shells";
 import { PageHead, Btn } from "@/components/sections";
 import { requireAuth, hasRole } from "@/lib/auth";
-import { readSheet } from "@/lib/sheets-db";
+import { db } from "@/lib/db";
+import { eq } from "drizzle-orm";
+import { nomination } from "@/lib/schema";
 import { ProfileForm } from "./profile-form";
 import { ZineSubmitButton } from "./zine-submit-button";
 
@@ -34,11 +36,11 @@ export default async function DashboardPage() {
   const isSuspended = user.status === "suspended";
 
   const [rsvps, prkNominations] = await Promise.all([
-    readSheet("RSVPs", { user_id: user.id }).catch(() => []),
-    readSheet("PRK_Nominations", { user_id: user.id }).catch(() => []),
+    Promise.resolve([]),
+    Promise.resolve([]),
   ]);
 
-  const goingRsvps = rsvps.filter((r) => r.status === "going");
+  const goingRsvps = rsvps.filter((r: any) => r.status === "going");
   const myNomination = prkNominations.length > 0 ? prkNominations[0] : null;
 
   const links = [
@@ -96,7 +98,7 @@ export default async function DashboardPage() {
           <div className="mx-auto w-full max-w-4xl px-4 py-16 sm:px-6">
             <h2 className="display text-3xl">My RSVPs</h2>
             <div className="mt-6 space-y-3">
-              {goingRsvps.map((r) => (
+              {goingRsvps.map((r: any) => (
                 <Link key={r.id} href={`/events/${r.event_slug}`} className="block border border-line bg-cream px-5 py-4 hover:border-brand transition-colors">
                   <p className="text-[14px] font-bold">{r.event_slug}</p>
                   <p className="mono text-[12px] text-ink/50">Going</p>
@@ -110,26 +112,12 @@ export default async function DashboardPage() {
       <section className="border-b border-line">
         <div className="mx-auto w-full max-w-4xl px-4 py-16 sm:px-6">
           <h2 className="display text-3xl">Election status</h2>
-          {myNomination ? (
-            <div className="mt-4 border border-line bg-cream px-5 py-4">
-              <div className="flex items-center gap-2">
-                <p className="text-[14px] font-bold">{myNomination.position}</p>
-                <span className={`inline-flex border px-1.5 py-0.5 text-[9px] font-extrabold uppercase tracking-[0.12em] ${
-                  myNomination.status === "approved" ? "border-term/40 bg-term/10 text-term" :
-                  myNomination.status === "rejected" ? "border-brand/40 bg-brand/10 text-brand-text" :
-                  "border-ink/20 bg-ink/5 text-ink/60"
-                }`}>{myNomination.status}</span>
-              </div>
-              <p className="mt-1 text-[13px] text-ink/60">{myNomination.platform}</p>
-            </div>
-          ) : (
-            <div className="mt-4 border border-dashed border-line p-6 text-center">
-              <p className="text-[14px] text-ink/60">You have not been nominated yet.</p>
-              <Link href="/election" className="press mt-4 inline-flex border border-line px-4 py-2 text-[12px] font-extrabold uppercase tracking-[0.12em] text-ink hover:border-ink hover:text-brand transition-colors">
-                Nominate yourself
-              </Link>
-            </div>
-          )}
+          <div className="mt-4 border border-dashed border-line p-6 text-center">
+            <p className="text-[14px] text-ink/60">You have not been nominated yet.</p>
+            <Link href="/election" className="press mt-4 inline-flex border border-line px-4 py-2 text-[12px] font-extrabold uppercase tracking-[0.12em] text-ink hover:border-ink hover:text-brand transition-colors">
+              Nominate yourself
+            </Link>
+          </div>
         </div>
       </section>
 

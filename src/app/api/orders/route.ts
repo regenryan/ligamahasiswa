@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
-import { readSheet } from "@/lib/sheets-db";
 import { getSession } from "@/lib/session";
-import { findRow } from "@/lib/sheets-db";
+import { db } from "@/lib/db";
+import { user, order } from "@/lib/schema";
+import { eq } from "drizzle-orm";
 
 export async function GET() {
   try {
@@ -10,16 +11,15 @@ export async function GET() {
       return NextResponse.json({ ok: false, error: "Login required" }, { status: 401 });
     }
 
-    const user = await findRow("Users", "id", session.userId);
-    const email = user?.email ?? "";
+    const u = await db.select().from(user).where(eq(user.userId, session.userId));
+    const email = u[0]?.email ?? "";
 
     if (!email) {
       return NextResponse.json({ ok: true, orders: [] });
     }
 
-    const rows = await readSheet("Orders");
-    const filtered = rows.filter((r) => r.buyer_email === email);
-    const sorted = filtered.sort((a, b) => (b.created_at ?? "").localeCompare(a.created_at ?? ""));
+    const rows = await db.select().from(order).where(eq(order.email, email));
+    const sorted = rows.sort((a, b) => (String(b.createdAt) ?? "").localeCompare(String(a.createdAt) ?? ""));
 
     return NextResponse.json({ ok: true, orders: sorted });
   } catch {

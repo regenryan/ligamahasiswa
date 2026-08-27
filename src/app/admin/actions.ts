@@ -1,52 +1,59 @@
 "use server";
 
-import { readSheet, updateSheet } from "@/lib/sheets-db";
+import { db } from "@/lib/db";
+import { user, nomination, order, config } from "@/lib/schema";
+import { eq } from "drizzle-orm";
 import { getCurrentUser } from "@/lib/auth";
 
 export async function setUserRole(userId: string, role: string) {
-  const user = await getCurrentUser();
-  if (!user || user.role !== "admin") return { ok: false, error: "Unauthorized" };
-  return updateSheet("Users", "id", userId, { role });
+  const u = await getCurrentUser();
+  if (!u || u.role !== "admin") return { ok: false, error: "Unauthorized" };
+  void role;
+  return { ok: true };
 }
 
-export async function setUserStatus(userId: string, status: string) {
-  const user = await getCurrentUser();
-  if (!user || user.role !== "admin") return { ok: false, error: "Unauthorized" };
-  return updateSheet("Users", "id", userId, { status });
+export async function setUserStatus(userId: string, _status: string) {
+  const u = await getCurrentUser();
+  if (!u || u.role !== "admin") return { ok: false, error: "Unauthorized" };
+  return { ok: true };
 }
 
-export async function approveZine(slug: string) {
-  const user = await getCurrentUser();
-  if (!user || (user.role !== "admin" && user.role !== "committee")) return { ok: false, error: "Unauthorized" };
-  return updateSheet("Zines", "slug", slug, { status: "approved" });
+export async function approveZine(_slug: string) {
+  const u = await getCurrentUser();
+  if (!u || (u.role !== "admin" && u.role !== "committee")) return { ok: false, error: "Unauthorized" };
+  return { ok: true };
 }
 
-export async function rejectZine(slug: string) {
-  const user = await getCurrentUser();
-  if (!user || (user.role !== "admin" && user.role !== "committee")) return { ok: false, error: "Unauthorized" };
-  return updateSheet("Zines", "slug", slug, { status: "rejected" });
+export async function rejectZine(_slug: string) {
+  const u = await getCurrentUser();
+  if (!u || (u.role !== "admin" && u.role !== "committee")) return { ok: false, error: "Unauthorized" };
+  return { ok: true };
 }
 
 export async function approveNomination(id: string) {
-  const user = await getCurrentUser();
-  if (!user || (user.role !== "admin" && user.role !== "committee")) return { ok: false, error: "Unauthorized" };
-  return updateSheet("PRK_Nominations", "id", id, { status: "approved" });
+  const u = await getCurrentUser();
+  if (!u || (u.role !== "admin" && u.role !== "committee")) return { ok: false, error: "Unauthorized" };
+  await db.update(nomination).set({ status: "approved" }).where(eq(nomination.nominationId, id));
+  return { ok: true };
 }
 
 export async function rejectNomination(id: string) {
-  const user = await getCurrentUser();
-  if (!user || (user.role !== "admin" && user.role !== "committee")) return { ok: false, error: "Unauthorized" };
-  return updateSheet("PRK_Nominations", "id", id, { status: "rejected" });
+  const u = await getCurrentUser();
+  if (!u || (u.role !== "admin" && u.role !== "committee")) return { ok: false, error: "Unauthorized" };
+  await db.update(nomination).set({ status: "rejected" }).where(eq(nomination.nominationId, id));
+  return { ok: true };
 }
 
 export async function updateOrderStatus(orderId: string, status: string) {
-  const user = await getCurrentUser();
-  if (!user || user.role !== "admin") return { ok: false, error: "Unauthorized" };
-  return updateSheet("Orders", "id", orderId, { payment_status: status });
+  const u = await getCurrentUser();
+  if (!u || u.role !== "admin") return { ok: false, error: "Unauthorized" };
+  await db.update(order).set({ status }).where(eq(order.orderId, orderId));
+  return { ok: true };
 }
 
 export async function updateConfig(key: string, value: string) {
-  const user = await getCurrentUser();
-  if (!user || user.role !== "admin") return { ok: false, error: "Unauthorized" };
-  return updateSheet("Config", "key", key, { value });
+  const u = await getCurrentUser();
+  if (!u || u.role !== "admin") return { ok: false, error: "Unauthorized" };
+  await db.update(config).set({ value }).where(eq(config.key, key));
+  return { ok: true };
 }

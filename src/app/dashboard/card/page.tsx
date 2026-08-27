@@ -2,25 +2,28 @@ import { Shell } from "@/components/shells";
 import { PageHead, SectionHead, Btn } from "@/components/sections/head";
 import { JoinBand } from "@/components/sections/strips";
 import { getCurrentUser } from "@/lib/auth";
-import { findRow } from "@/lib/sheets-db";
+import { db } from "@/lib/db";
+import { eq } from "drizzle-orm";
+import { user } from "@/lib/schema";
 import Link from "next/link";
 import { MemberCardClient } from "./member-card-client";
 import { PerksGrid } from "./perks-grid";
 
 export default async function CardPage() {
-  const user = await getCurrentUser();
+  const currentUser = await getCurrentUser();
 
   let memberData = null;
-  if (user) {
-    const row = await findRow("Users", "id", user.id);
+  if (currentUser) {
+    const rows = await db.select().from(user).where(eq(user.userId, currentUser.id));
+    const row = rows[0] ?? null;
     if (row) {
       memberData = {
         name: row.name ?? "",
-        role: row.role ?? "user",
-        chapterSlug: row.chapter_slug ?? "",
-        memberId: row.member_id ?? "",
-        status: (row.status as string) ?? "pending",
-        createdAt: row.created_at ?? "",
+        role: "user",
+        chapterSlug: "",
+        memberId: "",
+        status: "pending",
+        createdAt: row.createdAt ? String(row.createdAt) : "",
       };
     }
   }
@@ -40,7 +43,7 @@ export default async function CardPage() {
           >
             {"\u2190"} Back to dashboard
           </Link>
-          {user && memberData ? (
+          {currentUser && memberData ? (
             <MemberCardClient member={memberData} />
           ) : (
             <div className="mx-auto max-w-md text-center">

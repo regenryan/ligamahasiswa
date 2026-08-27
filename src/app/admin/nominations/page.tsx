@@ -1,7 +1,8 @@
 import { Shell } from "@/components/shells";
 import { PageHead } from "@/components/sections";
 import { getCurrentUser } from "@/lib/auth";
-import { readSheet } from "@/lib/sheets-db";
+import { db } from "@/lib/db";
+import { nomination } from "@/lib/schema";
 import Link from "next/link";
 import AdminNominationsClient from "./client";
 
@@ -20,6 +21,15 @@ export default async function AdminNominationsPage() {
     );
   }
 
-  const nominations = await readSheet("PRK_Nominations").catch(() => []);
+  const rows = await db.select().from(nomination);
+  const nominations = rows.map((r) => ({
+    id: r.nominationId,
+    name: r.name ?? "",
+    chapter: r.chapterId ?? "",
+    status: r.status ?? "pending",
+    position: r.nominationId,
+    created_at: r.createdAt ? String(r.createdAt) : "",
+    justification: r.justification ?? "",
+  }));
   return <AdminNominationsClient nominations={nominations} />;
 }

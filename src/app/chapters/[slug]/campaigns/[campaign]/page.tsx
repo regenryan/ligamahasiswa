@@ -1,54 +1,17 @@
 import { Suspense } from "react";
 import { Shell } from "@/components/shells";
 import { PageHead, SectionHead, JoinBand, NewsletterBand } from "@/components/sections";
-import { readSheet } from "@/lib/sheets-db";
+import { dbGetCampaignBySlug } from "@/lib/queries";
+import type { CampaignData } from "@/lib/queries";
 import { chapterLabel } from "@/lib/chapters";
-import { campaigns as mockCampaigns } from "@/lib/mock";
 import Link from "next/link";
 import { ShareKit } from "@/components/ShareKit";
 import { SkeletonDetail, SkeletonMediaGrid } from "@/components/skeleton";
 
 const DIR = 27;
 
-type CampaignData = {
-  slug: string;
-  title: string;
-  summary: string;
-  demands: string[];
-  memorandum: string;
-  status: string;
-  chapterSlug: string;
-};
-
-async function getCampaign(slug: string, campaignSlug: string): Promise<CampaignData | null> {
-  try {
-    const rows = await readSheet("Campaigns", { chapter_slug: slug, slug: campaignSlug });
-    if (rows.length > 0) {
-      const r = rows[0];
-      return {
-        slug: r.slug ?? campaignSlug,
-        title: r.title ?? "",
-        summary: r.summary ?? r.description ?? "",
-        demands: r.demands ? JSON.parse(r.demands) : [],
-        memorandum: r.memorandum ?? "",
-        status: r.status ?? "Active",
-        chapterSlug: r.chapter_slug ?? slug,
-      };
-    }
-  } catch {}
-  const mock = mockCampaigns.find((c) => c.slug === campaignSlug && c.chapterSlug === slug);
-  if (mock) {
-    return {
-      slug: mock.slug,
-      title: mock.title,
-      summary: mock.summary,
-      demands: mock.demands,
-      memorandum: "",
-      status: mock.status,
-      chapterSlug: mock.chapterSlug,
-    };
-  }
-  return null;
+async function getCampaign(campaignSlug: string): Promise<CampaignData | null> {
+  return dbGetCampaignBySlug(campaignSlug);
 }
 
 type Post = { id: string; platform: string; caption: string; url: string };
@@ -58,72 +21,23 @@ type Podcast = { slug: string; title: string; date: string };
 type Article = { title: string; outlet: string; url: string };
 
 async function getPosts(chapterSlug: string): Promise<Post[]> {
-  try {
-    const rows = await readSheet("Social", { chapter_slug: chapterSlug });
-    return rows.map((r) => ({
-      id: r.id ?? `social-${r.url}`,
-      platform: (r.platform ?? "instagram").toLowerCase(),
-      caption: r.caption ?? "",
-      url: r.url ?? "#",
-    }));
-  } catch {
-    return [];
-  }
+  return [];
 }
 
 async function getZines(chapterSlug: string): Promise<Zine[]> {
-  try {
-    const rows = await readSheet("Zines", { chapter_slug: chapterSlug, status: "approved" });
-    return rows.map((r) => ({
-      slug: r.slug ?? "",
-      title: r.title ?? "",
-      excerpt: r.excerpt ?? (r.content ?? "").slice(0, 160),
-    }));
-  } catch {
-    return [];
-  }
+  return [];
 }
 
 async function getStatements(chapterSlug: string): Promise<Statement[]> {
-  try {
-    const rows = await readSheet("Statements", { chapter_slug: chapterSlug });
-    return rows.map((r) => ({
-      slug: r.slug ?? "",
-      title: r.title ?? "",
-      preview: (r.content ?? "").slice(0, 160),
-    }));
-  } catch {
-    return [];
-  }
+  return [];
 }
 
 async function getPodcasts(chapterSlug: string): Promise<Podcast[]> {
-  try {
-    const rows = await readSheet(
-      "Podcasts" as Parameters<typeof readSheet>[0],
-      { chapter_slug: chapterSlug },
-    );
-    return rows.map((r) => ({
-      slug: r.slug ?? "",
-      title: r.title ?? "",
-      date: r.date ?? "",
-    }));
-  } catch {
-    return [];
-  }
+  return [];
 }
 
 async function getArticles(chapterSlug: string): Promise<Article[]> {
-  try {
-    const rows = await readSheet("News", { chapter_slug: chapterSlug });
-    return rows.map((r) => ({
-      title: r.title ?? "",
-      outlet: r.outlet ?? "",
-      url: r.url ?? "#",
-    }));
-  } catch {
-    return [];
-  }
+  return [];
 }
 
 const CARD = "border border-line bg-cream p-5 hover:border-brand transition-colors";
@@ -160,7 +74,7 @@ async function CampaignContent({
   campaignSlug: string;
   typeFilter?: string;
 }) {
-  const campaign = await getCampaign(slug, campaignSlug);
+  const campaign = await getCampaign(campaignSlug);
 
   if (!campaign) {
     return (
@@ -182,7 +96,7 @@ async function CampaignContent({
 
   return (
     <>
-      <PageHead kicker={chapterLabel(slug)} title={campaign.title} sub={campaign.summary} />
+      <PageHead kicker={chapterLabel(slug)} title={campaign.name} sub={campaign.summary} />
 
       <section id="introduction" className="border-b border-line">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
@@ -192,9 +106,9 @@ async function CampaignContent({
           </p>
           <div className="mt-6 flex flex-wrap gap-2">
             <span className={`${BADGE} border-brand/40 bg-brand/10 text-brand-text`}>
-              {campaign.status}
+              Active
             </span>
-            <span className={TAG}>{chapterLabel(campaign.chapterSlug)}</span>
+            <span className={TAG}>{chapterLabel(slug)}</span>
           </div>
         </div>
       </section>
@@ -270,7 +184,7 @@ async function CampaignContent({
       <section className="border-b border-line">
         <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6">
           <ShareKit
-            title={campaign.title}
+            title={campaign.name}
             url={`https://ligamahasiswa.vercel.app/chapters/${slug}/campaigns/${campaignSlug}`}
           />
         </div>

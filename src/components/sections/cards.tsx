@@ -4,7 +4,13 @@ import Link from "next/link";
 import { StatusChip, Btn } from "@/components/sections/head";
 import { LikeButton, ShareButton } from "@/components/interactive";
 import { chapterLabel } from "@/lib/chapters";
-import type { Campaign, EventItem, MediaItem, Member, Product, ZinePost } from "@/lib/mock";
+
+type Campaign = { slug: string; chapterSlug: string; title: string; status: string; summary: string; demands: string[] };
+type EventItem = { slug: string; chapterSlug: string; title: string; date: string; time: string; place: string; type: "Forum" | "Assembly" | "Dialogue"; blurb: string };
+type MediaItem = { slug: string; outlet: string; title: string; date: string; kind: "Video" | "Podcast" | "Article"; blurb: string };
+type Member = { name: string; chapterSlug: string; role: string; blurb: string };
+type Product = { slug: string; chapterSlug: string; name: string; price: string; tag: string; memberOnly: boolean; preorder: boolean; deliveryEstimate: string };
+type ZinePost = { slug: string; author: string; chapterSlug: string; title: string; excerpt: string; likes: number };
 
 const FRAME = "border border-line bg-cream card-hover";
 

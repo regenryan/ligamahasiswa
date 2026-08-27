@@ -2,9 +2,8 @@ import Link from "next/link";
 import { Shell } from "@/components/shells";
 import { PageHead } from "@/components/sections/head";
 import { JoinBand, NewsletterBand } from "@/components/sections";
-import { readSheet } from "@/lib/sheets-db";
+import { dbGetCampaignBySlug } from "@/lib/queries";
 import { chapterLabel } from "@/lib/chapters";
-import { getCampaign } from "@/lib/mock";
 
 type CampaignInfo = {
   slug: string;
@@ -19,33 +18,18 @@ async function getChapterCampaign(
   campaignSlug: string,
 ): Promise<CampaignInfo | null> {
   try {
-    const rows = await readSheet("Campaigns", {
-      chapter_slug: chapterSlug,
-      campaign_slug: campaignSlug,
-    });
-    if (rows.length > 0) {
-      const r = rows[0];
+    const r = await dbGetCampaignBySlug(campaignSlug);
+    if (r) {
       return {
-        slug: r.slug ?? "",
-        title: r.title ?? "",
-        summary: r.summary ?? r.description ?? "",
-        status: r.status ?? "",
-        paymentUrl:
-          r.payment_url || r.donate_url || r.hitpay_url || null,
+        slug: r.slug,
+        title: r.name,
+        summary: r.summary,
+        status: "",
+        paymentUrl: null,
       };
     }
   } catch {
     // fall through
-  }
-  const mock = getCampaign(chapterSlug, campaignSlug);
-  if (mock && mock.slug === campaignSlug) {
-    return {
-      slug: mock.slug,
-      title: mock.title,
-      summary: mock.summary,
-      status: mock.status,
-      paymentUrl: null,
-    };
   }
   return null;
 }

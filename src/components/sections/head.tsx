@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { useCountdown, useNow, useNowDaysSince } from "@/components/clock";
-import { aukuStart, countdownTarget, type Campaign } from "@/lib/mock";
+
+const aukuStart = "1971-01-01";
+const countdownTarget = "2026-01-01";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -92,7 +94,7 @@ export function PageHead({
 
 export function Countdown({ label = "Next assembly" }: { label?: string }) {
   const now = useNow();
-  const c = useCountdown(countdownTarget, now);
+  const c = useCountdown(new Date(countdownTarget), now);
   const cells = [
     { v: c.days, l: "Days" },
     { v: c.hours, l: "Hours" },
@@ -115,7 +117,7 @@ export function Countdown({ label = "Next assembly" }: { label?: string }) {
 }
 
 export function AukuYears() {
-  const days = useNowDaysSince(aukuStart);
+  const days = useNowDaysSince(new Date(aukuStart));
   const years = days === null ? null : Math.floor(days / 365.25);
   return (
     <p className="mono text-[13px] uppercase tracking-[0.16em] text-ink/70">
@@ -124,7 +126,7 @@ export function AukuYears() {
   );
 }
 
-export function StatusChip({ status }: { status: Campaign["status"] }) {
+export function StatusChip({ status }: { status: string }) {
   const skin =
     status === "Active"
       ? "bg-brand/15 text-brand-text border-brand/40"

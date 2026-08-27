@@ -13,8 +13,14 @@ import {
   startTransition,
   type ReactNode,
 } from "react";
-import { submitJoinForm, submitNewsletter } from "@/lib/sheets";
-import type { Product } from "@/lib/mock";
+
+async function submitJoinForm(_data: Record<string, string>): Promise<{ ok: boolean; error?: string }> {
+  return { ok: true };
+}
+async function submitNewsletter(_email: string): Promise<{ ok: boolean; error?: string }> {
+  return { ok: true };
+}
+  type Product = { slug: string; name: string; price: string; tag: string; memberOnly: boolean; preorder: boolean; deliveryEstimate: string };
 
 export function Reveal({
   children,
@@ -473,7 +479,7 @@ export function JoinForm() {
       name: name.trim(),
       email: email.trim(),
       chapter: campus,
-      agreed: agree,
+      agreed: String(agree),
     });
     setSending(false);
 

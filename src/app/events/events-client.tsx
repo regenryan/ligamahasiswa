@@ -3,7 +3,7 @@
 import { useState, useCallback } from "react";
 import Link from "next/link";
 import { CHAPTERS, chapterLabel } from "@/lib/chapters";
-import type { EventItem } from "@/lib/mock";
+import type { EventData } from "@/lib/queries";
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const FILTER_BTN =
@@ -15,7 +15,7 @@ function formatDate(date: string): string {
   return `${String(day).padStart(2, "0")} ${MONTHS[mon - 1]} ${date.slice(0, 4)}`;
 }
 
-function EventCard({ e, hrefOverride }: { e: EventItem; hrefOverride?: string }) {
+function EventCard({ e, hrefOverride }: { e: EventData; hrefOverride?: string }) {
   const href = hrefOverride ?? `/chapters/${e.chapterSlug}/events/${e.slug}`;
   return (
     <Link
@@ -30,15 +30,15 @@ function EventCard({ e, hrefOverride }: { e: EventItem; hrefOverride?: string })
           {formatDate(e.date)}
         </span>
       </div>
-      <h3 className="mt-3 display text-xl">{e.title}</h3>
+      <h3 className="mt-3 display text-xl">{e.name}</h3>
       <p className="mono mt-2 text-[11px] uppercase tracking-[0.14em] text-ink/50">
-        {e.place}
+        {e.location}
       </p>
     </Link>
   );
 }
 
-export function EventsClient({ events }: { events: EventItem[] }) {
+export function EventsClient({ events }: { events: EventData[] }) {
   const [chapter, setChapter] = useState<string>("");
 
   const sorted = [...events].sort((a, b) => a.date.localeCompare(b.date));

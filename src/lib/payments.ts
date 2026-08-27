@@ -1,5 +1,6 @@
 import { config } from "@/lib/config";
-import type { Product } from "@/lib/mock";
+
+type Product = { slug: string; name: string; price: string };
 
 const HITPAY_API = "https://api.hit-pay.com/v1";
 

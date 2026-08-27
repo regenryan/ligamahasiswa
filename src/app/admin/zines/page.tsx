@@ -1,7 +1,6 @@
 import { Shell } from "@/components/shells";
 import { PageHead } from "@/components/sections";
 import { getCurrentUser } from "@/lib/auth";
-import { readSheet } from "@/lib/sheets-db";
 import Link from "next/link";
 import AdminZinesClient from "./client";
 
@@ -20,11 +19,7 @@ export default async function AdminZinesPage() {
     );
   }
 
-  const isAdmin = user.role === "admin";
-
-  const zines = isAdmin
-    ? await readSheet("Zines").catch(() => [])
-    : await readSheet("Zines", { chapter_slug: user.chapterSlug }).catch(() => []);
+  const zines: never[] = [];
 
   return <AdminZinesClient zines={zines} />;
 }

@@ -6,7 +6,8 @@ import { Reveal, FilterPills, useCart } from "@/components/interactive";
 import { useAuth } from "@/components/auth-provider";
 import { Marquee } from "@/components/Marquee";
 import { ShopCard } from "@/components/sections";
-import type { Product } from "@/lib/mock";
+
+type Product = { slug: string; chapterSlug: string; name: string; price: string; tag: string; memberOnly: boolean; preorder: boolean; deliveryEstimate: string };
 
 type Catalog = "all" | "member" | "limited";
 type ShopFilter = "All" | "Member exclusive";

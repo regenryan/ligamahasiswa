@@ -1,38 +1,43 @@
 import { Suspense } from "react";
 import { Shell } from "@/components/shells";
 import { PageHead, JoinBand } from "@/components/sections";
-import { readSheet } from "@/lib/sheets-db";
-import { events as mockEvents, chapters as mockChapters } from "@/lib/mock";
-import type { EventItem } from "@/lib/mock";
+import { db } from "@/lib/db";
+import * as s from "@/lib/schema";
+import { getChapter, getChapterSync, CHAPTERS } from "@/lib/chapters";
+import { and, eq } from "drizzle-orm";
+import type { EventData } from "@/lib/queries";
 import Link from "next/link";
 import { RsvpButton } from "@/components/RsvpButton";
 import { ShareKit } from "@/components/ShareKit";
 import { SkeletonDetail } from "@/components/skeleton";
 
-async function getEvent(chapterSlug: string, eventSlug: string): Promise<EventItem | null> {
-  try {
-    const rows = await readSheet("Events", { slug: eventSlug, chapter_slug: chapterSlug });
-    if (rows.length > 0) {
-      const r = rows[0];
-      return {
-        slug: r.slug ?? "",
-        chapterSlug: r.chapter_slug ?? "",
-        title: r.title ?? "",
-        date: r.date ?? "",
-        time: r.time ?? "",
-        place: r.place ?? r.location ?? "",
-        type: (r.type as EventItem["type"]) ?? "Forum",
-        blurb: r.blurb ?? r.description ?? "",
-      };
-    }
-  } catch {
-    // fall through
-  }
-  return mockEvents.find((e) => e.slug === eventSlug && e.chapterSlug === chapterSlug) ?? null;
+async function getEvent(chapterSlug: string, eventSlug: string): Promise<EventData | null> {
+  const chapter = await getChapter(chapterSlug);
+  if (!chapter) return null;
+  const rows = await db
+    .select()
+    .from(s.event)
+    .where(and(eq(s.event.chapterId, chapter.chapterId), eq(s.event.slug, eventSlug)));
+  const r = rows[0];
+  if (!r) return null;
+  return {
+    id: r.eventId,
+    chapterSlug,
+    chapterId: r.chapterId,
+    slug: r.slug,
+    name: r.name,
+    description: r.description ?? "",
+    location: r.location ?? "",
+    date: r.date ?? "",
+    time: r.time ?? "",
+    type: r.type ?? "",
+    createdAt: r.createdAt ? String(r.createdAt) : "",
+    updatedAt: r.updatedAt ? String(r.updatedAt) : "",
+  };
 }
 
 async function ChapterEventContent({ slug, eventSlug }: { slug: string; eventSlug: string }) {
-  const ch = mockChapters.find((c) => c.slug === slug) ?? mockChapters[0];
+  const ch = getChapterSync(slug) ?? CHAPTERS[0];
   const event = await getEvent(slug, eventSlug);
 
   if (!event) {
@@ -54,9 +59,9 @@ async function ChapterEventContent({ slug, eventSlug }: { slug: string; eventSlu
   return (
     <>
       <PageHead
-        kicker={`${ch.name} / Events`}
-        title={event.title}
-        sub={event.blurb}
+        kicker={`${ch.label} / Events`}
+        title={event.name}
+        sub={event.description}
       />
       <section className="border-b border-line">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
@@ -65,7 +70,7 @@ async function ChapterEventContent({ slug, eventSlug }: { slug: string; eventSlu
           </Link>
           <div className="grid gap-8 md:grid-cols-3">
             <div className="md:col-span-2">
-              <p className="text-[15px] leading-relaxed text-ink/70">{event.blurb}</p>
+              <p className="text-[15px] leading-relaxed text-ink/70">{event.description}</p>
             </div>
             <div className="border border-line bg-cream p-5">
               <div className="space-y-4">
@@ -79,7 +84,7 @@ async function ChapterEventContent({ slug, eventSlug }: { slug: string; eventSlu
                 </div>
                 <div>
                   <p className="text-[11px] uppercase text-ink/40">Location</p>
-                  <p className="text-[14px]">{event.place}</p>
+                  <p className="text-[14px]">{event.location}</p>
                 </div>
                 <div>
                   <p className="text-[11px] uppercase text-ink/40">Type</p>
@@ -90,7 +95,7 @@ async function ChapterEventContent({ slug, eventSlug }: { slug: string; eventSlu
             </div>
           </div>
           <div className="mt-8">
-            <ShareKit title={event.title} url={`https://ligamahasiswa.vercel.app/chapters/${slug}/events/${eventSlug}`} />
+            <ShareKit title={event.name} url={`https://ligamahasiswa.vercel.app/chapters/${slug}/events/${eventSlug}`} />
           </div>
         </div>
       </section>
@@ -122,7 +127,7 @@ export default async function ChapterEventDetailPage({
   params: Promise<{ slug: string; event: string }>;
 }) {
   const { slug, event: eventSlug } = await params;
-  const ch = mockChapters.find((c) => c.slug === slug) ?? mockChapters[0];
+  const ch = getChapterSync(slug) ?? CHAPTERS[0];
 
   return (
     <Shell dir={27}>

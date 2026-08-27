@@ -1,7 +1,8 @@
 "use client";
 
 import { useCart } from "@/components/interactive";
-import type { Product } from "@/lib/mock";
+
+type Product = { slug: string; chapterSlug: string; name: string; price: string; tag: string; memberOnly: boolean; preorder: boolean; deliveryEstimate: string };
 
 export function ProductDetailClient({ product }: { product: Product }) {
   const { add, items } = useCart();

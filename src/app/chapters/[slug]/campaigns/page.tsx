@@ -1,31 +1,20 @@
 import { Shell } from "@/components/shells";
-import { PageHead, SectionHead, StatusChip } from "@/components/sections/head";
-import { readSheet } from "@/lib/sheets-db";
-import { campaigns as mockCampaigns } from "@/lib/mock";
-import type { Campaign } from "@/lib/mock";
-import { chapters as mockChapters } from "@/lib/mock";
+import { PageHead } from "@/components/sections/head";
+import { getChapter, CHAPTERS } from "@/lib/chapters";
+import { dbGetCampaignsByChapter } from "@/lib/queries";
+import type { CampaignData } from "@/lib/queries";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-async function getChapterCampaigns(slug: string): Promise<Campaign[]> {
-  try {
-    const rows = await readSheet("Campaigns", { chapter_slug: slug });
-    if (rows.length === 0) {
-      return mockCampaigns.filter((c) => c.chapterSlug === slug);
-    }
-    return rows.map((r) => ({
-      slug: r.slug ?? "",
-      chapterSlug: r.chapter_slug ?? "",
-      title: r.title ?? "",
-      status: (r.status as Campaign["status"]) ?? "Active",
-      summary: r.summary ?? r.description ?? "",
-      demands: r.demands ? JSON.parse(r.demands) : [],
-      timeline: r.timeline ? JSON.parse(r.timeline) : [],
-      hasTicker: r.has_ticker === "true",
-    }));
-  } catch {
-    return mockCampaigns.filter((c) => c.chapterSlug === slug);
-  }
+async function getChapterCampaigns(slug: string): Promise<CampaignData[]> {
+  const chapterId = await getChapterId(slug);
+  if (!chapterId) return [];
+  return dbGetCampaignsByChapter(chapterId);
+}
+
+async function getChapterId(slug: string): Promise<string | null> {
+  const chapter = await getChapter(slug);
+  return chapter?.chapterId ?? null;
 }
 
 export default async function ChapterCampaignsPage({
@@ -34,14 +23,14 @@ export default async function ChapterCampaignsPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const ch = mockChapters.find((c) => c.slug === slug);
+  const ch = CHAPTERS.find((c) => c.slug === slug);
   if (!ch) notFound();
   const campaigns = await getChapterCampaigns(slug);
 
   return (
     <Shell dir={27}>
       <PageHead
-        kicker={ch.name}
+        kicker={ch.label}
         title="Campaigns"
         sub={`All campaigns run by the ${ch.short} chapter.`}
       />
@@ -62,11 +51,13 @@ export default async function ChapterCampaignsPage({
               {campaigns.map((c) => (
                 <Link
                   key={c.slug}
-                  href={`/chapters/${c.chapterSlug}/campaigns/${c.slug}`}
+                  href={`/chapters/${slug}/campaigns/${c.slug}`}
                   className="border border-line bg-cream p-6 hover:border-brand transition-colors"
                 >
-                  <StatusChip status={c.status} />
-                  <h3 className="mt-3 display text-xl">{c.title}</h3>
+                  <span className="inline-flex border border-brand/40 bg-brand/10 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-[0.12em] text-brand-text">
+                    Active
+                  </span>
+                  <h3 className="mt-3 display text-xl">{c.name}</h3>
                   <p className="mt-2 text-[14px] text-ink/70 line-clamp-3">{c.summary}</p>
                 </Link>
               ))}

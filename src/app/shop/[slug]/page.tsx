@@ -4,35 +4,42 @@ import { notFound } from "next/navigation";
 import { Shell } from "@/components/shells";
 import { PageHead } from "@/components/sections";
 import { CartProvider } from "@/components/interactive";
-import { readSheet } from "@/lib/sheets-db";
-import { products as mockProducts } from "@/lib/mock";
-import type { Product } from "@/lib/mock";
+import { dbGetProductBySlug } from "@/lib/queries";
 import { ProductDetailClient } from "./product-detail-client";
 import { SkeletonDetail } from "@/components/skeleton";
 
+type ShopProduct = {
+  slug: string;
+  chapterSlug: string;
+  name: string;
+  price: string;
+  tag: string;
+  memberOnly: boolean;
+  preorder: boolean;
+  deliveryEstimate: string;
+};
+
 const DIR = 27;
 
-async function getProduct(slug: string): Promise<Product | null> {
+async function getProduct(slug: string): Promise<ShopProduct | null> {
   try {
-    const rows = await readSheet("Products", { slug });
-    if (rows.length > 0) {
-      const r = rows[0];
+    const r = await dbGetProductBySlug(slug);
+    if (r) {
       return {
-        slug: r.slug ?? slug,
-        chapterSlug: r.chapter_slug ?? "",
-        name: r.name ?? "",
-        price: r.price ?? "",
-        tag: r.tag ?? "",
-        memberOnly: r.member_only === "true",
-        preorder: r.preorder === "true",
-        deliveryEstimate: r.delivery_estimate ?? "",
+        slug: r.slug,
+        chapterSlug: r.chapterSlug,
+        name: r.name,
+        price: r.price,
+        tag: r.type,
+        memberOnly: false,
+        preorder: false,
+        deliveryEstimate: "",
       };
     }
   } catch {
     // fall through
   }
-  const mock = mockProducts.find((p) => p.slug === slug);
-  return mock ?? null;
+  return null;
 }
 
 async function ProductContent({ slug }: { slug: string }) {

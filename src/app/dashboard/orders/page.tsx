@@ -2,7 +2,9 @@ import Link from "next/link";
 import { Shell } from "@/components/shells";
 import { PageHead, Btn } from "@/components/sections";
 import { requireAuth } from "@/lib/auth";
-import { readSheet } from "@/lib/sheets-db";
+import { db } from "@/lib/db";
+import { eq } from "drizzle-orm";
+import { order } from "@/lib/schema";
 
 const DIR = 27;
 
@@ -25,11 +27,10 @@ export default async function OrderHistoryPage() {
   }
 
   const email = user.email ?? "";
-  const orders = email
-    ? (await readSheet("Orders", { buyer_email: email })).sort(
-        (a, b) => (b.created_at ?? "").localeCompare(a.created_at ?? ""),
-      )
+  const rows = email
+    ? await db.select().from(order).where(eq(order.email, email))
     : [];
+  const orders = rows.sort((a, b) => String(b.createdAt ?? "").localeCompare(String(a.createdAt ?? "")));
 
   const statusColors: Record<string, string> = {
     completed: "bg-term/20 text-term",
@@ -53,21 +54,21 @@ export default async function OrderHistoryPage() {
             </div>
           ) : (
             <div className="space-y-3">
-              {orders.map((order) => (
+              {orders.map((o) => (
                 <div
-                  key={order.id}
+                  key={o.orderId}
                   className="border border-line bg-cream p-4 sm:flex sm:items-center sm:justify-between"
                 >
                   <div>
                     <p className="mono text-[12px] text-ink/50">
-                      {order.id}
+                      {o.orderId}
                     </p>
                     <p className="mt-1 text-[14px] font-bold">
-                      {order.items || "Shop order"}
+                      {o.method || "Shop order"}
                     </p>
                     <p className="mono text-[12px] text-ink/40">
-                      {order.created_at
-                        ? new Date(order.created_at).toLocaleDateString("en-MY", {
+                      {o.createdAt
+                        ? new Date(o.createdAt).toLocaleDateString("en-MY", {
                             year: "numeric",
                             month: "short",
                             day: "numeric",
@@ -78,12 +79,12 @@ export default async function OrderHistoryPage() {
                   <div className="mt-3 flex items-center gap-4 sm:mt-0">
                     <span
                       className={`mono text-[11px] uppercase tracking-[0.12em] px-2 py-1 ${
-                        statusColors[order.payment_status ?? "pending"] ?? statusColors.pending
+                        statusColors[o.status ?? "pending"] ?? statusColors.pending
                       }`}
                     >
-                      {order.payment_status ?? "pending"}
+                      {o.status ?? "pending"}
                     </span>
-                    <span className="display text-lg">{order.amount} {order.currency}</span>
+                    <span className="display text-lg">{o.total} {o.currency}</span>
                   </div>
                 </div>
               ))}

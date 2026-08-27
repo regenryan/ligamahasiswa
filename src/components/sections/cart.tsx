@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { Btn } from "@/components/sections/head";
 import { useCart } from "@/components/interactive";
-import type { Product } from "@/lib/mock";
+
+type Product = { slug: string; name: string; price: string; tag: string; memberOnly: boolean; preorder: boolean; deliveryEstimate: string };
 
 export function AddToCart({ product }: { product: Product }) {
   const { add } = useCart();

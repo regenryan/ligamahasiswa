@@ -6,7 +6,23 @@ import { CartDrawerSlot } from "@/components/sections/cart";
 import { Marquee } from "@/components/Marquee";
 import { Reveal, NewsletterForm, JoinForm, useCart } from "@/components/interactive";
 import { useAuth } from "@/components/auth-provider";
-import { mediaItems, products as allProducts, stories, allies, campaigns as allCampaigns, type Product, type Campaign } from "@/lib/mock";
+
+type Product = { slug: string; chapterSlug: string; name: string; price: string; tag: string; memberOnly: boolean; preorder: boolean; deliveryEstimate: string };
+type Campaign = { slug: string; chapterSlug: string; title: string; status: string; summary: string; demands: string[] };
+
+const mediaItems: { slug: string; outlet: string }[] = [];
+const allProducts: Product[] = [];
+const allCampaigns: Campaign[] = [];
+
+const stories = [
+  { name: "Afiqah", text: "I joined because I was tired of reading about problems and doing nothing. Now I organize assemblies." },
+  { name: "Harris", text: "The movement gave me something uni never did — a sense that my voice actually matters." },
+  { name: "Suriya", text: "We are not waiting for permission. We are building the structure we wish existed." },
+];
+
+const allies = [
+  "UM", "UTM", "USM", "UniSZA", "SPARC UTeM", "UKM", "UPM", "UKM",
+];
 
 export function Evidence() {
   return (

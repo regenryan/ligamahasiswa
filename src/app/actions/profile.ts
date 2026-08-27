@@ -1,7 +1,9 @@
 "use server";
 
 import { getSession } from "@/lib/session";
-import { updateSheet } from "@/lib/sheets-db";
+import { db } from "@/lib/db";
+import { user } from "@/lib/schema";
+import { eq } from "drizzle-orm";
 
 export type ProfileState = {
   ok: boolean;
@@ -34,15 +36,7 @@ export async function updateProfile(
     return { ok: false, error: "Invalid chapter." };
   }
 
-  const result = await updateSheet("Users", "id", session.userId, {
-    name,
-    chapter_slug: chapter,
-    phone,
-  });
-
-  if (!result.ok) {
-    return { ok: false, error: result.error ?? "Update failed. Try again." };
-  }
+  await db.update(user).set({ name, phone }).where(eq(user.userId, session.userId));
 
   return { ok: true };
 }

@@ -1,13 +1,14 @@
 import { Shell } from "@/components/shells";
 import { PageHead } from "@/components/sections";
 import { getCurrentUser } from "@/lib/auth";
-import { readSheet } from "@/lib/sheets-db";
+import { db } from "@/lib/db";
+import { user } from "@/lib/schema";
 import Link from "next/link";
 import AdminUsersClient from "./client";
 
 export default async function AdminUsersPage() {
-  const user = await getCurrentUser();
-  if (!user || user.role !== "admin") {
+  const currentUser = await getCurrentUser();
+  if (!currentUser || currentUser.role !== "admin") {
     return (
       <Shell dir={27}>
         <PageHead kicker="Admin" title="Access denied" />
@@ -20,7 +21,18 @@ export default async function AdminUsersPage() {
     );
   }
 
-  const users = await readSheet("Users").catch(() => []);
-
+  const rows = await db.select().from(user);
+  const users = rows.map((r) => ({
+    id: r.userId,
+    username: r.username,
+    name: r.name ?? "",
+    email: r.email,
+    phone: r.phone ?? "",
+    chapter: "",
+    role: "user",
+    status: "active",
+    member_id: "",
+    created_at: r.createdAt ? String(r.createdAt) : "",
+  }));
   return <AdminUsersClient users={users} />;
 }

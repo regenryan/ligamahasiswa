@@ -1,7 +1,8 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { writeSheet } from "@/lib/sheets-db";
+import { db } from "@/lib/db";
+import { nomination } from "@/lib/schema";
 import { getSession } from "@/lib/session";
 
 export type PrkState = { error?: string } | undefined;
@@ -29,21 +30,14 @@ export async function submitNomination(
 
   const id = `prk_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`;
 
-  const result = await writeSheet("PRK_Nominations", {
-    id,
+  await db.insert(nomination).values({
+    nominationId: id,
     name,
-    user_id: session.userId,
-    chapter_slug: chapterSlug,
-    position,
-    platform: statement,
     email,
+    chapterId: chapterSlug,
+    justification: `${position}: ${statement}`,
     status: "pending",
-    created_at: new Date().toISOString(),
   });
-
-  if (!result.ok) {
-    return { error: result.error ?? "Nomination failed. Try again." };
-  }
 
   redirect("/election?submitted=1");
 }

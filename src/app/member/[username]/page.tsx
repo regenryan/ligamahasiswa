@@ -2,22 +2,25 @@ import { Suspense } from "react";
 import { Shell } from "@/components/shells";
 import { PageHead } from "@/components/sections/head";
 import { Btn } from "@/components/sections/head";
-import { findRow } from "@/lib/sheets-db";
+import { db } from "@/lib/db";
+import { eq } from "drizzle-orm";
+import { user } from "@/lib/schema";
 import { chapterLabel } from "@/lib/chapters";
 import Link from "next/link";
 import { SkeletonDetail } from "@/components/skeleton";
 
 async function getMember(username: string) {
   try {
-    const row = await findRow("Users", "id", username);
-    if (!row || row.status !== "active") return null;
+    const rows = await db.select().from(user).where(eq(user.userId, username));
+    const row = rows[0] ?? null;
+    if (!row) return null;
     return {
-      id: row.id ?? "",
+      id: row.userId ?? "",
       name: row.name ?? "",
-      chapterSlug: row.chapter_slug ?? "",
-      role: row.role ?? "user",
-      memberId: row.member_id ?? "",
-      createdAt: row.created_at ?? "",
+      chapterSlug: "",
+      role: "user",
+      memberId: "",
+      createdAt: row.createdAt ? String(row.createdAt) : "",
     };
   } catch {
     return null;
@@ -101,7 +104,7 @@ async function MemberContent({ username }: { username: string }) {
                   <p className="text-[11px] uppercase text-ink/40">Joined</p>
                   <p className="text-[13px]">
                     {member.createdAt
-                      ? new Date(member.createdAt).toLocaleDateString("en-MY", {
+                      ? new Date(Number(member.createdAt)).toLocaleDateString("en-MY", {
                           year: "numeric",
                           month: "long",
                         })

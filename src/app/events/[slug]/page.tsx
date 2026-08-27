@@ -1,35 +1,43 @@
 import { Suspense } from "react";
 import { Shell } from "@/components/shells";
 import { PageHead, JoinBand } from "@/components/sections";
-import { readSheet } from "@/lib/sheets-db";
+import { dbGetEventBySlug } from "@/lib/queries";
 import { chapterLabel } from "@/lib/chapters";
-import { events as mockEvents } from "@/lib/mock";
-import type { EventItem } from "@/lib/mock";
 import Link from "next/link";
 import { RsvpButton } from "@/components/RsvpButton";
 import { ShareKit } from "@/components/ShareKit";
 import { SkeletonDetail } from "@/components/skeleton";
 
+type EventItem = {
+  slug: string;
+  chapterSlug: string;
+  title: string;
+  date: string;
+  time: string;
+  place: string;
+  type: "Forum" | "Assembly" | "Dialogue";
+  blurb: string;
+};
+
 async function getEvent(slug: string): Promise<EventItem | null> {
   try {
-    const rows = await readSheet("Events", { slug });
-    if (rows.length > 0) {
-      const r = rows[0];
+    const r = await dbGetEventBySlug(slug);
+    if (r) {
       return {
-        slug: r.slug ?? "",
-        chapterSlug: r.chapter_slug ?? "",
-        title: r.title ?? "",
-        date: r.date ?? "",
-        time: r.time ?? "",
-        place: r.place ?? r.location ?? "",
-        type: (r.type as EventItem["type"]) ?? "Forum",
-        blurb: r.blurb ?? r.description ?? "",
+        slug: r.slug,
+        chapterSlug: r.chapterSlug,
+        title: r.name,
+        date: r.date,
+        time: r.time,
+        place: r.location,
+        type: (r.type as EventItem["type"]) || "Forum",
+        blurb: r.description,
       };
     }
   } catch {
     // fall through
   }
-  return mockEvents.find((e) => e.slug === slug) ?? null;
+  return null;
 }
 
 async function EventContent({ slug }: { slug: string }) {

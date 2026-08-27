@@ -1,14 +1,6 @@
 import Link from "next/link";
-import { readSheet } from "@/lib/sheets-db";
+import { dbGetEvents, type EventData } from "@/lib/queries";
 import { chapterLabel } from "@/lib/chapters";
-
-type Event = {
-  slug: string;
-  title: string;
-  date: string;
-  chapterSlug: string;
-  place: string;
-};
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -21,23 +13,16 @@ function formatDate(date: string): { day: string; month: string; year: string } 
   };
 }
 
-async function getEvents(): Promise<Event[]> {
-  try {
-    const rows = await readSheet("Events");
-    return rows.slice(0, 4).map((r) => ({
-      slug: r.slug ?? "",
-      title: r.title ?? "",
-      date: r.date ?? "",
-      chapterSlug: r.chapter_slug ?? "ligamy",
-      place: r.place ?? r.location ?? "",
-    }));
-  } catch {
-    return [];
-  }
-}
-
 export async function EventsSection() {
-  const events = await getEvents();
+  const rows = await dbGetEvents();
+  const events = rows.slice(0, 4).map((r) => ({
+    slug: r.slug ?? "",
+    name: r.name ?? "",
+    date: r.date ?? "",
+    chapterSlug: "ligamy",
+    location: r.location ?? "",
+  }));
+
   const [featured, ...rest] = events;
   const upcoming = rest.slice(0, 3);
 
@@ -69,8 +54,8 @@ export async function EventsSection() {
                   <span className="mono text-[11px] uppercase tracking-[0.2em] text-ink/50">{formatDate(featured.date).month}</span>
                 </div>
                 <div>
-                  <h3 className="display text-2xl leading-none">{featured.title}</h3>
-                  {featured.place ? <p className="mono mt-2 text-[12px] text-ink/50">{featured.place}</p> : null}
+                  <h3 className="display text-2xl leading-none">{featured.name}</h3>
+                  {featured.location ? <p className="mono mt-2 text-[12px] text-ink/50">{featured.location}</p> : null}
                 </div>
               </div>
               <p className="mono mt-6 text-[12px] font-bold uppercase tracking-[0.12em] text-brand group-hover:underline group-hover:underline-offset-4">
@@ -92,8 +77,8 @@ export async function EventsSection() {
                       <span className="mono text-[9px] uppercase tracking-[0.16em] text-ink/50">{fd.month}</span>
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="display text-sm leading-tight truncate">{e.title}</p>
-                      <p className="mono mt-0.5 text-[10px] uppercase tracking-[0.14em] text-ink/40 truncate">{chapterLabel(e.chapterSlug)}{e.place ? ` · ${e.place}` : ""}</p>
+                      <p className="display text-sm leading-tight truncate">{e.name}</p>
+                      <p className="mono mt-0.5 text-[10px] uppercase tracking-[0.14em] text-ink/40 truncate">{chapterLabel(e.chapterSlug)}{e.location ? ` · ${e.location}` : ""}</p>
                     </div>
                   </Link>
                 );

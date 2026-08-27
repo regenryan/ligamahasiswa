@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
-import { readSheet } from "@/lib/sheets-db";
+import { db } from "@/lib/db";
+import { config } from "@/lib/schema";
 import { Shell } from "@/components/shells";
 import { PageHead } from "@/components/sections";
 import Link from "next/link";
@@ -14,8 +15,8 @@ export default async function AdminSettingsPage() {
   const user = await getCurrentUser();
   if (!user || user.role !== "admin") redirect("/dashboard");
 
-  const configs = await readSheet("Config").catch(() => []);
-  const configMap = Object.fromEntries(configs.map((c) => [c.key, c.value]));
+  const rows = await db.select().from(config);
+  const configMap = Object.fromEntries(rows.map((c) => [c.key, c.value]));
 
   return (
     <Shell dir={27}>

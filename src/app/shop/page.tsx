@@ -6,32 +6,38 @@ import {
   NewsletterBand,
 } from "@/components/sections";
 import { CartProvider } from "@/components/interactive";
-import { readSheet } from "@/lib/sheets-db";
-import { products as mockProducts } from "@/lib/mock";
-import type { Product } from "@/lib/mock";
+import { dbGetProducts } from "@/lib/queries";
 import { ShopGridClient } from "./shop-grid-client";
 import { SkeletonShopGrid } from "@/components/skeleton";
 
+type ShopProduct = {
+  slug: string;
+  chapterSlug: string;
+  name: string;
+  price: string;
+  tag: string;
+  memberOnly: boolean;
+  preorder: boolean;
+  deliveryEstimate: string;
+};
+
 const DIR = 27;
 
-async function getProducts(): Promise<Product[]> {
+async function getProducts(): Promise<ShopProduct[]> {
   try {
-    const rows = await readSheet("Products");
-    if (rows.length === 0) return mockProducts;
-    return rows
-      .filter((r) => r.status !== "archived")
-      .map((r) => ({
-        slug: r.slug ?? "",
-        chapterSlug: r.chapter_slug ?? "",
-        name: r.name ?? "",
-        price: r.price ?? "",
-        tag: r.tag ?? "",
-        memberOnly: r.member_only === "true",
-        preorder: r.preorder === "true",
-        deliveryEstimate: r.delivery_estimate ?? "",
-      }));
+    const rows = await dbGetProducts();
+    return rows.map((r) => ({
+      slug: r.slug,
+      chapterSlug: r.chapterSlug,
+      name: r.name,
+      price: r.price,
+      tag: r.type,
+      memberOnly: false,
+      preorder: false,
+      deliveryEstimate: "",
+    }));
   } catch {
-    return mockProducts;
+    return [];
   }
 }
 

@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Shell } from "@/components/shells";
 import { PageHead, Btn } from "@/components/sections";
 import { requireAuth, hasRole } from "@/lib/auth";
-import { readSheet } from "@/lib/sheets-db";
 import { CHAPTERS } from "@/lib/chapters";
 import { CommitteeForm } from "./committee-form";
 import { CommitteeActions } from "./committee-actions";
@@ -39,30 +38,15 @@ export default async function CommitteePage() {
   const visibleChapters = isAdmin ? chapters : chapters.filter((ch) => ch.slug === user.chapterSlug);
 
   for (const ch of visibleChapters) {
-    const [campRows, evtRows, stmtRows, commRows] = await Promise.all([
-      readSheet("Campaigns", { chapter_slug: ch.slug }).catch(() => []),
-      readSheet("Events", { chapter_slug: ch.slug }).catch(() => []),
-      readSheet("Statements", { chapter_slug: ch.slug }).catch(() => []),
-      readSheet("CommitteePositions", { chapter: ch.slug, status: "active" }).catch(() => []),
-    ]);
-    committees[ch.slug] = commRows.map((r) => ({
-      title: r.title ?? "",
-      name: r.name ?? "",
-      email: r.email ?? "",
-      id: r.id ?? "",
-      user_id: r.user_id ?? "",
-      status: r.status ?? "active",
-    }));
+    committees[ch.slug] = [];
     chapterStats[ch.slug] = {
-      campaigns: campRows.length,
-      events: evtRows.length,
-      statements: stmtRows.length,
+      campaigns: 0,
+      events: 0,
+      statements: 0,
     };
   }
 
-  const pendingApprovals = isCommitteeMember || isAdmin
-    ? await readSheet("CommitteeApprovals", { status: "pending" }).catch(() => [])
-    : [];
+  const pendingApprovals: never[] = [];
 
   return (
     <Shell dir={DIR}>
@@ -105,7 +89,7 @@ export default async function CommitteePage() {
               <p className="mt-2 text-[14px] text-ink/60">Resignation requests awaiting approval.</p>
               <div className="mt-4">
                 <CommitteeActions
-                  approvals={pendingApprovals.map((a) => ({
+                  approvals={pendingApprovals.map((a: any) => ({
                     id: a.id,
                     type: a.type,
                     requesterId: a.requester_id,

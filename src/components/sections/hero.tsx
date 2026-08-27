@@ -2,11 +2,11 @@
 
 import { Btn, AukuYears } from "@/components/sections/head";
 import { Reveal } from "@/components/interactive";
-import type { Campaign } from "@/lib/mock";
+import type { CampaignData } from "@/lib/queries";
 
 type HeroProps = {
   chapterName: string;
-  campaign: Campaign;
+  campaign: CampaignData | undefined;
 };
 
 export function Hero({ chapterName, campaign }: HeroProps) {
@@ -27,10 +27,10 @@ export function Hero({ chapterName, campaign }: HeroProps) {
         <div className="mt-14 flex flex-col items-center text-center">
           <Reveal delay={100}>
             <p className="mono text-[12px] uppercase tracking-[0.2em] accent">Abolish AUKU</p>
-            <h1 className="display mt-4 text-4xl leading-[0.88] sm:text-5xl lg:text-6xl xl:text-7xl">{campaign.title}</h1>
+            <h1 className="display mt-4 text-4xl leading-[0.88] sm:text-5xl lg:text-6xl xl:text-7xl">{campaign?.name}</h1>
           </Reveal>
           <Reveal delay={200}>
-            <p className="mt-8 max-w-xl text-[16px] leading-relaxed text-ink/70">{campaign.summary}</p>
+            <p className="mt-8 max-w-xl text-[16px] leading-relaxed text-ink/70">{campaign?.summary}</p>
           </Reveal>
           <Reveal delay={300}>
             <div className="mt-8 flex flex-wrap justify-center gap-3">

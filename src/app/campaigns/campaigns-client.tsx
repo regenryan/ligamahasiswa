@@ -3,12 +3,12 @@
 import { useState, useCallback } from "react";
 import Link from "next/link";
 import { CHAPTERS, chapterLabel } from "@/lib/chapters";
-import type { Campaign } from "@/lib/mock";
+import type { CampaignData } from "@/lib/queries";
 
 const FILTER_BTN =
   "press border px-3 py-1.5 text-[12px] font-bold uppercase tracking-[0.1em] transition-colors";
 
-function CampaignCard({ c, hrefOverride }: { c: Campaign; hrefOverride?: string }) {
+function CampaignCard({ c, hrefOverride }: { c: CampaignData; hrefOverride?: string }) {
   const href = hrefOverride ?? `/chapters/${c.chapterSlug}/campaigns/${c.slug}`;
   return (
     <Link
@@ -19,25 +19,17 @@ function CampaignCard({ c, hrefOverride }: { c: Campaign; hrefOverride?: string 
         <span className="border border-line px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-[0.12em] text-ink/60">
           {chapterLabel(c.chapterSlug)}
         </span>
-        <span className="mono text-[11px] uppercase tracking-[0.14em] text-ink/50">
-          {c.status}
-        </span>
       </div>
-      <h3 className="mt-3 display text-xl">{c.title}</h3>
+      <h3 className="mt-3 display text-xl">{c.name}</h3>
       <p className="mt-2 text-[13px] text-ink/60 line-clamp-2">{c.summary}</p>
-      {c.status === "Active" && (
-        <span className="mono mt-4 inline-block text-[12px] font-bold uppercase tracking-[0.12em] text-brand underline underline-offset-4">
-          Fundraise
-        </span>
-      )}
     </Link>
   );
 }
 
-export function CampaignsClient({ campaigns }: { campaigns: Campaign[] }) {
+export function CampaignsClient({ campaigns }: { campaigns: CampaignData[] }) {
   const [chapter, setChapter] = useState<string>("");
 
-  const fundraisers = campaigns.filter((c) => c.status === "Active").slice(0, 3);
+  const fundraisers = campaigns.slice(0, 3);
   const all = chapter
     ? campaigns.filter((c) => c.chapterSlug === chapter)
     : campaigns;

@@ -1,7 +1,8 @@
 import { Shell } from "@/components/shells";
 import { PageHead, Btn } from "@/components/sections";
 import { getCurrentUser } from "@/lib/auth";
-import { readSheet } from "@/lib/sheets-db";
+import { db } from "@/lib/db";
+import { order } from "@/lib/schema";
 import Link from "next/link";
 
 export default async function AdminOrdersPage() {
@@ -22,8 +23,8 @@ export default async function AdminOrdersPage() {
     );
   }
 
-  const orders = await readSheet("Orders").catch(() => []);
-  const sorted = orders.sort((a, b) => (b.created_at ?? "").localeCompare(a.created_at ?? ""));
+  const rows = await db.select().from(order);
+  const sorted = rows.sort((a, b) => (String(b.createdAt ?? "")).localeCompare(String(a.createdAt ?? "")));
 
   const statusColors: Record<string, string> = {
     completed: "bg-term/20 text-term",
@@ -46,17 +47,17 @@ export default async function AdminOrdersPage() {
           ) : (
             <div className="space-y-3">
               {sorted.map((o) => (
-                <div key={o.id} className="border border-line bg-cream p-4 sm:flex sm:items-center sm:justify-between">
+                <div key={o.orderId} className="border border-line bg-cream p-4 sm:flex sm:items-center sm:justify-between">
                   <div className="min-w-0">
-                    <p className="mono text-[12px] text-ink/50">{o.id}</p>
-                    <p className="mt-1 text-[14px] font-bold">{o.buyer_name || "Unknown"} / {o.buyer_email || "No email"}</p>
-                    <p className="mono text-[12px] text-ink/40">{o.items || "Shop order"} / {o.payment_method || "N/A"}</p>
+                    <p className="mono text-[12px] text-ink/50">{o.orderId}</p>
+                    <p className="mt-1 text-[14px] font-bold">{o.email || "No email"}</p>
+                    <p className="mono text-[12px] text-ink/40">{o.method || "N/A"}</p>
                   </div>
                   <div className="mt-3 flex items-center gap-4 sm:mt-0">
-                    <span className={`mono text-[11px] uppercase tracking-[0.12em] px-2 py-1 ${statusColors[o.payment_status ?? "pending"] ?? statusColors.pending}`}>
-                      {o.payment_status ?? "pending"}
+                    <span className={`mono text-[11px] uppercase tracking-[0.12em] px-2 py-1 ${statusColors[o.status ?? "pending"] ?? statusColors.pending}`}>
+                      {o.status ?? "pending"}
                     </span>
-                    <span className="display text-lg">{o.amount} {o.currency}</span>
+                    <span className="display text-lg">{o.total} {o.currency}</span>
                   </div>
                 </div>
               ))}

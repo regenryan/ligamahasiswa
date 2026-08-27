@@ -1,26 +1,6 @@
 import Link from "next/link";
-import { readSheet } from "@/lib/sheets-db";
+import { dbGetCampaigns, type CampaignData } from "@/lib/queries";
 import { chapterLabel } from "@/lib/chapters";
-import { campaigns as mockCampaigns, type Campaign } from "@/lib/mock";
-
-async function getCampaigns(): Promise<Campaign[]> {
-  try {
-    const rows = await readSheet("Campaigns");
-    if (rows.length === 0) return mockCampaigns;
-    return rows.map((r) => ({
-      slug: r.slug ?? "",
-      chapterSlug: r.chapter_slug ?? "",
-      title: r.title ?? "",
-      status: (r.status as Campaign["status"]) ?? "Active",
-      summary: r.summary ?? r.description ?? "",
-      demands: r.demands ? JSON.parse(r.demands) : [],
-      timeline: r.timeline ? JSON.parse(r.timeline) : [],
-      hasTicker: r.has_ticker === "true",
-    }));
-  } catch {
-    return mockCampaigns;
-  }
-}
 
 const STATUS_SKIN: Record<string, string> = {
   Active: "bg-brand/15 text-brand-text border-brand/40",
@@ -29,7 +9,15 @@ const STATUS_SKIN: Record<string, string> = {
 };
 
 export async function CampaignsSection() {
-  const campaigns = await getCampaigns();
+  const rows = await dbGetCampaigns();
+  const campaigns = rows.map((r) => ({
+    slug: r.slug ?? "",
+    chapterSlug: r.chapterId ?? "ligamy",
+    name: r.name ?? "",
+    summary: r.summary ?? r.description ?? "",
+    demands: r.demands ?? [],
+  }));
+
   const [featured, ...rest] = campaigns;
   const supporting = rest.slice(0, 2);
 
@@ -54,13 +42,13 @@ export async function CampaignsSection() {
             className="group flex flex-col border border-line bg-cream p-6 lg:col-span-3 hover:border-brand transition-colors"
           >
             <div className="flex items-center gap-3">
-              <span className={`inline-flex items-center gap-1.5 border px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-[0.12em] ${STATUS_SKIN[featured.status] ?? "border-line text-ink/60"}`}>
+              <span className={`inline-flex items-center gap-1.5 border px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-[0.12em] ${STATUS_SKIN["Active"] ?? "border-line text-ink/60"}`}>
                 <span className="h-1.5 w-1.5 rounded-full bg-current" aria-hidden="true" />
-                {featured.status}
+                Active
               </span>
               <span className="mono text-[11px] uppercase tracking-[0.14em] text-ink/40">{chapterLabel(featured.chapterSlug)}</span>
             </div>
-            <h3 className="display mt-4 text-2xl leading-none">{featured.title}</h3>
+            <h3 className="display mt-4 text-2xl leading-none">{featured.name}</h3>
             <p className="mt-3 flex-1 text-[14px] leading-relaxed text-ink/70">{featured.summary}</p>
             {featured.demands.length > 0 && (
               <ul className="mt-4 space-y-1.5 border-t border-line pt-4">
@@ -85,13 +73,13 @@ export async function CampaignsSection() {
                 className="group flex flex-1 flex-col border border-line bg-cream p-5 hover:border-brand transition-colors"
               >
                 <div className="flex items-center gap-2">
-                  <span className={`inline-flex items-center gap-1.5 border px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-[0.12em] ${STATUS_SKIN[c.status] ?? "border-line text-ink/60"}`}>
+                  <span className={`inline-flex items-center gap-1.5 border px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-[0.12em] ${STATUS_SKIN["Active"] ?? "border-line text-ink/60"}`}>
                     <span className="h-1.5 w-1.5 rounded-full bg-current" aria-hidden="true" />
-                    {c.status}
+                    Active
                   </span>
                   <span className="mono text-[10px] uppercase tracking-[0.14em] text-ink/40">{chapterLabel(c.chapterSlug)}</span>
                 </div>
-                <h3 className="display mt-3 text-lg leading-none">{c.title}</h3>
+                <h3 className="display mt-3 text-lg leading-none">{c.name}</h3>
                 <p className="mt-2 flex-1 text-[13px] leading-relaxed text-ink/60 line-clamp-2">{c.summary}</p>
                 <p className="mono mt-3 text-[11px] font-bold uppercase tracking-[0.12em] text-brand group-hover:underline group-hover:underline-offset-4">
                   Read more →

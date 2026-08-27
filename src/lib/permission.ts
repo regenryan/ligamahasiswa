@@ -21,19 +21,34 @@ export async function getUserRoles(userId: string): Promise<string[]> {
 }
 
 export async function getUserPermissions(userId: string): Promise<string[]> {
-  const roles = await getUserRoles(userId);
-  if (roles.length === 0) return [];
+  const userRoles = await getUserRoles(userId);
+  if (userRoles.length === 0) return [];
+  
+  if (userRoles.includes("admin")) {
+    // Admin has all permissions
+    const allPerms = await db.select().from(permTable);
+    return allPerms.map(p => p.name);
+  }
+
+  // Get all roles that are at or below the user's highest role in hierarchy
+  const highestLevel = Math.max(...userRoles.map(r => ROLE_HIERARCHY[r] ?? 0));
+  const inheritedRoles = Object.keys(ROLE_HIERARCHY).filter(r => ROLE_HIERARCHY[r] <= highestLevel);
+
+  // Since we're keeping it simple, we fetch all role records that match
+  const validRoles = Array.from(new Set([...userRoles, ...inheritedRoles]));
 
   const perms = await db
     .select({ permName: permTable.name })
     .from(rolePermission)
-    .innerJoin(permTable, eq(rolePermission.permissionId, permTable.permissionId))
-    .where(
-      eq(rolePermission.roleId, roles[0])
-    );
+    .innerJoin(roleTable, eq(rolePermission.roleId, roleTable.roleId))
+    .innerJoin(permTable, eq(rolePermission.permissionId, permTable.permissionId));
+    
+  // Filter manually since 'inArray' can be tricky with different sqlite adapters
+  const userPerms = perms
+    .filter(p => validRoles.includes((p as any).roleName))
+    .map(p => p.permName);
 
-  // TODO: union all role permissions, not just first role
-  return perms.map((p) => p.permName);
+  return Array.from(new Set(userPerms));
 }
 
 export async function hasPermission(userId: string, permissionName: string): Promise<boolean> {

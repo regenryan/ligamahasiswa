@@ -19,9 +19,16 @@ export default async function AdminPage() {
             <p className="text-[15px] text-ink/60">You do not have admin access.</p>
             <div className="mt-6">
               <Btn kind="join" href="/dashboard">Back to dashboard</Btn>
-            </div>
+            <Link href="/admin/media" className="group flex items-center justify-between border border-line bg-cream px-5 py-4 hover:border-brand hover:bg-brand/5 transition-colors">
+              <div>
+                <p className="text-[15px] font-bold">Media Hub</p>
+                <p className="mono text-[12px] text-ink/50">Manage external articles, videos, and zines</p>
+              </div>
+              <span className="mono text-[12px] text-ink/30 group-hover:text-brand transition-colors">{"\u2192"}</span>
+            </Link>
           </div>
-        </section>
+        </div>
+      </section>
       </Shell>
     );
   }
@@ -65,9 +72,23 @@ export default async function AdminPage() {
               </div>
               <span className="mono text-[12px] text-ink/30 group-hover:text-brand transition-colors">{"\u2192"}</span>
             </Link>
+              <Link href="/admin/universities" className="group flex items-center justify-between border border-line bg-cream px-5 py-4 hover:border-brand hover:bg-brand/5 transition-colors">
+                <div>
+                  <p className="text-[15px] font-bold">Universities</p>
+                  <p className="mono text-[12px] text-ink/50">Approve new university submissions</p>
+                </div>
+                <span className="mono text-[12px] text-ink/30 group-hover:text-brand transition-colors">{"\u2192"}</span>
+              </Link>
+              <Link href="/admin/audit" className="group flex items-center justify-between border border-line bg-cream px-5 py-4 hover:border-brand hover:bg-brand/5 transition-colors">
+                <div>
+                  <p className="text-[15px] font-bold">Audit Logs</p>
+                  <p className="mono text-[12px] text-ink/50">System activity and security logging</p>
+                </div>
+                <span className="mono text-[12px] text-ink/30 group-hover:text-brand transition-colors">{"\u2192"}</span>
+              </Link>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
       <section className="border-b border-line">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
           <h2 className="display text-3xl">Quick stats</h2>

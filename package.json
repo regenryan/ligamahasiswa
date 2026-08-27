@@ -17,6 +17,7 @@
     "@react-email/components": "^1.0.12",
     "@tiptap/extension-color": "^3.30.5",
     "@tiptap/extension-text-style": "^3.30.5",
+    "@tiptap/html": "^3.30.5",
     "@tiptap/react": "^3.30.5",
     "@tiptap/starter-kit": "^3.30.5",
     "@upstash/ratelimit": "^2.0.8",

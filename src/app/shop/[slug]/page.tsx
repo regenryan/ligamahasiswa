@@ -7,6 +7,7 @@ import { CartProvider } from "@/components/interactive";
 import { dbGetProductBySlug } from "@/lib/queries";
 import { ProductDetailClient } from "./product-detail-client";
 import { SkeletonDetail } from "@/components/skeleton";
+import { generateSafeHTML } from "@/lib/tiptap";
 
 type ShopProduct = {
   slug: string;

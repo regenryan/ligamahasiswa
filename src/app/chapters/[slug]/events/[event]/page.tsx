@@ -9,6 +9,7 @@ import type { EventData } from "@/lib/queries";
 import Link from "next/link";
 import { ShareKit } from "@/components/ShareKit";
 import { SkeletonDetail } from "@/components/skeleton";
+import { generateSafeHTML } from "@/lib/tiptap";
 
 async function getEvent(chapterSlug: string, eventSlug: string): Promise<EventData | null> {
   const chapter = await getChapter(chapterSlug);
@@ -69,7 +70,10 @@ async function ChapterEventContent({ slug, eventSlug }: { slug: string; eventSlu
           </Link>
           <div className="grid gap-8 md:grid-cols-3">
             <div className="md:col-span-2">
-              <p className="text-[15px] leading-relaxed text-ink/70">{event.description}</p>
+              <div 
+                className="prose prose-sm sm:prose lg:prose-lg max-w-none text-ink/70 prose-a:text-brand hover:prose-a:text-brand/80" 
+                dangerouslySetInnerHTML={{ __html: generateSafeHTML(event.description) }} 
+              />
             </div>
             <div className="border border-line bg-cream p-5">
               <div className="space-y-4">

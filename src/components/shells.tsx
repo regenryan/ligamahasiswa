@@ -172,17 +172,18 @@ function Footer() {
             <p className="mono mb-3 text-[11px] tracking-[0.18em] text-fog/50">Follow us</p>
             {social}
           </div>
-          <div>
-            <p className="mono mb-3 text-[11px] tracking-[0.18em] text-fog/50">Contact</p>
-            <ul className="space-y-2.5 text-sm">
-              <li><a href="mailto:contact@ligamahasiswa.my" className="text-fog/75 hover:text-brand transition-colors">contact@ligamahasiswa.my</a></li>
-              <li><a href="mailto:admin@ligamahasiswa.my" className="text-fog/75 hover:text-brand transition-colors">admin@ligamahasiswa.my</a></li>
-            </ul>
-            <p className="mono mt-4 mb-1 text-[11px] tracking-[0.18em] text-fog/50">Legal</p>
-            <ul className="space-y-2.5 text-sm">
-              <li><Link href="/dashboard" className="text-fog/75 hover:text-brand transition-colors">Dashboard</Link></li>
-            </ul>
-          </div>
+            <div>
+              <p className="mono mb-3 text-[11px] tracking-[0.18em] text-fog/50">Contact</p>
+              <ul className="space-y-2.5 text-sm">
+                <li><a href="mailto:contact@ligamahasiswa.my" className="text-fog/75 hover:text-brand transition-colors">contact@ligamahasiswa.my</a></li>
+                <li><a href="mailto:admin@ligamahasiswa.my" className="text-fog/75 hover:text-brand transition-colors">admin@ligamahasiswa.my</a></li>
+              </ul>
+              <p className="mono mt-4 mb-3 text-[11px] tracking-[0.18em] text-fog/50">Legal</p>
+              <ul className="space-y-2.5 text-sm">
+                <li><Link href="/terms" className="text-fog/75 hover:text-brand transition-colors">Terms of Service</Link></li>
+                <li><Link href="/privacy" className="text-fog/75 hover:text-brand transition-colors">Privacy Policy</Link></li>
+              </ul>
+            </div>
         </div>
         <div className="mt-8 flex flex-wrap items-center justify-between gap-2 border-t border-fog/20 pt-4">
           <p className="mono text-[11px] uppercase tracking-[0.14em] text-fog/50">

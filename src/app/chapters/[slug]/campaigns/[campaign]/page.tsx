@@ -7,6 +7,7 @@ import { chapterLabel } from "@/lib/chapters";
 import Link from "next/link";
 import { ShareKit } from "@/components/ShareKit";
 import { SkeletonDetail, SkeletonMediaGrid } from "@/components/skeleton";
+import { generateSafeHTML } from "@/lib/tiptap";
 
 const DIR = 27;
 
@@ -101,9 +102,16 @@ async function CampaignContent({
       <section id="introduction" className="border-b border-line">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
           <SectionHead index={1} title="Overview" />
-          <p className="mt-6 max-w-2xl text-[15px] leading-relaxed text-ink/70">
-            {campaign.summary}
-          </p>
+          {campaign.description ? (
+            <div 
+              className="prose prose-sm sm:prose lg:prose-lg max-w-2xl mt-6 text-ink/70 prose-a:text-brand hover:prose-a:text-brand/80" 
+              dangerouslySetInnerHTML={{ __html: generateSafeHTML(campaign.description) }} 
+            />
+          ) : (
+            <p className="mt-6 max-w-2xl text-[15px] leading-relaxed text-ink/70">
+              {campaign.summary}
+            </p>
+          )}
           <div className="mt-6 flex flex-wrap gap-2">
             <span className={`${BADGE} border-brand/40 bg-brand/10 text-brand-text`}>
               Active

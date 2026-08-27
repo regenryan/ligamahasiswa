@@ -32,6 +32,9 @@ function NominationActions({ nom }: { nom: NominationRow }) {
           nom.status === "approved" ? "border-term/40 bg-term/10 text-term" : "border-brand/40 bg-brand/10 text-brand-text"
         }`}>{nom.status}</span>
       )}
+      <Link href={`/admin/nominations/${nom.id}`} className="inline-flex border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.12em] border-ink/40 bg-ink/10 text-ink hover:bg-ink/20 transition-colors">
+        View
+      </Link>
     </div>
   );
 }

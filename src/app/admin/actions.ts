@@ -1,9 +1,10 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { user, nomination, order, config } from "@/lib/schema";
+import { user, nomination, order, config, nominationNote } from "@/lib/schema";
 import { eq } from "drizzle-orm";
 import { getCurrentUser } from "@/lib/auth";
+import crypto from "crypto";
 
 export async function setUserRole(userId: string, role: string) {
   const u = await getCurrentUser();
@@ -55,5 +56,22 @@ export async function updateConfig(key: string, value: string) {
   const u = await getCurrentUser();
   if (!u || u.role !== "admin") return { ok: false, error: "Unauthorized" };
   await db.update(config).set({ value }).where(eq(config.key, key));
+  return { ok: true };
+}
+
+export async function addNominationNote(nominationId: string, comment: string, verdict: string | null = null, contactStatus: string | null = null) {
+  const u = await getCurrentUser();
+  if (!u || (u.role !== "admin" && u.role !== "committee")) return { ok: false, error: "Unauthorized" };
+  
+  const noteId = `note_${crypto.randomUUID().replace(/-/g, "")}`;
+  await db.insert(nominationNote).values({
+    noteId,
+    nominationId,
+    userId: u.id,
+    comment,
+    verdict,
+    contactStatus,
+  });
+  
   return { ok: true };
 }

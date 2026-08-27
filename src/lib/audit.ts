@@ -3,7 +3,7 @@ import { auditLog } from "./schema";
 import { nanoid } from "./nanoid";
 
 interface AuditEntry {
-  userId?: string;
+  userId?: string | null;
   action: string;
   targetType?: string;
   targetId?: string;

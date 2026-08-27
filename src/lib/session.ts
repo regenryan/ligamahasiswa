@@ -1,28 +1,18 @@
 import "server-only";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
-import { config } from "@/lib/config";
-
-export type UserRole = "user" | "member" | "committee" | "national" | "admin";
-export type UserStatus = "active" | "expired" | "suspended";
 
 export interface SessionPayload {
   userId: string;
-  role: UserRole;
-  status: UserStatus;
-  chapterSlug: string;
-  membershipPaidAt?: string;
-  membershipExpiresAt?: string;
 }
 
 const SESSION_COOKIE = "liga-session";
 const SESSION_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
 
 function getKey() {
-  if (!config.sessionSecret) {
-    throw new Error("SESSION_SECRET env var is not set");
-  }
-  return new TextEncoder().encode(config.sessionSecret);
+  const secret = process.env.SESSION_SECRET;
+  if (!secret) throw new Error("SESSION_SECRET env var is not set");
+  return new TextEncoder().encode(secret);
 }
 
 export async function encrypt(payload: SessionPayload): Promise<string> {
@@ -33,14 +23,10 @@ export async function encrypt(payload: SessionPayload): Promise<string> {
     .sign(getKey());
 }
 
-export async function decrypt(
-  token: string | undefined,
-): Promise<SessionPayload | null> {
+export async function decrypt(token: string | undefined): Promise<SessionPayload | null> {
   if (!token) return null;
   try {
-    const { payload } = await jwtVerify(token, getKey(), {
-      algorithms: ["HS256"],
-    });
+    const { payload } = await jwtVerify(token, getKey(), { algorithms: ["HS256"] });
     return payload as unknown as SessionPayload;
   } catch {
     return null;

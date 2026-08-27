@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { Shell } from "@/components/shells";
 import { PageHead, SectionHead, EventCard, JoinBand } from "@/components/sections";
 import { readSheet } from "@/lib/sheets-db";
-import { getChapter, chapterLabel } from "@/lib/chapters";
+import { getChapterSync, chapterLabel } from "@/lib/chapters";
 import { chapters as mockChapters, campaigns as mockCampaigns, events as mockEvents, members as mockMembers } from "@/lib/mock";
 import type { Campaign, EventItem } from "@/lib/mock";
 import Link from "next/link";
@@ -391,7 +391,7 @@ export default async function ChapterPage({
   const { slug } = await params;
   const ch = getChapterData(slug);
   if (!ch) notFound();
-  const meta = getChapter(slug)!;
+  const meta = getChapterSync(slug)!;
 
   const sectionFallback = (
     <section className="border-b border-line">

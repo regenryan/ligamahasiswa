@@ -114,9 +114,14 @@ function LoginForm({
         </div>
 
         <div>
-          <label htmlFor="auth-modal-login-password" className="mb-1.5 block text-[13px] font-bold">
-            Password
-          </label>
+          <div className="flex items-center justify-between">
+            <label htmlFor="auth-modal-login-password" className="mb-1.5 block text-[13px] font-bold">
+              Password
+            </label>
+            <a href="/forgot-password" className="text-[12px] font-bold text-brand hover:underline">
+              Forgot password?
+            </a>
+          </div>
           <input
             id="auth-modal-login-password"
             name="password"

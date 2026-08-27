@@ -1,7 +1,7 @@
 import { Shell } from "@/components/shells";
 import { PageHead, JoinBand, NewsletterBand } from "@/components/sections";
 import { readSheet } from "@/lib/sheets-db";
-import { chapterLabel, getChapter } from "@/lib/chapters";
+import { chapterLabel, getChapterSync } from "@/lib/chapters";
 import { statements as mockStatements } from "@/lib/mock";
 import { ShareKit } from "@/components/ShareKit";
 import Link from "next/link";
@@ -54,7 +54,7 @@ export default async function StatementPage({
 }) {
   const { slug, statement: statementSlug } = await params;
   const statement = await getStatement(slug, statementSlug);
-  const chapter = getChapter(slug);
+  const chapter = getChapterSync(slug);
   if (!chapter) notFound();
 
   if (!statement) {

@@ -1,17 +1,13 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { hashPassword, verifyPassword } from "@/lib/hash";
+import { eq } from "drizzle-orm";
+import { db } from "@/lib/db";
+import { user, member, roleRecord } from "@/lib/schema";
+import { hashPassword, verifyPassword } from "@/lib/password";
 import { createSession, deleteSession } from "@/lib/session";
-import { findRow, readSheet, writeSheet } from "@/lib/sheets-db";
-
-function genId(): string {
-  return `u_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
-}
-
-function genMemberId(year: number, seq: number): string {
-  return `LMM-${year}-${String(seq).padStart(4, "0")}`;
-}
+import { nanoid } from "@/lib/nanoid";
+import { logAction } from "@/lib/audit";
 
 export type AuthState =
   | { error?: string; fieldErrors?: Record<string, string> }
@@ -25,7 +21,7 @@ export async function registerAction(
   const email = String(formData.get("email") ?? "").trim().toLowerCase();
   const password = String(formData.get("password") ?? "");
   const phone = String(formData.get("phone") ?? "").trim();
-  const chapter = String(formData.get("chapter") ?? "").trim();
+  const chapterSlug = String(formData.get("chapter") ?? "").trim();
 
   const fieldErrors: Record<string, string> = {};
   if (name.length < 3) fieldErrors.name = "Name must be at least 3 characters.";
@@ -34,52 +30,40 @@ export async function registerAction(
   if (password.length < 8) fieldErrors.password = "Password must be at least 8 characters.";
   if (!/[a-zA-Z]/.test(password) || !/[0-9]/.test(password))
     fieldErrors.password = "Password must contain letters and numbers.";
-  if (!chapter) fieldErrors.chapter = "Pick your chapter.";
+  if (!chapterSlug) fieldErrors.chapter = "Pick your chapter.";
 
   if (Object.keys(fieldErrors).length > 0) {
     return { fieldErrors };
   }
 
-  const existing = await findRow("Users", "email", email);
-  if (existing) {
+  // Check existing
+  const existing = await db.select().from(user).where(eq(user.email, email));
+  if (existing.length > 0) {
     return { error: "An account with this email already exists." };
   }
 
   const passwordHash = await hashPassword(password);
-  const users = await readSheet("Users");
-  const seq = users.length + 1;
-  const year = new Date().getFullYear();
-  const userId = genId();
-  const memberId = genMemberId(year, seq);
+  const userId = nanoid();
 
-  const result = await writeSheet("Users", {
-    id: userId,
+  await db.insert(user).values({
+    userId,
+    username: email.split("@")[0],
     name,
     email,
-    password_hash: passwordHash,
-    phone,
-    chapter_slug: chapter,
-    role: "user",
-    status: "active",
-    member_id: memberId,
-    membership_paid_at: "",
-    membership_expires_at: "",
-    avatar_url: "",
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
+    phone: phone || null,
+    password: passwordHash,
   });
 
-  if (!result.ok) {
-    return { error: result.error ?? "Registration failed. Try again." };
-  }
-
-  await createSession({
+  // Assign default user role
+  await db.insert(roleRecord).values({
+    recordId: nanoid(),
     userId,
-    role: "user",
-    status: "active",
-    chapterSlug: chapter,
+    roleId: "role_user",
+    startDate: new Date(),
   });
 
+  await logAction({ userId, action: "user:register", targetType: "user", targetId: userId });
+  await createSession({ userId });
   redirect("/dashboard");
 }
 
@@ -94,25 +78,20 @@ export async function loginAction(
     return { error: "Email and password are required." };
   }
 
-  const user = await findRow("Users", "email", email);
-  if (!user) {
+  const rows = await db.select().from(user).where(eq(user.email, email));
+  const u = rows[0];
+
+  if (!u || u.deletedAt) {
     return { error: "Invalid email or password." };
   }
 
-  const valid = await verifyPassword(password, user.password_hash ?? "");
+  const valid = await verifyPassword(password, u.password);
   if (!valid) {
     return { error: "Invalid email or password." };
   }
 
-  await createSession({
-    userId: user.id ?? "",
-    role: (user.role as "user" | "member" | "committee" | "national" | "admin") ?? "user",
-    status: (user.status as "active" | "expired" | "suspended") ?? "active",
-    chapterSlug: user.chapter_slug ?? "",
-    membershipPaidAt: user.membership_paid_at ?? "",
-    membershipExpiresAt: user.membership_expires_at ?? "",
-  });
-
+  await logAction({ userId: u.userId, action: "user:login", targetType: "user", targetId: u.userId });
+  await createSession({ userId: u.userId });
   redirect("/dashboard");
 }
 

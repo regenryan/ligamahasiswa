@@ -1,3 +1,31 @@
+import { cache } from "react";
+import { db } from "./db";
+import { chapter } from "./schema";
+
+export interface Chapter {
+  chapterId: string;
+  slug: string;
+  name: string;
+  slogan: string | null;
+  social: string | null;
+  type: string;
+}
+
+export const getChapters = cache(async (): Promise<Chapter[]> => {
+  return db.select().from(chapter);
+});
+
+export async function getChapter(slug: string): Promise<Chapter | null> {
+  const chapters = await getChapters();
+  return chapters.find((c) => c.slug === slug) ?? null;
+}
+
+export function chapterLabel(slug: string): string {
+  if (slug === "ligamy") return "National";
+  return slug.toUpperCase();
+}
+
+// Backward-compatible CHAPTERS constant for client components and sync lookups
 export const CHAPTERS = [
   { slug: "ligamy", label: "Liga Mahasiswa Malaysia", short: "LigaMY", color: "#e11d2e", tagline: "The national student movement." },
   { slug: "ligaum", label: "Liga Mahasiswa UM", short: "LigaUM", color: "#e11d2e", tagline: "The first campus that dared." },
@@ -9,12 +37,7 @@ export const CHAPTERS = [
 
 export type ChapterSlug = (typeof CHAPTERS)[number]["slug"];
 
-export function chapterLabel(slug: string): string {
-  if (slug === "ligamy") return "National";
-  const ch = CHAPTERS.find((c) => c.slug === slug);
-  return ch?.short ?? slug.toUpperCase();
-}
-
-export function getChapter(slug: string) {
+// Sync lookup from CHAPTERS constant (backward-compatible)
+export function getChapterSync(slug: string) {
   return CHAPTERS.find((c) => c.slug === slug) ?? null;
 }

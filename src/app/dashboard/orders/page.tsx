@@ -35,6 +35,7 @@ export default async function OrderHistoryPage() {
   const statusColors: Record<string, string> = {
     completed: "bg-term/20 text-term",
     paid: "bg-term/20 text-term",
+    shipped: "bg-blue-500/10 text-blue-600",
     pending: "bg-midnight text-ink/50",
     failed: "bg-brand/10 text-ink/40",
     cancelled: "bg-brand/10 text-ink/40",
@@ -75,6 +76,11 @@ export default async function OrderHistoryPage() {
                           })
                         : ""}
                     </p>
+                    {o.trackingCode && (
+                      <p className="mono mt-1 text-[11px] text-blue-600">
+                        Tracking: {o.trackingCode}
+                      </p>
+                    )}
                   </div>
                   <div className="mt-3 flex items-center gap-4 sm:mt-0">
                     <span
@@ -85,6 +91,12 @@ export default async function OrderHistoryPage() {
                       {o.status ?? "pending"}
                     </span>
                     <span className="display text-lg">{o.total} {o.currency}</span>
+                    <Link
+                      href={`/dashboard/orders/${o.orderId}/tracking`}
+                      className="mono text-[11px] uppercase tracking-[0.12em] text-brand hover:underline"
+                    >
+                      Track
+                    </Link>
                   </div>
                 </div>
               ))}

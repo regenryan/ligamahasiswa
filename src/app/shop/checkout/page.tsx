@@ -8,17 +8,12 @@ import { SkeletonGrid } from "@/components/skeleton";
 
 const DIR = 27;
 
-const PAYMENT_METHODS = [
-  { id: "fpx", label: "FPX", desc: "Online banking" },
-  { id: "tng", label: "TnG", desc: "Touch 'n Go eWallet" },
-  { id: "duitnow", label: "DuitNow", desc: "QR / bank transfer" },
-] as const;
-
 function CheckoutInner() {
   const { items, clear } = useCart();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState<string>("fpx");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
 
@@ -37,7 +32,14 @@ function CheckoutInner() {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items, paymentMethod, buyerName: name, buyerEmail: email }),
+        body: JSON.stringify({
+          items,
+          paymentMethod: "toyyibpay",
+          buyerName: name,
+          buyerEmail: email,
+          buyerPhone: phone,
+          buyerAddress: address,
+        }),
       });
       const data = await res.json();
       setSending(false);
@@ -74,7 +76,7 @@ function CheckoutInner() {
 
   return (
     <Shell dir={DIR}>
-      <PageHead kicker="Shop" title="Checkout" sub="Review your order and choose a payment method." />
+      <PageHead kicker="Shop" title="Checkout" sub="Review your order and complete payment." />
       <section className="border-b border-line">
         <div className="mx-auto grid w-full max-w-4xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.2fr_0.8fr]">
           <div>
@@ -115,30 +117,24 @@ function CheckoutInner() {
                 <label htmlFor="co-email" className="mb-1.5 block text-[13px] font-bold">Email</label>
                 <input id="co-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@campus.edu.my" className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none" />
               </div>
+              <div>
+                <label htmlFor="co-phone" className="mb-1.5 block text-[13px] font-bold">Phone (optional)</label>
+                <input id="co-phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="012-345 6789" className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none" />
+              </div>
+              <div>
+                <label htmlFor="co-address" className="mb-1.5 block text-[13px] font-bold">Shipping address</label>
+                <textarea id="co-address" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Full address for shipping" rows={3} className="w-full border border-line bg-midnight px-4 py-3 text-[14px] placeholder:text-ink/40 focus:outline-none resize-none" />
+              </div>
             </div>
 
             {error && <p role="alert" className="mono mt-4 text-[12px] text-brand-text">{error}</p>}
 
             <div className="mt-6 space-y-3">
-              <p className="mono text-[11px] uppercase tracking-[0.16em] text-ink/50">Payment method</p>
-              <div className="grid grid-cols-3 gap-2">
-                {PAYMENT_METHODS.map((m) => (
-                  <button
-                    key={m.id}
-                    type="button"
-                    onClick={() => setPaymentMethod(m.id)}
-                    className={`flex flex-col items-center justify-center border px-3 py-2.5 text-[12px] font-bold uppercase tracking-[0.08em] transition-colors ${
-                      paymentMethod === m.id
-                        ? "border-2 border-brand bg-brand/10 text-brand"
-                        : "border border-line bg-cream text-ink/60 hover:border-ink hover:text-ink"
-                    }`}
-                  >
-                    <span>{m.label}</span>
-                    <span className="mt-0.5 text-[10px] normal-case tracking-normal text-ink/40">{m.desc}</span>
-                  </button>
-                ))}
+              <p className="mono text-[11px] uppercase tracking-[0.16em] text-ink/50">Payment</p>
+              <div className="border border-line bg-cream px-4 py-3">
+                <p className="text-[14px] font-bold">ToyyibPay</p>
+                <p className="mono text-[12px] text-ink/50">FPX, credit/debit cards, e-wallets</p>
               </div>
-              <p className="mono text-[10px] text-ink/40">You will be redirected to complete payment.</p>
             </div>
 
             <button

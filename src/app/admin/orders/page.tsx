@@ -29,6 +29,7 @@ export default async function AdminOrdersPage() {
   const statusColors: Record<string, string> = {
     completed: "bg-term/20 text-term",
     paid: "bg-term/20 text-term",
+    shipped: "bg-blue-500/10 text-blue-600",
     pending: "bg-midnight text-ink/50",
     failed: "bg-brand/10 text-ink/40",
     cancelled: "bg-brand/10 text-ink/40",
@@ -39,9 +40,14 @@ export default async function AdminOrdersPage() {
       <PageHead kicker="Admin" title="Order management" sub="View all orders and update payment status." />
       <section className="border-b border-line">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
-          <Link href="/admin" className="mono mb-6 inline-block text-[11px] uppercase tracking-[0.14em] text-ink/50 hover:text-brand transition-colors">
-            {"\u2190"} Back to admin
-          </Link>
+          <div className="mb-6 flex flex-wrap gap-3">
+            <Link href="/admin" className="mono text-[11px] uppercase tracking-[0.14em] text-ink/50 hover:text-brand transition-colors">
+              {"\u2190"} Back to admin
+            </Link>
+            <Link href="/admin/orders/ship" className="mono text-[11px] uppercase tracking-[0.14em] text-brand hover:underline">
+              Ship orders {"\u2192"}
+            </Link>
+          </div>
           {sorted.length === 0 ? (
             <p className="border border-dashed border-line p-8 text-center text-[14px] text-ink/50">No orders yet.</p>
           ) : (
@@ -52,6 +58,9 @@ export default async function AdminOrdersPage() {
                     <p className="mono text-[12px] text-ink/50">{o.orderId}</p>
                     <p className="mt-1 text-[14px] font-bold">{o.email || "No email"}</p>
                     <p className="mono text-[12px] text-ink/40">{o.method || "N/A"}</p>
+                    {o.trackingCode && (
+                      <p className="mono mt-1 text-[11px] text-blue-600">Tracking: {o.trackingCode}</p>
+                    )}
                   </div>
                   <div className="mt-3 flex items-center gap-4 sm:mt-0">
                     <span className={`mono text-[11px] uppercase tracking-[0.12em] px-2 py-1 ${statusColors[o.status ?? "pending"] ?? statusColors.pending}`}>

@@ -3,6 +3,7 @@
 import { useState, useCallback } from "react";
 import Link from "next/link";
 import { CHAPTERS, chapterLabel } from "@/lib/chapters";
+import { Pagination, paginate } from "@/components/pagination";
 import type { CampaignData } from "@/lib/queries";
 
 const FILTER_BTN =
@@ -28,16 +29,24 @@ function CampaignCard({ c, hrefOverride }: { c: CampaignData; hrefOverride?: str
 
 export function CampaignsClient({ campaigns }: { campaigns: CampaignData[] }) {
   const [chapter, setChapter] = useState<string>("");
+  const [page, setPage] = useState(1);
 
   const fundraisers = campaigns.slice(0, 3);
-  const all = chapter
+  const filtered = chapter
     ? campaigns.filter((c) => c.chapterSlug === chapter)
     : campaigns;
+  const { items: pagedCampaigns, totalPages } = paginate(filtered, page);
 
   const updateUrl = useCallback((slug: string) => {
     const url = slug ? `/campaigns?chapter=${slug}` : "/campaigns";
     window.history.replaceState(null, "", url);
   }, []);
+
+  const handleChapterChange = (slug: string) => {
+    setChapter(slug);
+    setPage(1);
+    updateUrl(slug);
+  };
 
   return (
     <>
@@ -67,7 +76,7 @@ export function CampaignsClient({ campaigns }: { campaigns: CampaignData[] }) {
 
           <div className="mt-6 flex flex-wrap gap-2">
             <button
-              onClick={() => { setChapter(""); updateUrl(""); }}
+              onClick={() => handleChapterChange("")}
               className={`${FILTER_BTN} ${!chapter ? "border-brand bg-brand/10 text-brand" : "border-line text-ink/60 hover:border-ink hover:text-ink"}`}
             >
               All
@@ -75,7 +84,7 @@ export function CampaignsClient({ campaigns }: { campaigns: CampaignData[] }) {
             {CHAPTERS.map((ch) => (
               <button
                 key={ch.slug}
-                onClick={() => { setChapter(ch.slug); updateUrl(ch.slug); }}
+                onClick={() => handleChapterChange(ch.slug)}
                 className={`${FILTER_BTN} ${chapter === ch.slug ? "border-brand bg-brand/10 text-brand" : "border-line text-ink/60 hover:border-ink hover:text-ink"}`}
               >
                 {chapterLabel(ch.slug)}
@@ -84,15 +93,17 @@ export function CampaignsClient({ campaigns }: { campaigns: CampaignData[] }) {
           </div>
 
           <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {all.map((c) => (
+            {pagedCampaigns.map((c) => (
               <CampaignCard key={`${c.chapterSlug}-${c.slug}`} c={c} />
             ))}
           </div>
-          {all.length === 0 && (
+          {filtered.length === 0 && (
             <div className="border border-dashed border-line p-8 text-center">
               <p className="text-[14px] text-ink/50">No campaigns for this chapter yet.</p>
             </div>
           )}
+
+          <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
         </div>
       </section>
     </>

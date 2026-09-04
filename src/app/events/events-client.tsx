@@ -3,6 +3,7 @@
 import { useState, useCallback } from "react";
 import Link from "next/link";
 import { CHAPTERS, chapterLabel } from "@/lib/chapters";
+import { Pagination, paginate } from "@/components/pagination";
 import type { EventData } from "@/lib/queries";
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -40,17 +41,25 @@ function EventCard({ e, hrefOverride }: { e: EventData; hrefOverride?: string })
 
 export function EventsClient({ events }: { events: EventData[] }) {
   const [chapter, setChapter] = useState<string>("");
+  const [page, setPage] = useState(1);
 
   const sorted = [...events].sort((a, b) => a.date.localeCompare(b.date));
   const fundraisers = sorted.slice(0, 3);
-  const all = chapter
-    ? events.filter((e) => e.chapterSlug === chapter)
-    : events;
+  const filtered = chapter
+    ? sorted.filter((e) => e.chapterSlug === chapter)
+    : sorted;
+  const { items: pagedEvents, totalPages } = paginate(filtered, page);
 
   const updateUrl = useCallback((slug: string) => {
     const url = slug ? `/events?chapter=${slug}` : "/events";
     window.history.replaceState(null, "", url);
   }, []);
+
+  const handleChapterChange = (slug: string) => {
+    setChapter(slug);
+    setPage(1);
+    updateUrl(slug);
+  };
 
   return (
     <>
@@ -80,7 +89,7 @@ export function EventsClient({ events }: { events: EventData[] }) {
 
           <div className="mt-6 flex flex-wrap gap-2">
             <button
-              onClick={() => { setChapter(""); updateUrl(""); }}
+              onClick={() => handleChapterChange("")}
               className={`${FILTER_BTN} ${!chapter ? "border-brand bg-brand/10 text-brand" : "border-line text-ink/60 hover:border-ink hover:text-ink"}`}
             >
               All
@@ -88,7 +97,7 @@ export function EventsClient({ events }: { events: EventData[] }) {
             {CHAPTERS.map((ch) => (
               <button
                 key={ch.slug}
-                onClick={() => { setChapter(ch.slug); updateUrl(ch.slug); }}
+                onClick={() => handleChapterChange(ch.slug)}
                 className={`${FILTER_BTN} ${chapter === ch.slug ? "border-brand bg-brand/10 text-brand" : "border-line text-ink/60 hover:border-ink hover:text-ink"}`}
               >
                 {chapterLabel(ch.slug)}
@@ -97,15 +106,17 @@ export function EventsClient({ events }: { events: EventData[] }) {
           </div>
 
           <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {all.map((e) => (
+            {pagedEvents.map((e) => (
               <EventCard key={`${e.chapterSlug}-${e.slug}`} e={e} />
             ))}
           </div>
-          {all.length === 0 && (
+          {filtered.length === 0 && (
             <div className="border border-dashed border-line p-8 text-center">
               <p className="text-[14px] text-ink/50">No events for this chapter yet.</p>
             </div>
           )}
+
+          <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
         </div>
       </section>
     </>

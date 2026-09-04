@@ -6,6 +6,7 @@ import { Reveal, FilterPills, useCart } from "@/components/interactive";
 import { useAuth } from "@/components/auth-provider";
 import { Marquee } from "@/components/Marquee";
 import { ShopCard } from "@/components/sections";
+import { Pagination, paginate } from "@/components/pagination";
 
 type Product = { slug: string; chapterSlug: string; name: string; price: string; tag: string; memberOnly: boolean; preorder: boolean; deliveryEstimate: string };
 
@@ -40,6 +41,7 @@ function ShopMarquee() {
 function ShopGrid({ products }: { products: Product[] }) {
   const [catalog, setCatalog] = useState<Catalog>("all");
   const [shopFilter, setShopFilter] = useState<ShopFilter>("All");
+  const [page, setPage] = useState(1);
   const { add } = useCart();
   const { user } = useAuth();
   const isMember = ["member", "committee", "national", "admin"].includes(user?.role ?? "");
@@ -51,12 +53,19 @@ function ShopGrid({ products }: { products: Product[] }) {
         ? products.filter((p) => p.preorder)
         : products;
 
-  const items = shopFilter === "All" ? byCatalog : byCatalog.filter((p) => p.memberOnly);
+  const filtered = shopFilter === "All" ? byCatalog : byCatalog.filter((p) => p.memberOnly);
+  const { items: pagedProducts, totalPages } = paginate(filtered, page);
 
   const updateUrl = useCallback((cat: string) => {
     const url = cat === "all" ? "/shop" : `/shop?catalog=${cat}`;
     window.history.replaceState(null, "", url);
   }, []);
+
+  const handleCatalogChange = (cat: Catalog) => {
+    setCatalog(cat);
+    setPage(1);
+    updateUrl(cat);
+  };
 
   return (
     <section className="border-b border-line">
@@ -65,7 +74,7 @@ function ShopGrid({ products }: { products: Product[] }) {
           {CATALOGS.map((c) => (
             <button
               key={c.value}
-              onClick={() => { setCatalog(c.value); updateUrl(c.value); }}
+              onClick={() => handleCatalogChange(c.value)}
               className={`${FILTER_BTN} ${catalog === c.value ? "border-brand bg-brand/10 text-brand" : "border-line text-ink/60 hover:border-ink hover:text-ink"}`}
             >
               {c.label}
@@ -82,18 +91,20 @@ function ShopGrid({ products }: { products: Product[] }) {
           />
         </Reveal>
         <Reveal className="mb-8">
-          <FilterPills options={["All", "Member exclusive"]} value={shopFilter} onChange={setShopFilter} label="Filter" />
+          <FilterPills options={["All", "Member exclusive"]} value={shopFilter} onChange={(v) => { setShopFilter(v as ShopFilter); setPage(1); }} label="Filter" />
         </Reveal>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map((p, i) => (
+          {pagedProducts.map((p, i) => (
             <Reveal key={p.slug} delay={i * 60}>
               <ShopCard p={p} onAdd={() => add(p)} isMember={isMember} />
             </Reveal>
           ))}
         </div>
-        {items.length === 0 ? (
+        {filtered.length === 0 ? (
           <p className="text-center text-[14px] text-ink/50">No products available yet.</p>
         ) : null}
+
+        <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
       </div>
     </section>
   );

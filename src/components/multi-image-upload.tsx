@@ -62,6 +62,7 @@ export function MultiImageUpload({ onUpload, defaultValues = [], label = "Upload
         <div className="flex flex-wrap gap-4">
           {imageUrls.map((url, idx) => (
             <div key={idx} className="relative w-24 h-24 border border-line bg-cream overflow-hidden">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={url} alt={`Preview ${idx}`} className="object-cover w-full h-full" />
               <button 
                 type="button"

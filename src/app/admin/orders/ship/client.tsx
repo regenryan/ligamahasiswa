@@ -16,7 +16,8 @@ type OrderRow = {
   createdAt: string;
 };
 
-export function ShipOrderClient({ orders }: { orders: OrderRow[] }) {
+export function ShipOrderClient({ orders: initialOrders }: { orders: OrderRow[] }) {
+  const [orders, setOrders] = useState<OrderRow[]>(initialOrders);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [trackingUrl, setTrackingUrl] = useState("");
   const [trackingCode, setTrackingCode] = useState("");
@@ -35,13 +36,13 @@ export function ShipOrderClient({ orders }: { orders: OrderRow[] }) {
       if (data.ok) {
         setSaved(orderId);
         setEditingId(null);
-        // Update local state
-        const idx = orders.findIndex(o => o.orderId === orderId);
-        if (idx >= 0) {
-          orders[idx].trackingUrl = trackingUrl;
-          orders[idx].trackingCode = trackingCode;
-          orders[idx].status = "shipped";
-        }
+        setOrders((prev) =>
+          prev.map((o) =>
+            o.orderId === orderId
+              ? { ...o, trackingUrl, trackingCode, status: "shipped" }
+              : o,
+          ),
+        );
       } else {
         alert(data.error || "Failed to update");
       }

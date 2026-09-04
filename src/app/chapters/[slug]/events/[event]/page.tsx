@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import { Shell } from "@/components/shells";
 import { PageHead, JoinBand } from "@/components/sections";
 import { db } from "@/lib/db";
@@ -10,6 +11,34 @@ import Link from "next/link";
 import { ShareKit } from "@/components/ShareKit";
 import { SkeletonDetail } from "@/components/skeleton";
 import { generateSafeHTML } from "@/lib/tiptap";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ligamahasiswa.vercel.app";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string; event: string }>;
+}): Promise<Metadata> {
+  const { slug, event: eventSlug } = await params;
+  const chapter = await getChapter(slug);
+  const rows = chapter
+    ? await db.select().from(s.event).where(and(eq(s.event.chapterId, chapter.chapterId), eq(s.event.slug, eventSlug)))
+    : [];
+  const ev = rows[0];
+  return {
+    title: ev ? ev.name : "Event",
+    description: ev?.description ?? "An event of the Liga Mahasiswa movement.",
+    openGraph: {
+      title: ev ? `${ev.name} | Liga Mahasiswa Malaysia` : "Event | Liga Mahasiswa Malaysia",
+      description: ev?.description ?? "An event of the Liga Mahasiswa movement.",
+      url: `${siteUrl}/chapters/${slug}/events/${eventSlug}`,
+      siteName: "Liga Mahasiswa Malaysia",
+      locale: "en_MY",
+      type: "website",
+    },
+    alternates: { canonical: `${siteUrl}/chapters/${slug}/events/${eventSlug}` },
+  };
+}
 
 async function getEvent(chapterSlug: string, eventSlug: string): Promise<EventData | null> {
   const chapter = await getChapter(chapterSlug);
@@ -62,6 +91,26 @@ async function ChapterEventContent({ slug, eventSlug }: { slug: string; eventSlu
         kicker={`${ch.label} / Events`}
         title={event.name}
         sub={event.description}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Event",
+            name: event.name,
+            description: event.description,
+            startDate: event.date ? `${event.date}${event.time ? `T${event.time}` : ""}` : undefined,
+            location: event.location
+              ? {
+                  "@type": "Place",
+                  name: event.location,
+                }
+              : undefined,
+            url: `${siteUrl}/chapters/${slug}/events/${eventSlug}`,
+            organizer: { "@type": "Organization", name: "Liga Mahasiswa Malaysia" },
+          }),
+        }}
       />
       <section className="border-b border-line">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">

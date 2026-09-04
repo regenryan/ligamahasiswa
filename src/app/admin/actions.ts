@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { user, nomination, order, config, nominationNote } from "@/lib/schema";
+import { nomination, order, config, nominationNote } from "@/lib/schema";
 import { eq } from "drizzle-orm";
 import { getCurrentUser } from "@/lib/auth";
 import crypto from "crypto";

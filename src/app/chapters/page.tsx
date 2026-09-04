@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Shell } from "@/components/shells";
 import { PageHead } from "@/components/sections/head";
@@ -5,6 +6,22 @@ import { JoinBand } from "@/components/sections";
 import { CHAPTERS } from "@/lib/chapters";
 
 const DIR = 27;
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ligamahasiswa.vercel.app";
+
+export const metadata: Metadata = {
+  title: "Chapters",
+  description: "Every campus has its own voice. Explore the chapters of the Liga Mahasiswa movement.",
+  openGraph: {
+    title: "Chapters | Liga Mahasiswa Malaysia",
+    description: "Every campus has its own voice. Explore the chapters of the Liga Mahasiswa movement.",
+    url: `${siteUrl}/chapters`,
+    siteName: "Liga Mahasiswa Malaysia",
+    locale: "en_MY",
+    type: "website",
+  },
+  alternates: { canonical: `${siteUrl}/chapters` },
+};
 
 export default function ChaptersPage() {
   return (

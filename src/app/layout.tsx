@@ -16,7 +16,7 @@ const fontVars = [
   spaceMono.variable,
 ].join(" ");
 
-const siteUrl = "https://liga.vercel.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ligamahasiswa.vercel.app";
 
 export const metadata: Metadata = {
   title: {
@@ -60,6 +60,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`h-full antialiased ${fontVars}`}
     >
       <body className="min-h-full">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:border-2 focus:border-ink focus:bg-brand focus:px-4 focus:py-2 focus:text-[12px] focus:font-bold focus:uppercase focus:tracking-[0.1em] focus:text-paper"
+        >
+          Skip to content
+        </a>
         <AuthProvider>
           <AuthModalProvider>
             {children}

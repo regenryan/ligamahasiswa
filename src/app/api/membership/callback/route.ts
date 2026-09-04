@@ -12,7 +12,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
   const orderId = url.searchParams.get("order");
-  const billCode = url.searchParams.get("billCode");
+  void url.searchParams.get("billCode");
 
   // In production, we would verify the payment with ToyyibPay API
   // For now, redirect to dashboard with a success message

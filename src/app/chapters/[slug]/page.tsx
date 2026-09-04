@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import { Shell } from "@/components/shells";
 import { PageHead, SectionHead, EventCard, JoinBand } from "@/components/sections";
 import { getChapterSync, getChapter, CHAPTERS } from "@/lib/chapters";
@@ -8,6 +9,30 @@ import Link from "next/link";
 import { ShareKit } from "@/components/ShareKit";
 import { notFound } from "next/navigation";
 import { SkeletonGrid, SkeletonSectionHead, SkeletonStats } from "@/components/skeleton";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ligamahasiswa.vercel.app";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const ch = getChapterSync(slug);
+  return {
+    title: ch ? ch.label : "Chapter",
+    description: ch?.tagline ?? "A chapter of the Liga Mahasiswa movement.",
+    openGraph: {
+      title: ch ? `${ch.label} | Liga Mahasiswa Malaysia` : "Chapter | Liga Mahasiswa Malaysia",
+      description: ch?.tagline ?? "A chapter of the Liga Mahasiswa movement.",
+      url: `${siteUrl}/chapters/${slug}`,
+      siteName: "Liga Mahasiswa Malaysia",
+      locale: "en_MY",
+      type: "website",
+    },
+    alternates: { canonical: `${siteUrl}/chapters/${slug}` },
+  };
+}
 
 type SocialPost = { id: string; platform: string; url: string; caption: string };
 type ZinePreview = { slug: string; title: string; excerpt: string; date: string };

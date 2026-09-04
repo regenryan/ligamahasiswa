@@ -290,6 +290,8 @@ function AuthModal({
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // Hydration guard: modal is portal-rendered, must run after mount.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 

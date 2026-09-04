@@ -64,12 +64,16 @@ function Nav() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-    } else {
+    if (!open) return;
+    document.body.style.overflow = "hidden";
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
       document.body.style.overflow = "";
-    }
-    return () => { document.body.style.overflow = ""; };
+      window.removeEventListener("keydown", onKeyDown);
+    };
   }, [open]);
 
   return (
@@ -202,7 +206,7 @@ export function Shell({ dir, children }: DirProps & { children: ReactNode }) {
   return (
     <div className={`dir-${dir} flex min-h-screen flex-col`}>
       <Nav />
-      <div className="flex-1">{children}</div>
+      <main id="main" className="flex-1">{children}</main>
       <Footer />
     </div>
   );

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 import { Btn } from "@/components/sections/head";
 import { useCart } from "@/components/interactive";
@@ -17,6 +18,17 @@ export function AddToCart({ product }: { product: Product }) {
 
 export function CartDrawerSlot() {
   const { items, open, setOpen, remove } = useCart();
+
+  useEffect(() => {
+    if (open) {
+      const onKeyDown = (e: KeyboardEvent) => {
+        if (e.key === "Escape") setOpen(false);
+      };
+      window.addEventListener("keydown", onKeyDown);
+      return () => window.removeEventListener("keydown", onKeyDown);
+    }
+  }, [open, setOpen]);
+
   return (
     <>
       <button

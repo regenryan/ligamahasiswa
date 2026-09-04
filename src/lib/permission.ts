@@ -38,15 +38,15 @@ export async function getUserPermissions(userId: string): Promise<string[]> {
   const validRoles = Array.from(new Set([...userRoles, ...inheritedRoles]));
 
   const perms = await db
-    .select({ permName: permTable.name })
+    .select({ roleName: roleTable.name, permName: permTable.name })
     .from(rolePermission)
     .innerJoin(roleTable, eq(rolePermission.roleId, roleTable.roleId))
     .innerJoin(permTable, eq(rolePermission.permissionId, permTable.permissionId));
-    
-  // Filter manually since 'inArray' can be tricky with different sqlite adapters
+
+  // Filter by roles in the valid set
   const userPerms = perms
-    .filter(p => validRoles.includes((p as any).roleName))
-    .map(p => p.permName);
+    .filter((p) => validRoles.includes(p.roleName))
+    .map((p) => p.permName);
 
   return Array.from(new Set(userPerms));
 }

@@ -48,6 +48,7 @@ export function ImageUpload({ onUpload, defaultValue, label = "Upload Image" }: 
       
       {imageUrl && (
         <div className="mb-4 relative w-32 h-32 border border-line bg-cream overflow-hidden">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={imageUrl} alt="Uploaded preview" className="object-cover w-full h-full" />
           <button 
             type="button"

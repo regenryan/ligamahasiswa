@@ -33,8 +33,9 @@ export async function submitUniversity(
       status: "pending",
     });
     return { ok: true };
-  } catch (err: any) {
-    if (err.message?.includes("UNIQUE constraint failed: university.slug")) {
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "";
+    if (message.includes("UNIQUE constraint failed: university.slug")) {
       return { ok: false, error: "This university has already been submitted." };
     }
     return { ok: false, error: "Failed to submit university. Please try again." };

@@ -14,13 +14,10 @@ function PaymentSuccessInner() {
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (!orderId) {
-      setStatus("error");
-      setError("No order ID found");
-      return;
-    }
+  const missingOrder = !orderId;
 
+  useEffect(() => {
+    if (missingOrder) return;
     // Verify payment with our backend
     fetch("/api/payment/callback", {
       method: "POST",
@@ -40,21 +37,24 @@ function PaymentSuccessInner() {
         setStatus("error");
         setError("Network error. Please contact support.");
       });
-  }, [orderId, billCode]);
+  }, [orderId, billCode, missingOrder]);
+
+  const shownStatus: "loading" | "success" | "error" = missingOrder ? "error" : status;
+  const shownError = missingOrder ? "No order ID found" : error;
 
   return (
     <Shell dir={27}>
-      <PageHead kicker="Payment" title={status === "loading" ? "Processing..." : status === "success" ? "Payment successful" : "Payment issue"} />
+      <PageHead kicker="Payment" title={shownStatus === "loading" ? "Processing..." : shownStatus === "success" ? "Payment successful" : "Payment issue"} />
       <section className="border-b border-line">
         <div className="mx-auto w-full max-w-2xl px-4 py-16 text-center sm:px-6">
-          {status === "loading" && (
+          {shownStatus === "loading" && (
             <div className="space-y-4">
               <div className="mx-auto h-8 w-8 animate-spin border-2 border-brand border-t-transparent" />
               <p className="mono text-[13px] text-ink/50">Verifying your payment...</p>
             </div>
           )}
 
-          {status === "success" && (
+          {shownStatus === "success" && (
             <div className="space-y-6">
               <div className="mx-auto flex h-16 w-16 items-center justify-center border-2 border-term bg-term/10 text-3xl">
                 {"\u2713"}
@@ -87,14 +87,14 @@ function PaymentSuccessInner() {
             </div>
           )}
 
-          {status === "error" && (
+          {shownStatus === "error" && (
             <div className="space-y-6">
               <div className="mx-auto flex h-16 w-16 items-center justify-center border-2 border-brand bg-brand/10 text-3xl">
                 {"\u2717"}
               </div>
               <div>
                 <h2 className="display text-3xl">Payment issue</h2>
-                <p className="mt-2 text-[15px] text-ink/60">{error || "Something went wrong with your payment."}</p>
+                <p className="mt-2 text-[15px] text-ink/60">{shownError || "Something went wrong with your payment."}</p>
               </div>
               <div className="flex flex-wrap justify-center gap-3">
                 <Link href="/shop" className="press border border-2 border-ink bg-brand px-5 py-3 text-[13px] font-extrabold uppercase tracking-[0.14em] text-paper hover:opacity-90">

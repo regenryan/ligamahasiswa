@@ -12,30 +12,31 @@ export default function VerifyEmailPage() {
   const token = searchParams.get("token") ?? "";
   const [state, setState] = useState<{ success?: string; error?: string } | null>(null);
 
-  useEffect(() => {
-    if (!token) {
-      setState({ error: "Invalid verification link." });
-      return;
-    }
+  const noToken = !token;
 
+  useEffect(() => {
+    if (noToken) return;
     verifyEmailAction(token).then((result) => setState(result ?? null));
-  }, [token]);
+  }, [token, noToken]);
+
+  const shownError = noToken ? "Invalid verification link." : state?.error; 
+  const shownSuccess = state?.success;
 
   return (
     <Shell dir={27}>
       <PageHead kicker="Account" title="Verify email" sub="Verifying your email address..." />
       <section className="border-b border-line">
         <div className="mx-auto w-full max-w-md px-4 py-16 sm:px-6 text-center">
-          {state?.error ? (
+          {shownError ? (
             <>
-              <p className="text-[14px] text-brand-text">{state.error}</p>
+              <p className="text-[14px] text-brand-text">{shownError}</p>
               <Link href="/login" className="mt-4 inline-block font-bold text-brand hover:underline">
                 Go to login
               </Link>
             </>
-          ) : state?.success ? (
+          ) : shownSuccess ? (
             <>
-              <p className="text-[14px] text-green-700">{state.success}</p>
+              <p className="text-[14px] text-green-700">{shownSuccess}</p>
               <Link href="/login" className="mt-4 inline-block font-bold text-brand hover:underline">
                 Go to login
               </Link>

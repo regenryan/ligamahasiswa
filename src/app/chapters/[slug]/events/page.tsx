@@ -50,7 +50,7 @@ export default async function ChapterEventsPage({
             <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
               {events.map((e) => (
                 <Link key={e.slug} href={`/chapters/${slug}/events/${e.slug}`}>
-                  <EventCard e={{ ...e, title: e.name, place: e.location, blurb: e.description, type: e.type as any, chapterSlug: e.chapterSlug || "" }} />
+                  <EventCard e={{ ...e, title: e.name, place: e.location, blurb: e.description, type: (e.type || "Forum") as "Forum" | "Assembly" | "Dialogue", chapterSlug: e.chapterSlug || "" }} />
                 </Link>
               ))}
             </div>

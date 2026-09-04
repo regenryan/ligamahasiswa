@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Shell } from "@/components/shells";
@@ -8,6 +9,31 @@ import { dbGetProductBySlug } from "@/lib/queries";
 import { ProductDetailClient } from "./product-detail-client";
 import { SkeletonDetail } from "@/components/skeleton";
 import { generateSafeHTML } from "@/lib/tiptap";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ligamahasiswa.vercel.app";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const r = await dbGetProductBySlug(slug);
+  return {
+    title: r ? r.name : "Product",
+    description: r ? `Buy the ${r.name} from the Liga Mahasiswa shop.` : "A product from the Liga Mahasiswa shop.",
+    openGraph: {
+      title: r ? `${r.name} | Liga Mahasiswa Shop` : "Product | Liga Mahasiswa Shop",
+      description: r ? `Buy the ${r.name} from the Liga Mahasiswa shop.` : "A product from the Liga Mahasiswa shop.",
+      url: `${siteUrl}/shop/${slug}`,
+      images: r?.image ? [{ url: r.image }] : undefined,
+      siteName: "Liga Mahasiswa Malaysia",
+      locale: "en_MY",
+      type: "website",
+    },
+    alternates: { canonical: `${siteUrl}/shop/${slug}` },
+  };
+}
 
 type ShopProduct = {
   slug: string;
@@ -53,6 +79,24 @@ async function ProductContent({ slug }: { slug: string }) {
   return (
     <>
       <PageHead kicker="Shop" title={product.name} sub={product.tag} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: product.name,
+            description: product.tag,
+            offers: {
+              "@type": "Offer",
+              price: product.price.replace("RM", "").trim(),
+              priceCurrency: "MYR",
+              availability: "https://schema.org/InStock",
+            },
+            url: `${siteUrl}/shop/${slug}`,
+          }),
+        }}
+      />
       <CartProvider>
       <section className="border-b border-line">
         <div className="mx-auto grid w-full max-w-4xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1fr_1fr]">

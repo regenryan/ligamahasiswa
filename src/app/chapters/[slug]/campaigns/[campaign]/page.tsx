@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import { Shell } from "@/components/shells";
 import { PageHead, SectionHead, JoinBand } from "@/components/sections";
 import { dbGetCampaignBySlug } from "@/lib/queries";
@@ -10,6 +11,30 @@ import { SkeletonDetail, SkeletonMediaGrid } from "@/components/skeleton";
 import { generateSafeHTML } from "@/lib/tiptap";
 
 const DIR = 27;
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ligamahasiswa.vercel.app";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string; campaign: string }>;
+}): Promise<Metadata> {
+  const { slug, campaign: campaignSlug } = await params;
+  const c = await dbGetCampaignBySlug(campaignSlug);
+  return {
+    title: c ? c.name : "Campaign",
+    description: c?.summary ?? "A campaign of the Liga Mahasiswa movement.",
+    openGraph: {
+      title: c ? `${c.name} | Liga Mahasiswa Malaysia` : "Campaign | Liga Mahasiswa Malaysia",
+      description: c?.summary ?? "A campaign of the Liga Mahasiswa movement.",
+      url: `${siteUrl}/chapters/${slug}/campaigns/${campaignSlug}`,
+      siteName: "Liga Mahasiswa Malaysia",
+      locale: "en_MY",
+      type: "article",
+    },
+    alternates: { canonical: `${siteUrl}/chapters/${slug}/campaigns/${campaignSlug}` },
+  };
+}
 
 async function getCampaign(campaignSlug: string): Promise<CampaignData | null> {
   return dbGetCampaignBySlug(campaignSlug);
@@ -98,6 +123,20 @@ async function CampaignContent({
   return (
     <>
       <PageHead kicker={chapterLabel(slug)} title={campaign.name} sub={campaign.summary} />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Campaign",
+            name: campaign.name,
+            description: campaign.summary,
+            url: `${siteUrl}/chapters/${slug}/campaigns/${campaignSlug}`,
+            isPartOf: { "@type": "Organization", name: "Liga Mahasiswa Malaysia" },
+          }),
+        }}
+      />
 
       <section id="introduction" className="border-b border-line">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">

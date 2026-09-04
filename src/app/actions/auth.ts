@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { eq } from "drizzle-orm";
 import { db } from "@/lib/db";
-import { user, member, roleRecord } from "@/lib/schema";
+import { user, roleRecord } from "@/lib/schema";
 import { hashPassword, verifyPassword } from "@/lib/password";
 import { createSession, deleteSession } from "@/lib/session";
 import { nanoid } from "@/lib/nanoid";

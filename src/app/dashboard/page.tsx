@@ -2,9 +2,6 @@ import Link from "next/link";
 import { Shell } from "@/components/shells";
 import { PageHead, Btn } from "@/components/sections";
 import { requireAuth, hasRole } from "@/lib/auth";
-import { db } from "@/lib/db";
-import { eq } from "drizzle-orm";
-import { nomination } from "@/lib/schema";
 import { ProfileForm } from "./profile-form";
 
 const DIR = 27;
@@ -33,14 +30,6 @@ export default async function DashboardPage() {
   const isMember = hasRole(user.role, "member") && user.status === "active";
   const isExpired = user.status === "expired";
   const isSuspended = user.status === "suspended";
-
-  const [rsvps, prkNominations] = await Promise.all([
-    Promise.resolve([]),
-    Promise.resolve([]),
-  ]);
-
-  const goingRsvps = rsvps.filter((r: any) => r.status === "going");
-  const myNomination = prkNominations.length > 0 ? prkNominations[0] : null;
 
   const links = [
     { href: "/#member", label: "Membership", desc: isMember ? "Manage your membership" : "Become a verified member" },
@@ -91,22 +80,6 @@ export default async function DashboardPage() {
           </div>
         </div>
       </section>
-
-      {goingRsvps.length > 0 ? (
-        <section className="border-b border-line">
-          <div className="mx-auto w-full max-w-4xl px-4 py-16 sm:px-6">
-            <h2 className="display text-3xl">My RSVPs</h2>
-            <div className="mt-6 space-y-3">
-              {goingRsvps.map((r: any) => (
-                <Link key={r.id} href={`/events/${r.event_slug}`} className="block border border-line bg-cream px-5 py-4 hover:border-brand transition-colors">
-                  <p className="text-[14px] font-bold">{r.event_slug}</p>
-                  <p className="mono text-[12px] text-ink/50">Going</p>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      ) : null}
 
       <section className="border-b border-line">
         <div className="mx-auto w-full max-w-4xl px-4 py-16 sm:px-6">

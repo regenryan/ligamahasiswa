@@ -4,7 +4,6 @@ import { getCurrentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { order } from "@/lib/schema";
 import { eq } from "drizzle-orm";
-import Link from "next/link";
 import { ShipOrderClient } from "./client";
 
 export default async function ShipOrderPage() {

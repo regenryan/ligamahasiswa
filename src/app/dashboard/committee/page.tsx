@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Shell } from "@/components/shells";
 import { PageHead, Btn } from "@/components/sections";
 import { requireAuth, hasRole } from "@/lib/auth";
@@ -46,7 +45,14 @@ export default async function CommitteePage() {
     };
   }
 
-  const pendingApprovals: never[] = [];
+  const pendingApprovals: {
+    id: string;
+    type: string;
+    requester_id: string;
+    payload: string;
+    approver_ids: string;
+    status: string;
+  }[] = [];
 
   return (
     <Shell dir={DIR}>
@@ -89,7 +95,7 @@ export default async function CommitteePage() {
               <p className="mt-2 text-[14px] text-ink/60">Resignation requests awaiting approval.</p>
               <div className="mt-4">
                 <CommitteeActions
-                  approvals={pendingApprovals.map((a: any) => ({
+                  approvals={pendingApprovals.map((a) => ({
                     id: a.id,
                     type: a.type,
                     requesterId: a.requester_id,

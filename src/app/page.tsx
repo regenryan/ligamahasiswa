@@ -14,12 +14,33 @@ import { dbGetCampaigns, type CampaignData } from "@/lib/queries";
 
 const DIR = 27;
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ligamahasiswa.vercel.app";
+
+const orgJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Liga Mahasiswa Malaysia",
+  url: siteUrl,
+  logo: `${siteUrl}/logo.png`,
+  sameAs: [
+    "https://instagram.com/ligamahasiswa",
+    "https://tiktok.com/@ligamahasiswa",
+    "https://youtube.com/@ligamahasiswa",
+  ],
+  description:
+    "The Malaysian student movement. Abolish AUKU, free the campus.",
+};
+
 export default async function Home() {
   const campaigns: CampaignData[] = await dbGetCampaigns();
   const [featured] = campaigns;
 
   return (
     <Shell dir={DIR}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+      />
       <Hero chapterName="Liga Mahasiswa Malaysia" campaign={featured} />
       <Principles />
       <ChaptersSection />

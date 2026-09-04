@@ -1,7 +1,7 @@
 "use server";
 
 import { getCurrentUser } from "@/lib/auth";
-import { getMembershipFee, getMembershipDurationDays } from "@/lib/config";
+import { getMembershipFee } from "@/lib/config";
 import { createBill } from "@/lib/toyyibpay";
 import { db } from "@/lib/db";
 import { order as orderTable } from "@/lib/schema";
@@ -20,7 +20,6 @@ export async function initiateMembershipPayment(): Promise<MembershipState> {
   }
 
   const fee = await getMembershipFee();
-  const durationDays = await getMembershipDurationDays();
 
   // If fee is 0, grant membership directly
   if (fee === 0) {

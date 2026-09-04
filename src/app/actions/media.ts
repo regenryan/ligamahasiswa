@@ -52,7 +52,7 @@ export async function submitMediaLink(
       // Truncate to reasonable length
       if (slug.length > 50) slug = slug.substring(0, 50);
     }
-  } catch (e) {
+  } catch {
     // Keep default slug
   }
   
@@ -74,7 +74,7 @@ export async function submitMediaLink(
     });
     
     return { ok: true };
-  } catch (err: any) {
+  } catch {
     return { ok: false, error: "Failed to submit media link. Please try again." };
   }
 }

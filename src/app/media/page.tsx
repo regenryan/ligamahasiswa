@@ -1,9 +1,28 @@
+import type { Metadata } from "next";
 import { Shell } from "@/components/shells";
 import { PageHead, JoinBand } from "@/components/sections";
 import { MediaClient } from "./media-client";
 import { dbGetMedia } from "@/lib/queries";
 
 const DIR = 27;
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ligamahasiswa.vercel.app";
+
+export const metadata: Metadata = {
+  title: "Media",
+  description:
+    "Stories, coverage, and voices from the Malaysian student movement.",
+  openGraph: {
+    title: "Media | Liga Mahasiswa Malaysia",
+    description:
+      "Stories, coverage, and voices from the Malaysian student movement.",
+    url: `${siteUrl}/media`,
+    siteName: "Liga Mahasiswa Malaysia",
+    locale: "en_MY",
+    type: "website",
+  },
+  alternates: { canonical: `${siteUrl}/media` },
+};
 
 export default async function MediaPage() {
   const allMedia = await dbGetMedia();

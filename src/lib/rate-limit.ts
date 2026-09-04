@@ -1,31 +1,34 @@
-import { Ratelimit } from "@upstash/ratelimit";
+import { Ratelimit, type Duration } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 
-let ratelimit: Ratelimit | null = null;
+const cache = new Map<string, Ratelimit>();
 
-function getRatelimit(): Ratelimit | null {
-  if (ratelimit) return ratelimit;
-
+function getRatelimit(limit: number, window: Duration): Ratelimit | null {
   const url = process.env.UPSTASH_REDIS_REST_URL;
   const token = process.env.UPSTASH_REDIS_REST_TOKEN;
 
   if (!url || !token) return null;
 
-  ratelimit = new Ratelimit({
+  const cacheKey = `${limit}|${window}`;
+  const cached = cache.get(cacheKey);
+  if (cached) return cached;
+
+  const rl = new Ratelimit({
     redis: Redis.fromEnv(),
-    limiter: Ratelimit.slidingWindow(10, "60 s"),
+    limiter: Ratelimit.slidingWindow(limit, window),
     analytics: true,
   });
 
-  return ratelimit;
+  cache.set(cacheKey, rl);
+  return rl;
 }
 
 export async function checkRateLimit(
   key: string,
   limit: number = 10,
-  window: string = "60 s"
+  window: Duration = "60 s"
 ): Promise<{ success: boolean; remaining: number }> {
-  const rl = getRatelimit();
+  const rl = getRatelimit(limit, window);
   if (!rl) return { success: true, remaining: 999 };
 
   const result = await rl.limit(key);

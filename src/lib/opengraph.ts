@@ -32,8 +32,13 @@ export async function fetchOGMetadata(url: string): Promise<OGMetadata | null> {
       return "";
     };
 
+    const getTitleElement = (): string => {
+      const m = html.match(/<title[^>]*>([^<]*)<\/title>/i);
+      return m ? m[1].trim() : "";
+    };
+
     return {
-      title: getMeta("og:title") || getMeta("title"),
+      title: getMeta("og:title") || getMeta("title") || getTitleElement(),
       description: getMeta("og:description") || getMeta("description"),
       image: getMeta("og:image"),
       siteName: getMeta("og:site_name"),

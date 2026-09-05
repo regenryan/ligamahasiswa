@@ -1,4 +1,4 @@
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, getTableColumns } from "drizzle-orm";
 import { db } from "./db";
 import * as s from "./schema";
 
@@ -82,10 +82,14 @@ export interface OrderData {
 // ── DB query helpers ─────────────────────────────────────────────────────────
 
 export async function dbGetCampaigns(): Promise<CampaignData[]> {
-  const rows = await db.select().from(s.campaign).orderBy(desc(s.campaign.createdAt));
+  const rows = await db
+    .select({ ...getTableColumns(s.campaign), chapterSlug: s.chapter.slug })
+    .from(s.campaign)
+    .leftJoin(s.chapter, eq(s.campaign.chapterId, s.chapter.chapterId))
+    .orderBy(desc(s.campaign.createdAt));
   return rows.map((r) => ({
     id: r.campaignId,
-    chapterSlug: "",
+    chapterSlug: r.chapterSlug ?? "",
     chapterId: r.chapterId,
     slug: r.slug,
     name: r.name,
@@ -99,12 +103,16 @@ export async function dbGetCampaigns(): Promise<CampaignData[]> {
 }
 
 export async function dbGetCampaignBySlug(slug: string): Promise<CampaignData | null> {
-  const rows = await db.select().from(s.campaign).where(eq(s.campaign.slug, slug));
+  const rows = await db
+    .select({ ...getTableColumns(s.campaign), chapterSlug: s.chapter.slug })
+    .from(s.campaign)
+    .leftJoin(s.chapter, eq(s.campaign.chapterId, s.chapter.chapterId))
+    .where(eq(s.campaign.slug, slug));
   const r = rows[0];
   if (!r) return null;
   return {
     id: r.campaignId,
-    chapterSlug: "",
+    chapterSlug: r.chapterSlug ?? "",
     chapterId: r.chapterId,
     slug: r.slug,
     name: r.name,
@@ -118,10 +126,15 @@ export async function dbGetCampaignBySlug(slug: string): Promise<CampaignData | 
 }
 
 export async function dbGetCampaignsByChapter(chapterId: string): Promise<CampaignData[]> {
-  const rows = await db.select().from(s.campaign).where(eq(s.campaign.chapterId, chapterId)).orderBy(desc(s.campaign.createdAt));
+  const rows = await db
+    .select({ ...getTableColumns(s.campaign), chapterSlug: s.chapter.slug })
+    .from(s.campaign)
+    .leftJoin(s.chapter, eq(s.campaign.chapterId, s.chapter.chapterId))
+    .where(eq(s.campaign.chapterId, chapterId))
+    .orderBy(desc(s.campaign.createdAt));
   return rows.map((r) => ({
     id: r.campaignId,
-    chapterSlug: "",
+    chapterSlug: r.chapterSlug ?? "",
     chapterId: r.chapterId,
     slug: r.slug,
     name: r.name,
@@ -135,10 +148,14 @@ export async function dbGetCampaignsByChapter(chapterId: string): Promise<Campai
 }
 
 export async function dbGetEvents(): Promise<EventData[]> {
-  const rows = await db.select().from(s.event).orderBy(desc(s.event.createdAt));
+  const rows = await db
+    .select({ ...getTableColumns(s.event), chapterSlug: s.chapter.slug })
+    .from(s.event)
+    .leftJoin(s.chapter, eq(s.event.chapterId, s.chapter.chapterId))
+    .orderBy(desc(s.event.createdAt));
   return rows.map((r) => ({
     id: r.eventId,
-    chapterSlug: "",
+    chapterSlug: r.chapterSlug ?? "",
     chapterId: r.chapterId,
     slug: r.slug,
     name: r.name,
@@ -153,12 +170,16 @@ export async function dbGetEvents(): Promise<EventData[]> {
 }
 
 export async function dbGetEventBySlug(slug: string): Promise<EventData | null> {
-  const rows = await db.select().from(s.event).where(eq(s.event.slug, slug));
+  const rows = await db
+    .select({ ...getTableColumns(s.event), chapterSlug: s.chapter.slug })
+    .from(s.event)
+    .leftJoin(s.chapter, eq(s.event.chapterId, s.chapter.chapterId))
+    .where(eq(s.event.slug, slug));
   const r = rows[0];
   if (!r) return null;
   return {
     id: r.eventId,
-    chapterSlug: "",
+    chapterSlug: r.chapterSlug ?? "",
     chapterId: r.chapterId,
     slug: r.slug,
     name: r.name,
@@ -173,10 +194,15 @@ export async function dbGetEventBySlug(slug: string): Promise<EventData | null> 
 }
 
 export async function dbGetEventsByChapter(chapterId: string): Promise<EventData[]> {
-  const rows = await db.select().from(s.event).where(eq(s.event.chapterId, chapterId)).orderBy(desc(s.event.createdAt));
+  const rows = await db
+    .select({ ...getTableColumns(s.event), chapterSlug: s.chapter.slug })
+    .from(s.event)
+    .leftJoin(s.chapter, eq(s.event.chapterId, s.chapter.chapterId))
+    .where(eq(s.event.chapterId, chapterId))
+    .orderBy(desc(s.event.createdAt));
   return rows.map((r) => ({
     id: r.eventId,
-    chapterSlug: "",
+    chapterSlug: r.chapterSlug ?? "",
     chapterId: r.chapterId,
     slug: r.slug,
     name: r.name,
@@ -208,10 +234,14 @@ export async function dbGetMedia(): Promise<MediaData[]> {
 }
 
 export async function dbGetProducts(): Promise<ProductData[]> {
-  const rows = await db.select().from(s.product).orderBy(desc(s.product.createdAt));
+  const rows = await db
+    .select({ ...getTableColumns(s.product), chapterSlug: s.chapter.slug })
+    .from(s.product)
+    .leftJoin(s.chapter, eq(s.product.chapterId, s.chapter.chapterId))
+    .orderBy(desc(s.product.createdAt));
   return rows.map((r) => ({
     id: r.productId,
-    chapterSlug: "",
+    chapterSlug: r.chapterSlug ?? "",
     chapterId: r.chapterId,
     slug: r.slug,
     name: r.name,
@@ -227,14 +257,18 @@ export async function dbGetProducts(): Promise<ProductData[]> {
 }
 
 export async function dbGetProductBySlug(slug: string): Promise<ProductData | null> {
-  const rows = await db.select().from(s.product).where(eq(s.product.slug, slug));
+  const rows = await db
+    .select({ ...getTableColumns(s.product), chapterSlug: s.chapter.slug })
+    .from(s.product)
+    .leftJoin(s.chapter, eq(s.product.chapterId, s.chapter.chapterId))
+    .where(eq(s.product.slug, slug));
   const r = rows[0];
   if (!r) return null;
 
   const images = await db.select().from(s.productImage).where(eq(s.productImage.productId, r.productId));
   return {
     id: r.productId,
-    chapterSlug: "",
+    chapterSlug: r.chapterSlug ?? "",
     chapterId: r.chapterId,
     slug: r.slug,
     name: r.name,

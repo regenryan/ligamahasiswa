@@ -1,13 +1,14 @@
 "use client";
 
-import { useActionState } from "react";
+import { Suspense, useActionState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { resetPasswordAction, type PasswordResetState } from "@/app/actions/password-reset";
 import { Shell } from "@/components/shells";
 import { PageHead, Btn } from "@/components/sections";
+import { SkeletonGrid } from "@/components/skeleton";
 
-export default function ResetPasswordPage() {
+function ResetPasswordForm() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token") ?? "";
   const [state, action, pending] = useActionState(resetPasswordAction, undefined);
@@ -66,5 +67,13 @@ export default function ResetPasswordPage() {
         </div>
       </section>
     </Shell>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={<SkeletonGrid />}>
+      <ResetPasswordForm />
+    </Suspense>
   );
 }

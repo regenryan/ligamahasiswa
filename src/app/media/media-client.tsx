@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 import Link from "next/link";
-import { CHAPTERS, chapterLabel } from "@/lib/chapters";
+import { CHAPTERS, chapterLabel } from "@/lib/chapter-constants";
 
 type Post = { id: string; platform: string; caption: string; url: string; chapter: string };
 type Zine = { slug: string; title: string; excerpt: string; author: string; chapter: string };

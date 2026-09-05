@@ -6,7 +6,7 @@ import { Shell } from "@/components/shells";
 import { PageHead, SectionHead } from "@/components/sections/head";
 import { Reveal } from "@/components/interactive";
 import { submitNomination } from "@/app/actions/prk";
-import { CHAPTERS } from "@/lib/chapters";
+import { CHAPTERS } from "@/lib/chapter-constants";
 import { Suspense } from "react";
 import { SkeletonGrid } from "@/components/skeleton";
 

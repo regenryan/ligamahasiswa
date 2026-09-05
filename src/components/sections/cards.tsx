@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { StatusChip, Btn } from "@/components/sections/head";
 import { ShareButton } from "@/components/interactive";
-import { chapterLabel } from "@/lib/chapters";
+import { chapterLabel } from "@/lib/chapter-constants";
 
 type Campaign = { slug: string; chapterSlug: string; title: string; status: string; summary: string; demands: string[] };
 type EventItem = { slug: string; chapterSlug: string; title: string; date: string; time: string; place: string; type: "Forum" | "Assembly" | "Dialogue"; blurb: string };

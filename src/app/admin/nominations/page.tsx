@@ -22,14 +22,19 @@ export default async function AdminNominationsPage() {
   }
 
   const rows = await db.select().from(nomination);
-  const nominations = rows.map((r) => ({
-    id: r.nominationId,
-    name: r.name ?? "",
-    chapter: r.chapterId ?? "",
-    status: r.status ?? "pending",
-    position: r.nominationId,
-    created_at: r.createdAt ? String(r.createdAt) : "",
-    justification: r.justification ?? "",
-  }));
+  const nominations = rows.map((r) => {
+    const justification = r.justification ?? "";
+    const sep = justification.indexOf(":");
+    return {
+      id: r.nominationId,
+      name: r.name ?? "",
+      chapter: r.chapterId ?? "",
+      chapter_slug: r.chapterId ?? "",
+      status: r.status ?? "pending",
+      position: sep > -1 ? justification.slice(0, sep).trim() : r.nominationId,
+      platform: sep > -1 ? justification.slice(sep + 1).trim() : justification,
+      created_at: r.createdAt ? String(r.createdAt) : "",
+    };
+  });
   return <AdminNominationsClient nominations={nominations} />;
 }

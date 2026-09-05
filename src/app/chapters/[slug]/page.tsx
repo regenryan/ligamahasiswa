@@ -12,13 +12,38 @@ import { SkeletonGrid, SkeletonSectionHead, SkeletonStats } from "@/components/s
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ligamahasiswa.vercel.app";
 
+export type ResolvedChapter = {
+  slug: string;
+  label: string;
+  short: string;
+  tagline: string;
+  color: string;
+};
+
+export async function resolveChapter(slug: string): Promise<ResolvedChapter | null> {
+  const known = getChapterSync(slug);
+  if (known) {
+    return { slug: known.slug, label: known.label, short: known.short, tagline: known.tagline, color: known.color };
+  }
+  const row = await getChapter(slug);
+  if (!row) return null;
+  const short = row.name.replace(/^Liga Mahasiswa /, "") || row.slug.toUpperCase();
+  return {
+    slug: row.slug,
+    label: row.name,
+    short,
+    tagline: row.slogan || "Our voice, our campus, our struggle.",
+    color: "#e11d2e",
+  };
+}
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const ch = getChapterSync(slug);
+  const ch = await resolveChapter(slug);
   return {
     title: ch ? ch.label : "Chapter",
     description: ch?.tagline ?? "A chapter of the Liga Mahasiswa movement.",
@@ -287,9 +312,9 @@ export default async function ChapterPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const ch = getChapterSync(slug);
-  if (!ch) notFound();
-  const meta = ch;
+  const meta = await resolveChapter(slug);
+  if (!meta) notFound();
+  const ch = meta;
 
   const sectionFallback = (
     <section className="border-b border-line">

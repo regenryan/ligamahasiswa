@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { verifyEmailAction } from "@/app/actions/email-verification";
 import { Shell } from "@/components/shells";
 import { PageHead } from "@/components/sections";
+import { SkeletonGrid } from "@/components/skeleton";
 
-export default function VerifyEmailPage() {
+function VerifyEmailContent() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token") ?? "";
   const [state, setState] = useState<{ success?: string; error?: string } | null>(null);
@@ -47,5 +48,13 @@ export default function VerifyEmailPage() {
         </div>
       </section>
     </Shell>
+  );
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={<SkeletonGrid />}>
+      <VerifyEmailContent />
+    </Suspense>
   );
 }

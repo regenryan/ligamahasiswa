@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import { updateProfile, type ProfileState } from "@/app/actions/profile";
-import { CHAPTERS } from "@/lib/chapters";
+import { CHAPTERS } from "@/lib/chapter-constants";
 
 export function ProfileForm({
   name,

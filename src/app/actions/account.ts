@@ -2,10 +2,9 @@
 
 import { db } from "@/lib/db";
 import { user } from "@/lib/schema";
-import { getSession } from "@/lib/session";
+import { getSession, deleteSession } from "@/lib/session";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
 
 export async function deleteAccount() {
   const session = await getSession();
@@ -23,8 +22,7 @@ export async function deleteAccount() {
   }).where(eq(user.userId, session.userId));
 
   // Clear session
-  const cookieStore = await cookies();
-  cookieStore.delete("session");
+  await deleteSession();
 
   redirect("/");
 }

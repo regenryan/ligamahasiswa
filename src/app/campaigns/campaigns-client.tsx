@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 import Link from "next/link";
-import { CHAPTERS, chapterLabel } from "@/lib/chapters";
+import { CHAPTERS, chapterLabel } from "@/lib/chapter-constants";
 import { Pagination, paginate } from "@/components/pagination";
 import type { CampaignData } from "@/lib/queries";
 

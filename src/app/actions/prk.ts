@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { nomination } from "@/lib/schema";
 import { getSession } from "@/lib/session";
+import { getChapter } from "@/lib/chapters";
 
 export type PrkState = { error?: string } | undefined;
 
@@ -30,11 +31,14 @@ export async function submitNomination(
 
   const id = `prk_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`;
 
+  const chapterRow = await getChapter(chapterSlug);
+  if (!chapterRow) return { error: "Pick a valid chapter." };
+
   await db.insert(nomination).values({
     nominationId: id,
     name,
     email,
-    chapterId: chapterSlug,
+    chapterId: chapterRow.chapterId,
     justification: `${position}: ${statement}`,
     status: "pending",
   });

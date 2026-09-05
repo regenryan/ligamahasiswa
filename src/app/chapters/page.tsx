@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Shell } from "@/components/shells";
 import { PageHead } from "@/components/sections/head";
 import { JoinBand } from "@/components/sections";
-import { CHAPTERS } from "@/lib/chapters";
+import { getChapters, getChapterSync } from "@/lib/chapters";
 
 const DIR = 27;
 
@@ -23,7 +23,21 @@ export const metadata: Metadata = {
   alternates: { canonical: `${siteUrl}/chapters` },
 };
 
-export default function ChaptersPage() {
+export default async function ChaptersPage() {
+  const rows = await getChapters();
+  const chapters = rows.map((c) => {
+    const known = getChapterSync(c.slug);
+    if (known) return known;
+    const short = c.name.replace(/^Liga Mahasiswa /, "") || c.slug.toUpperCase();
+    return {
+      slug: c.slug,
+      name: c.name,
+      short,
+      color: "#e11d2e",
+      tagline: "Our voice, our campus, our struggle.",
+    };
+  });
+
   return (
     <Shell dir={DIR}>
       <PageHead
@@ -34,7 +48,7 @@ export default function ChaptersPage() {
       <section className="border-b border-line">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
           <div className="grid gap-5 grid-cols-2 lg:grid-cols-3">
-            {CHAPTERS.map((chapter) => (
+            {chapters.map((chapter) => (
               <Link
                 key={chapter.slug}
                 href={`/chapters/${chapter.slug}`}

@@ -2,7 +2,7 @@
 
 import { Btn } from "@/components/sections/head";
 import { Reveal } from "@/components/interactive";
-import { chapterLabel } from "@/lib/chapters";
+import { chapterLabel } from "@/lib/chapter-constants";
 
 const QR_PATTERN: boolean[] = Array.from({ length: 81 }, (_, i) => {
   const r = Math.floor(i / 9);

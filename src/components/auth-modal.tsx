@@ -12,7 +12,7 @@ import {
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { loginAction, registerAction, type AuthState } from "@/app/actions/auth";
-import { CHAPTERS } from "@/lib/chapters";
+import { CHAPTERS } from "@/lib/chapter-constants";
 
 type AuthModalMode = "login" | "register";
 

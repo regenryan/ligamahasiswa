@@ -3,7 +3,7 @@
 import { useActionState } from "react";
 import Link from "next/link";
 import { registerAction, type AuthState } from "@/app/actions/auth";
-import { CHAPTERS } from "@/lib/chapters";
+import { CHAPTERS } from "@/lib/chapter-constants";
 import { Shell } from "@/components/shells";
 import { PageHead, Btn } from "@/components/sections";
 

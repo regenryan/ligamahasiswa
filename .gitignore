@@ -36,6 +36,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# figma export artifacts
+/figma-export/
+/.figma-capture/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
